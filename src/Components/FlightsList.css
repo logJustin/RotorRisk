@@ -1,0 +1,12 @@
+.flightStrip {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: brown;
+    border-radius: 15px;
+    height: min-content;
+    margin: 10px;
+    padding: 10px;
+}
