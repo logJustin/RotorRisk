@@ -10,6 +10,7 @@ import AddCircleOutlineSharpIcon from '@mui/icons-material/AddCircleOutlineSharp
 import CheckCircleOutlineSharpIcon from '@mui/icons-material/CheckCircleOutlineSharp';
 import CheckCircleSharpIcon from '@mui/icons-material/CheckCircleSharp';
 import ListIcon from '@mui/icons-material/List';
+import NewFormModal from './NewFormModal'
 
 const drawer = (
     <Box sx={{ justifyContent: 'space-evenly' }}>
@@ -52,22 +53,21 @@ const drawer = (
     </Box>
 );
 
-export default function LeftNaviation({ drawerWidth, props }) {
+export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, mobileOpen }) {
 
-
+    // const [open, setOpen] = React.useState(false);
+    // const handleOpen = () => setOpen(true);
+    // const handleClose = () => setOpen(false);
     const { window } = props;
-    const [mobileOpen, setMobileOpen] = React.useState(false);
-
-    const handleDrawerToggle = () => {
-        setMobileOpen(!mobileOpen);
-    };
     const container = window !== undefined ? () => window().document.body : undefined;
+
     return (
         <Box
             component="nav"
             sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
             aria-label="mailbox folders"
         >
+            {/* <NewFormModal open={open} handleOpen={handleOpen} handleClose={handleClose} /> */}
             {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
             <Drawer
                 container={container}

@@ -9,11 +9,16 @@ import './Layout.css'
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
+    const [mobileOpen, setMobileOpen] = React.useState(false);
+
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
 
     return (
         <Box sx={{ display: 'flex' }}>
-            <Header drawerWidth={drawerWidth} />
-            <LeftNavigation drawerWidth={drawerWidth} props={props} />
+            <Header drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle} />
+            <LeftNavigation drawerWidth={drawerWidth} props={props} mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
             <Body drawerWidth={drawerWidth} />
         </Box>
     );

@@ -8,10 +8,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 
 
-export default function Header({ drawerWidth }) {
-    const handleDrawerToggle = () => {
-        setMobileOpen(!mobileOpen);
-    };
+export default function Header({ drawerWidth, handleDrawerToggle }) {
+
 
     return (
         <AppBar
