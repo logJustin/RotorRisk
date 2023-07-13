@@ -28,6 +28,34 @@ export default function Body({ drawerWidth }) {
             briefed: 'CW3 Boiii',
             approved: 'CPT Nasty'
         },
+        {
+            date: '13JUL23',
+            pilot: 'Parry',
+            risk: 'M',
+            briefed: 'CW3 Chungus',
+            approved: 'MAJ Rad'
+        },
+        {
+            date: '13JUL23',
+            pilot: 'Jose',
+            risk: 'H',
+            briefed: 'CW3 Boiii',
+            approved: 'CPT Nasty'
+        },
+        {
+            date: '13JUL23',
+            pilot: 'Parry',
+            risk: 'M',
+            briefed: 'CW3 Chungus',
+            approved: 'MAJ Rad'
+        },
+        {
+            date: '13JUL23',
+            pilot: 'Jose',
+            risk: 'H',
+            briefed: 'CW3 Boiii',
+            approved: 'CPT Nasty'
+        },
     ]
     return (
         <Box
