@@ -10,7 +10,7 @@ import AddCircleOutlineSharpIcon from '@mui/icons-material/AddCircleOutlineSharp
 import CheckCircleOutlineSharpIcon from '@mui/icons-material/CheckCircleOutlineSharp';
 import CheckCircleSharpIcon from '@mui/icons-material/CheckCircleSharp';
 import ListIcon from '@mui/icons-material/List';
-import NewFormModal from './NewFormModal'
+
 
 const drawer = (
     <Box sx={{ justifyContent: 'space-evenly' }}>
@@ -55,20 +55,18 @@ const drawer = (
 
 export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, mobileOpen }) {
 
-    // const [open, setOpen] = React.useState(false);
-    // const handleOpen = () => setOpen(true);
-    // const handleClose = () => setOpen(false);
+
     const { window } = props;
     const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
         <Box
             component="nav"
-            sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+            sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
             aria-label="mailbox folders"
         >
-            {/* <NewFormModal open={open} handleOpen={handleOpen} handleClose={handleClose} /> */}
-            {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+
+            {/* Tablet & Mobile Drawer */}
             <Drawer
                 container={container}
                 variant="temporary"
@@ -78,22 +76,25 @@ export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, 
                     keepMounted: true, // Better open performance on mobile.
                 }}
                 sx={{
-                    display: { xs: 'block', sm: 'none' },
+                    // display: { xs: 'block', sm: 'none' },
+                    display: { sm: 'block', md: 'none' },
                     '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
                 }}
             >
                 {drawer}
             </Drawer>
+            {/* Desktop Drawer */}
             <Drawer
                 variant="permanent"
                 sx={{
-                    display: { xs: 'none', sm: 'block' },
+                    // display: { xs: 'none', sm: 'block' },
+                    display: { xs: 'none', sm: 'none', md: 'block' },
                     '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
                 }}
                 open
             >
                 {drawer}
             </Drawer>
-        </Box>
+        </Box >
     )
 }

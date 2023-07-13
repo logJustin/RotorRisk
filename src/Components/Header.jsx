@@ -15,8 +15,10 @@ export default function Header({ drawerWidth, handleDrawerToggle }) {
         <AppBar
             position="fixed"
             sx={{
-                width: { sm: `calc(100% - ${drawerWidth}px)` },
-                ml: { sm: `${drawerWidth}px` },
+                // width: { sm: `calc(100% - ${drawerWidth}px)` },
+                // ml: { sm: `${drawerWidth}px` },
+                width: { md: `calc(100% - ${drawerWidth}px)` },
+                ml: { md: `${drawerWidth}px` },
             }}
         >
 
@@ -26,7 +28,8 @@ export default function Header({ drawerWidth, handleDrawerToggle }) {
                     aria-label="open drawer"
                     edge="start"
                     onClick={handleDrawerToggle}
-                    sx={{ mr: 2, display: { sm: 'none' } }}
+                    // sx={{ mr: 2, display: { md: 'none' } }}
+                    sx={{ mr: 2, display: { md: 'none' } }}
                 >
                     <MenuIcon />
                 </IconButton>
