@@ -26,7 +26,19 @@ export default function Body({ drawerWidth }) {
             pilot: 'Neo',
             risk: 'L',
             briefed: 'CW3 Trinity',
-            approved: 'CPT Vega'
+            approved: 'CPT Vega',
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -34,6 +46,19 @@ export default function Body({ drawerWidth }) {
             risk: 'M',
             briefed: 'CW4 Art3mis',
             approved: 'LTC Winnfield'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -41,6 +66,19 @@ export default function Body({ drawerWidth }) {
             risk: 'H',
             briefed: 'CW5 Organa',
             approved: 'COL Solo'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -48,6 +86,19 @@ export default function Body({ drawerWidth }) {
             risk: 'M',
             briefed: 'CW4 Granger',
             approved: 'LTC Dumbledore'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -55,6 +106,19 @@ export default function Body({ drawerWidth }) {
             risk: 'H',
             briefed: 'CW5 Ravenwood',
             approved: 'COL Brody'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -62,6 +126,19 @@ export default function Body({ drawerWidth }) {
             risk: 'M',
             briefed: 'CW4 Moneypenny',
             approved: 'LTC Trevelyan'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -69,6 +146,19 @@ export default function Body({ drawerWidth }) {
             risk: 'H',
             briefed: 'CW5 Potts',
             approved: 'COL Rhodes'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -76,6 +166,19 @@ export default function Body({ drawerWidth }) {
             risk: 'M',
             briefed: 'CW4 Hicks',
             approved: 'LTC Bishop'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -83,6 +186,19 @@ export default function Body({ drawerWidth }) {
             risk: 'L',
             briefed: 'CW3 Gamgee',
             approved: 'CPT Aragorn'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -90,6 +206,19 @@ export default function Body({ drawerWidth }) {
             risk: 'M',
             briefed: 'CW4 Winston',
             approved: 'LTC Charon'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -97,6 +226,19 @@ export default function Body({ drawerWidth }) {
             risk: 'H',
             briefed: 'CW5 Trevor',
             approved: 'COL Hippolyta'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -104,6 +246,19 @@ export default function Body({ drawerWidth }) {
             risk: 'M',
             briefed: 'CW4 Swann',
             approved: 'LTC Barbossa'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -111,6 +266,19 @@ export default function Body({ drawerWidth }) {
             risk: 'H',
             briefed: 'CW5 Dunn',
             approved: 'COL Stickell'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -118,6 +286,19 @@ export default function Body({ drawerWidth }) {
             risk: 'M',
             briefed: 'CW4 Loki',
             approved: 'LTC Odin'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -125,6 +306,19 @@ export default function Body({ drawerWidth }) {
             risk: 'L',
             briefed: 'CW3 Brown',
             approved: 'CPT Tannen'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -132,6 +326,19 @@ export default function Body({ drawerWidth }) {
             risk: 'M',
             briefed: 'CW4 Mellark',
             approved: 'LTC Abernathy'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -139,6 +346,19 @@ export default function Body({ drawerWidth }) {
             risk: 'H',
             briefed: 'CW5 Watson',
             approved: 'COL Holmes'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -146,6 +366,19 @@ export default function Body({ drawerWidth }) {
             risk: 'M',
             briefed: 'CW4 Grey',
             approved: 'LTC Xavier'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -153,6 +386,19 @@ export default function Body({ drawerWidth }) {
             risk: 'H',
             briefed: 'CW5 Ortiz',
             approved: 'COL Hobbs'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         },
         {
             date: '13JUL23',
@@ -160,6 +406,19 @@ export default function Body({ drawerWidth }) {
             risk: 'M',
             briefed: 'CW4 Aang',
             approved: 'LTC Zuko'
+            ,
+            history: [
+                {
+                    date: '2020-01-05',
+                    customerId: '11091700',
+                    amount: 3,
+                },
+                {
+                    date: '2020-01-02',
+                    customerId: 'Anonymous',
+                    amount: 1,
+                },
+            ],
         }
     ];
 
@@ -218,19 +477,19 @@ export default function Body({ drawerWidth }) {
                         </IconButton>
                     </TableCell>
                     <TableCell component="th" scope="row">
-                        {row.name}
+                        {row.date}
                     </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
+                    <TableCell align="right">{row.pilot}</TableCell>
+                    <TableCell align="right">{row.risk}</TableCell>
+                    <TableCell align="right">{row.briefed}</TableCell>
+                    <TableCell align="right">{row.approved}</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                         <Collapse in={open} timeout="auto" unmountOnExit>
                             <Box sx={{ margin: 1 }}>
                                 <Typography variant="h6" gutterBottom component="div">
-                                    History
+                                    INSERT EDIT BUTTON HERE
                                 </Typography>
                                 <Table size="small" aria-label="purchases">
                                     <TableHead>
@@ -264,33 +523,6 @@ export default function Body({ drawerWidth }) {
         );
     }
 
-    Row.propTypes = {
-        row: PropTypes.shape({
-            calories: PropTypes.number.isRequired,
-            carbs: PropTypes.number.isRequired,
-            fat: PropTypes.number.isRequired,
-            history: PropTypes.arrayOf(
-                PropTypes.shape({
-                    amount: PropTypes.number.isRequired,
-                    customerId: PropTypes.string.isRequired,
-                    date: PropTypes.string.isRequired,
-                }),
-            ).isRequired,
-            name: PropTypes.string.isRequired,
-            price: PropTypes.number.isRequired,
-            protein: PropTypes.number.isRequired,
-        }).isRequired,
-    };
-
-    const rows = [
-        createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-        createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-        createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-        createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-        createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
-    ];
-
-
     return (
         <Box
             component="main"
@@ -321,9 +553,13 @@ export default function Body({ drawerWidth }) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {/* {rows.map((row) => (
                             <Row key={row.name} row={row} />
+                        ))} */}
+                        {flights.map((flight) => (
+                            <Row key={flight.pilot} row={flight} />
                         ))}
+
                     </TableBody>
                 </Table>
             </TableContainer>
