@@ -14,30 +14,20 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import flights from '../seederData';
+import flights from '../seederDataTemplate';
 import './FlightsList.css';
 
 
 
 export default function Body({ drawerWidth }) {
 
-    const riskColor = (risk) => {
-        switch (risk) {
-            case "L":
-                // return "#95E1D3";
-                return "#e1ecf7";
-            case "M":
-                // return "#FCE38A";
-                return "#aecbeb";
-            case "H":
-                // return "#F38181";
-                return "#83b0e1";
-        }
-    }
-
     function Row(props) {
         const { row } = props;
         const [open, setOpen] = React.useState(false);
+        const [crewOpen, setCrewOpen] = React.useState(true);
+        const [missionOpen, setMissionOpen] = React.useState(false);
+        const [weatherOpen, setWeatherOpen] = React.useState(false);
+
 
         return (
             <React.Fragment>
@@ -52,49 +42,111 @@ export default function Body({ drawerWidth }) {
                         </IconButton>
                     </TableCell>
                     <TableCell component="th" scope="row" align="left">
-                        {row.date}
+                        {row.flightInfo5484.date}
                     </TableCell>
-                    <TableCell align="left">{row.pilot}</TableCell>
-                    <TableCell align="center">{row.risk}</TableCell>
-                    <TableCell align="center">{row.briefed}</TableCell>
-                    <TableCell align="center">{row.approved}</TableCell>
+                    <TableCell align="left">{row.flightInfo5484.mission}</TableCell>
+                    <TableCell align="left">{row.overallRisk.residual}</TableCell>
+                    <TableCell align="left">{row.flightInfo5484.pc}</TableCell>
+                    <TableCell align="left">{row.approval.briefer}</TableCell>
+                    <TableCell align="left">{row.approval.approver}</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                         <Collapse in={open} timeout="auto" unmountOnExit>
+                            {/* <button style={{ margin: '20px 0' }}>EDIT BUTTON PLACEHOLDER</button> */}
                             <Box sx={{ margin: 1 }}>
-                                <Typography variant="h6" gutterBottom component="div">
-                                    INSERT EDIT BUTTON HERE
-                                </Typography>
+                                <IconButton
+                                    aria-label="expand row"
+                                    size="small"
+                                    onClick={() => setCrewOpen(!crewOpen)}
+                                    sx={{ display: 'inline' }}
+                                >
+                                    {crewOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                                </IconButton>
+                                <Typography variant="h6" gutterBottom component="div" sx={{ display: 'inline' }}>Aircrew: {row.crewData.risk.mitigatedRisk}</Typography>
                                 <Table size="small" aria-label="purchases">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Date</TableCell>
-                                            <TableCell>Customer</TableCell>
-                                            <TableCell align="right">Amount</TableCell>
-                                            <TableCell align="right">Total price ($)</TableCell>
-                                        </TableRow>
-                                    </TableHead>
                                     <TableBody>
-                                        {row.history.map((historyRow) => (
-                                            <TableRow key={historyRow.date}>
-                                                <TableCell component="th" scope="row">
-                                                    {historyRow.date}
-                                                </TableCell>
-                                                <TableCell>{historyRow.customerId}</TableCell>
-                                                <TableCell align="right">{historyRow.amount}</TableCell>
-                                                <TableCell align="right">
-                                                    {Math.round(historyRow.amount * row.price * 100) / 100}
-                                                </TableCell>
+                                        <Collapse in={crewOpen} timeout="auto" unmountOnExit>
+                                            <TableRow key={row.flightInfo5484.pc}>
+                                                <TableCell component="th" scope="row">PC: {row.flightInfo5484.pc}</TableCell>
+                                                <TableCell>PI: {row.flightInfo5484.pi}</TableCell>
+                                                <TableCell align="left">NRCM: {row.flightInfo5484.nrcm1}</TableCell>
+                                                <TableCell align="left">NRCM: {row.flightInfo5484.nrcm2}</TableCell>
+                                                {row.flightInfo5484.nrcm3 && <TableCell align="left">NRCM: {row.flightInfo5484.nrcm3}</TableCell>}
                                             </TableRow>
-                                        ))}
+                                            <TableRow key={row.crewData.experience.pcHoursTotal}>
+                                                <TableCell component="th" scope="row">({row.crewData.experience.pcHoursTotal} All / {row.crewData.experience.pcHoursNG} NG)</TableCell>
+                                                <TableCell>({row.crewData.experience.piHoursTotal} All / {row.crewData.experience.piHoursNG} NG)</TableCell>
+                                                <TableCell align="left">({row.crewData.experience.nrcm1HoursTotal} All / {row.crewData.experience.nrcm1HoursNG} NG)</TableCell>
+                                                <TableCell align="left">({row.crewData.experience.nrcm2HoursTotal} All / {row.crewData.experience.nrcm2HoursNG} NG)</TableCell>
+                                                {row.flightInfo5484.nrcm3 && <TableCell align="left">({row.crewData.experience.nrcm3HoursTotal} All / {row.crewData.experience.nrcm3HoursNG} NG)</TableCell>}
+                                            </TableRow>
+                                        </Collapse>
+                                    </TableBody>
+                                </Table>
+                            </Box>
+                            <Box sx={{ margin: 1 }}>
+                                <IconButton
+                                    aria-label="expand row"
+                                    size="small"
+                                    onClick={() => setMissionOpen(!missionOpen)}
+                                    sx={{ display: 'inline' }}
+                                >
+                                    {missionOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                                </IconButton>
+                                <Typography variant="h6" gutterBottom component="div" sx={{ display: 'inline' }}>Mission: {row.missionComplexity.risk.mitigatedRisk}</Typography>
+                                <Table size="small" aria-label="purchases">
+                                    <TableBody>
+                                        <Collapse in={missionOpen} timeout="auto" unmountOnExit>
+                                            <TableRow key={row.flightInfo5484.mission}>
+                                                <TableCell component="th" scope="row">Mission: {row.flightInfo5484.mission}</TableCell>
+                                                <TableCell>Flight Conditions: {row.flightInfo5484.flightConditions}</TableCell>
+                                                <TableCell>Mission Statement: {row.flightInfo5484.missionStatement}</TableCell>
+                                                <TableCell>ETD: {row.flightInfo5484.etd}</TableCell>
+                                                <TableCell>ETE: {row.flightInfo5484.ete}</TableCell>
+                                            </TableRow>
+                                            <TableRow key={row.flightInfo5484.aircraftType}>
+                                                <TableCell>Route: {row.flightInfo5484.route}</TableCell>
+                                                <TableCell align="left">Aircraft Type: {row.flightInfo5484.aircraftType}</TableCell>
+                                                <TableCell align="left">Aircraft Tail: {row.flightInfo5484.aircraftTail}</TableCell>
+                                            </TableRow>
+                                        </Collapse>
+                                    </TableBody>
+                                </Table>
+                            </Box>
+                            <Box sx={{ margin: 1 }}>
+                                <IconButton
+                                    aria-label="expand row"
+                                    size="small"
+                                    onClick={() => setWeatherOpen(!weatherOpen)}
+                                    sx={{ display: 'inline' }}
+                                >
+                                    {weatherOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                                </IconButton>
+                                <Typography variant="h6" gutterBottom component="div" sx={{ display: 'inline' }}>Weather: {row.weather.risk.mitigatedRisk}</Typography>
+                                <Table size="small" aria-label="purchases">
+                                    <TableBody>
+                                        <Collapse in={weatherOpen} timeout="auto" unmountOnExit>
+                                            <TableRow key={row.flightInfo5484.mission}>
+                                                <TableCell component="th" scope="row">Mission: {row.flightInfo5484.mission}</TableCell>
+                                                <TableCell>Flight Conditions: {row.flightInfo5484.flightConditions}</TableCell>
+                                                <TableCell>Mission Statement: {row.flightInfo5484.missionStatement}</TableCell>
+                                                <TableCell>ETD: {row.flightInfo5484.etd}</TableCell>
+                                                <TableCell>ETE: {row.flightInfo5484.ete}</TableCell>
+                                            </TableRow>
+                                            <TableRow key={row.flightInfo5484.aircraftType}>
+                                                <TableCell>Route: {row.flightInfo5484.route}</TableCell>
+                                                <TableCell align="left">Aircraft Type: {row.flightInfo5484.aircraftType}</TableCell>
+                                                <TableCell align="left">Aircraft Tail: {row.flightInfo5484.aircraftTail}</TableCell>
+                                            </TableRow>
+                                        </Collapse>
                                     </TableBody>
                                 </Table>
                             </Box>
                         </Collapse>
                     </TableCell>
                 </TableRow>
-            </React.Fragment>
+            </React.Fragment >
         );
     }
 
@@ -110,15 +162,16 @@ export default function Body({ drawerWidth }) {
                         <TableRow>
                             <TableCell />
                             <TableCell>Date</TableCell>
-                            <TableCell align="center">Pilot</TableCell>
-                            <TableCell align="center">Risk</TableCell>
-                            <TableCell align="center">Briefer</TableCell>
-                            <TableCell align="center">Approver</TableCell>
+                            <TableCell align="left">Mission</TableCell>
+                            <TableCell align="left">Risk</TableCell>
+                            <TableCell align="left">Pilot</TableCell>
+                            <TableCell align="left">Briefer</TableCell>
+                            <TableCell align="left">Approver</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {flights.map((flight) => (
-                            <Row key={flight.pilot} row={flight} />
+                            <Row key='{flight.pilot}' row={flight} />
                         ))}
                     </TableBody>
                 </Table>

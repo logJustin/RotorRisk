@@ -2,7 +2,6 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Header from './Header'
 import LeftNavigation from './LeftNavigation'
-import Body from './Body'
 import FlightsList from './FlightsList'
 import './Layout.css'
 
@@ -25,7 +24,6 @@ function ResponsiveDrawer(props, lightMode, handleLightModeToggle) {
         <Box sx={{ display: 'flex' }}>
             <Header drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle} />
             <LeftNavigation drawerWidth={drawerWidth} props={props} mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} lightMode={props.lightMode} handleLightModeToggle={props.handleLightModeToggle} />
-            {/* <Body drawerWidth={drawerWidth} /> */}
             <FlightsList drawerWidth={drawerWidth} />
         </Box>
     );
