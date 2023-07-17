@@ -2,7 +2,7 @@ const flights = [
     {
         flightInfo5484: {
             mission: 'ATM Cont',
-            missionStatement: 'NG Reset in local area',
+            missionStatement: 'NG Reset in local area. Going to fly low and fast, definitely not going to flip the aircraft on its side over the trees.',
             date: '1AUG23',
             route: 'ETIC-ETIC',
             aircraftType: 'HH60M',
@@ -23,22 +23,22 @@ const flights = [
                 pcHoursTotal: 463.9,
                 pcHoursNG: 105.2,
                 pc25HoursInAO: true,
-                piHoursTotal: 463.9,
-                piHoursNG: 105.2,
+                piHoursTotal: 2351.0,
+                piHoursNG: 384.2,
                 pi25HoursInAO: true,
-                nrcm1HoursTotal: 463.9,
-                nrcm1HoursNG: 105.2,
+                nrcm1HoursTotal: 399.9,
+                nrcm1HoursNG: 152.7,
                 nrcm125HoursInAO: true,
-                nrcm2HoursTotal: 463.9,
-                nrcm2HoursNG: 105.2,
+                nrcm2HoursTotal: 150.1,
+                nrcm2HoursNG: 200.2,
                 nrcm225HoursInAO: true,
-                nrcm3HoursTotal: 463.9,
-                nrcm3HoursNG: 105.2,
+                nrcm3HoursTotal: 611.8,
+                nrcm3HoursNG: 205.4,
                 nrcm325HoursInAO: true,
             },
             risk: {
                 initialRisk: 'M',
-                risMitigation: 'Experienced crew will conduct cross checks to combat complacency.',
+                riskMitigation: 'PC with >180 hours in AO paired with PC/MTP. Low risk NRCMs paired with Moderate risk PC. CE/MO have >50 hours in AO & are familiar with route to be flown.',
                 mitigatedRisk: 'L'
             },
             fighterManagement: {
@@ -81,7 +81,7 @@ const flights = [
             },
             risk: {
                 initialRisk: 'M*',
-                risMitigation: 'Crew will use exterior lighting as required.',
+                riskMitigation: 'Crew will use exterior lighting as required.',
                 mitigatedRisk: 'M*'
             }
         },
@@ -111,7 +111,7 @@ const flights = [
             },
             risk: {
                 initialRisk: 'M',
-                risMitigation: 'Crew will use exterior lighting as required.',
+                riskMitigation: 'Crew will use exterior lighting as required.',
                 mitigatedRisk: 'H'
             }
         },
@@ -171,7 +171,7 @@ const flights = [
             },
             risk: {
                 initialRisk: 'M',
-                risMitigation: 'Experienced crew will conduct cross checks to combat complacency.',
+                riskMitigation: 'Experienced crew will conduct cross checks to combat complacency.',
                 mitigatedRisk: 'L'
             },
             fighterManagement: {
@@ -214,7 +214,7 @@ const flights = [
             },
             risk: {
                 initialRisk: 'M',
-                risMitigation: 'Crew will use exterior lighting as required.',
+                riskMitigation: 'Crew will use exterior lighting as required.',
                 mitigatedRisk: 'L'
             }
         },
@@ -244,7 +244,7 @@ const flights = [
             },
             risk: {
                 initialRisk: 'M',
-                risMitigation: 'Crew will use exterior lighting as required.',
+                riskMitigation: 'Crew will use exterior lighting as required.',
                 mitigatedRisk: 'L'
             }
         },
