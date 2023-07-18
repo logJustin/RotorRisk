@@ -41,6 +41,7 @@ export default function Body({ drawerWidth }) {
         const [crewOpen, setCrewOpen] = React.useState(true);
         const [missionOpen, setMissionOpen] = React.useState(false);
         const [weatherOpen, setWeatherOpen] = React.useState(false);
+        const [finalRiskOpen, setFinalRiskOpen] = React.useState(false);
 
 
         return (
@@ -163,24 +164,75 @@ export default function Body({ drawerWidth }) {
                                 <Table size="small" aria-label="purchases">
                                     <TableBody>
                                         <Collapse in={weatherOpen} timeout="auto" unmountOnExit>
-                                            {/* <TableRow key={row.flightInfo5484.mission}>
-                                                <TableCell component="th" scope="row">Mission: {row.flightInfo5484.mission}</TableCell>
-                                                <TableCell>Flight Conditions: {row.flightInfo5484.flightConditions}</TableCell>
-                                                <TableCell>Mission Statement: {row.flightInfo5484.missionStatement}</TableCell>
-                                                <TableCell>ETD: {row.flightInfo5484.etd}</TableCell>
-                                                <TableCell>ETE: {row.flightInfo5484.ete}</TableCell>
+                                            <TableRow key='Ceilings'>
+                                                {row.weather.visibilityCeilings.gt1000 && <TableCell component="th" scope="row">Ceilings: Greater than 1000'</TableCell>}
+                                                {row.weather.visibilityCeilings.lt1000 && <TableCell component="th" scope="row">Ceilings: Less than 1000'</TableCell>}
+                                                {row.weather.visibilityCeilings.lt700 && <TableCell component="th" scope="row">Ceilings: Less than 700'</TableCell>}
+                                                {row.weather.visibilityCeilings.gt3 && <TableCell component="th" scope="row">Visibility: Greater than 3 SM</TableCell>}
+                                                {row.weather.visibilityCeilings.gt2 && <TableCell component="th" scope="row">Visibility: Greater than 2 SM</TableCell>}
+                                                {row.weather.visibilityCeilings.gt1 && <TableCell component="th" scope="row">Visibility: Greater than 1 SM</TableCell>}
+                                                {row.weather.visibilityCeilings.lt1 && <TableCell component="th" scope="row">Visibility: Less than 1 SM</TableCell>}
                                             </TableRow>
-                                            <TableRow key={row.flightInfo5484.aircraftType}>
-                                                <TableCell>Route: {row.flightInfo5484.route}</TableCell>
-                                                <TableCell align="left">Aircraft Type: {row.flightInfo5484.aircraftType}</TableCell>
-                                                <TableCell align="left">Aircraft Tail: {row.flightInfo5484.aircraftTail}</TableCell>
-                                            </TableRow> */}
+                                            <TableRow key='Visibility'>
+                                            </TableRow>
+                                            <TableRow key='LunarData'>
+                                                {row.weather.lunar.gt25IllumAndgt30degrees && <TableCell colSpan={4} component="th" scope="row">Lunar Data: Greater than 25% and 30°</TableCell>}
+                                                {row.weather.lunar.lt25IllumAndlt30degrees && <TableCell colSpan={4} component="th" scope="row">Lunar Data: Less than 25% and 30°</TableCell>}
+                                                {row.weather.lunar.gt25IllumAndgt30degreesLimitedLighting && <TableCell colSpan={4} component="th" scope="row">Lunar Data: Less than 25% and 30° (Limited Lighting)</TableCell>}
+                                            </TableRow>
+                                            <TableRow key='AltRequied'>
+                                                {row.weather.IFR.altRequired && <TableCell component="th" scope="row">Alternate Required: Yes</TableCell>}
+                                                {row.weather.IFR.altRequired && <TableCell component="th" scope="row">Alternate Required: Yes</TableCell>}
+                                            </TableRow>
                                             <TableRow key='MissionRiskMitigation'>
                                                 <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.weather.risk.riskMitigation}</TableCell>
                                             </TableRow>
                                             <TableRow key='MissionRisk'>
                                                 <TableCell align="left">Initial Risk: {row.weather.risk.initialRisk}</TableCell>
                                                 <TableCell align="left">Mitigated Risk: {row.weather.risk.mitigatedRisk}</TableCell>
+                                            </TableRow>
+                                        </Collapse>
+                                    </TableBody>
+                                </Table>
+                            </Box>
+
+                            {/* Final Risk */}
+                            <Box sx={{ margin: 1 }}>
+                                <IconButton
+                                    aria-label="expand row"
+                                    size="small"
+                                    onClick={() => setFinalRiskOpen(!finalRiskOpen)}
+                                    sx={{ display: 'inline' }}
+                                >
+                                    {finalRiskOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                                </IconButton>
+                                <Typography variant="h6" gutterBottom component="div" sx={{ display: 'inline' }}>Final: {row.weather.risk.mitigatedRisk}</Typography>
+                                <Table size="small" aria-label="purchases">
+                                    <TableBody>
+                                        <Collapse in={finalRiskOpen} timeout="auto" unmountOnExit>
+                                            <TableRow key='greatestRisk'>
+                                                <TableCell colSpan={5} component="th" scope="row">Greatest Risk: {row.overallRisk.greatestRisk}</TableCell>
+                                            </TableRow>
+                                            <TableRow key='MissionRiskMitigation'>
+                                                <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.overallRisk.riskMitigation}</TableCell>
+                                            </TableRow>
+                                            <TableRow key='Briefer'>
+                                                <TableCell component="th" scope="row">Briefer: {row.approval.briefer}</TableCell>
+                                                <TableCell>Comment Date: {row.approval.brieferCommentDate}</TableCell>
+                                            </TableRow>
+                                            <TableRow key='BrieferComment'>
+                                                <TableCell colSpan={3} component="th" scope="row">Briefer Comments: {row.approval.brieferComment}</TableCell>
+                                            </TableRow>
+                                            <TableRow key='Approver'>
+                                                <TableCell component="th" scope="row">Approver: {row.approval.approver}</TableCell>
+                                                <TableCell>Comment Date: {row.approval.approverCommentDate}</TableCell>
+                                            </TableRow>
+                                            <TableRow key='ApproverComment'>
+                                                <TableCell colSpan={3} component="th" scope="row">Approver Comments: {row.approval.approverComment}</TableCell>
+                                            </TableRow>
+                                            <TableRow key='MissionRisk'>
+                                                <TableCell align="left">Initial Risk: {row.overallRisk.initialRisk}</TableCell>
+                                                <TableCell align="left">Residual Mission Risk: {row.overallRisk.residualRisk}</TableCell>
                                             </TableRow>
                                         </Collapse>
                                     </TableBody>

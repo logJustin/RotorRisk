@@ -89,7 +89,7 @@ const flights = [
             lunar: {
                 gt25IllumAndgt30degrees: false,
                 lt25IllumAndlt30degrees: false,
-                gt25IllumAndgt30degreesLimitedLighting: false,
+                gt25IllumAndgt30degreesLimitedLighting: true,
             },
             weatherHazards: {
                 windGt30: false,
@@ -116,12 +116,10 @@ const flights = [
             }
         },
         overallRisk: {
-            yourself: 'L',
-            missionEnvironment: 'M',
-            weather: 'L',
-            residual: 'L',
+            initialRisk: 'L',
+            residualRisk: 'L',
             greatestRisk: 'Combat maneuvering flight in NG conditions.',
-            riskMitigation: ' Detailed table talk and brief will be conducted by crew prior to flight.'
+            riskMitigation: 'Detailed table talk and brief will be conducted by crew prior to flight.'
         },
         approval: {
             briefer: 'CW2 Trinity',
