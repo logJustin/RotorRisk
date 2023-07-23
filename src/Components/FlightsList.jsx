@@ -15,39 +15,71 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Button from '@mui/material/Button';
-import flights from '../seederDataTemplate';
+import flights from '../seederData';
+import risks from '../seederRisk';
 import './FlightsList.css';
-
 
 
 export default function Body({ drawerWidth }) {
 
-    const colorPicker = (hours, pilot) => {
+    const [lowRisk, moderateRisk, highRisk] = ['#8CD47E', '#F8D66D', '#FF6961']
+    const [day, night, ng] = ['rgba(201, 235, 255, 1)', 'rgba(163, 124, 64, 1)', 'rgba(2, 0, 36, 1)'];
+    const aircrewMemberRiskColor = (hours, pilot) => {
         if (pilot && hours > 500) {
-            return '#8CD47E'; // If hours is greater than 500, return green color
+            return lowRisk; // If hours is greater than 500, return green color
         } else if (pilot && hours > 100) {
-            return '#F8D66D'; // If hours is greater than 100, return yellow color
+            return moderateRisk; // If hours is greater than 100, return yellow color
         } else if (!pilot && hours > 150) {
-            return '#8CD47E'; // If hours is greater than 500, return green color
+            return lowRisk; // If hours is greater than 500, return green color
         } else {
-            return '#FF6961'; // Default case for hours less than or equal to 100, return red color
+            return highRisk; // Default case for hours less than or equal to 100, return red color
+        }
+    };
+
+    const determineHighestRisk = (task, flightModes) => {
+        // Initialize the highestRisk variable with the value of lowRisk
+        let highestRisk = lowRisk;
+        // Iterate over each riskLevel in the risks object
+        for (const riskLevel in risks) {
+            // Iterate over each mode in the risks[riskLevel] object
+            for (const mode in risks[riskLevel]) {
+                // Check if the flightModes array includes the current mode and if the nested risks[riskLevel][mode] array includes the task
+                if (flightModes.includes(mode) && risks[riskLevel][mode].includes(task)) {
+                    // Update the highestRisk variable with the current riskLevel
+                    highestRisk = riskLevel;
+                    break;
+                }
+            }
+        }
+
+        // Check the value of highestRisk using a switch statement and return the corresponding risk level
+        switch (highestRisk) {
+            case 'lowRisk':
+                return lowRisk;
+            case 'moderateRisk':
+                return moderateRisk;
+            case 'highRisk':
+                return highRisk;
         }
     };
 
 
+
+
+
     function Row(props) {
         const { row } = props;
-        const [open, setOpen] = React.useState(false);
-        const [crewOpen, setCrewOpen] = React.useState(true);
-        const [missionOpen, setMissionOpen] = React.useState(false);
+        const [open, setOpen] = React.useState(true);
+        const [crewOpen, setCrewOpen] = React.useState(false);
+        const [missionOpen, setMissionOpen] = React.useState(true);
         const [weatherOpen, setWeatherOpen] = React.useState(false);
         const [finalRiskOpen, setFinalRiskOpen] = React.useState(false);
 
 
         return (
             <React.Fragment>
-                <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                    <TableCell>
+                <TableRow size="small" sx={{ '& > *': { borderBottom: 'unset' } }}>
+                    <TableCell size="small" sx={{ padding: '0' }}>
                         <IconButton
                             aria-label="expand row"
                             size="small"
@@ -56,15 +88,13 @@ export default function Body({ drawerWidth }) {
                             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                         </IconButton>
                     </TableCell>
-                    <TableCell component="th" scope="row" align="left">
-                        {row.flightInfo5484.date}
-                    </TableCell>
-                    <TableCell align="left">{row.flightInfo5484.mission}</TableCell>
-                    <TableCell align="left">{row.overallRisk.residual}</TableCell>
-                    <TableCell align="left">{row.flightInfo5484.pc}</TableCell>
-                    <TableCell align="left">{row.approval.briefer}</TableCell>
-                    <TableCell align="left">{row.approval.approver}</TableCell>
-                    <TableCell>                    <Button sx={{ margin: '20px 0' }} variant="contained" color="inherit">Edit RCOP</Button></TableCell>
+                    <TableCell size="small" sx={{ padding: '0' }} component="th" scope="row" align="left">{row.flightInfo5484.date}</TableCell>
+                    <TableCell size="small" sx={{ padding: '0' }} align="left">{row.flightInfo5484.mission}</TableCell>
+                    <TableCell size="small" sx={{ padding: '0' }} align="left">{row.overallRisk.residualRisk}</TableCell>
+                    <TableCell size="small" sx={{ padding: '0' }} align="left">{row.flightInfo5484.pc}</TableCell>
+                    <TableCell size="small" sx={{ padding: '0' }} align="left">{row.approval.briefer}</TableCell>
+                    <TableCell size="small" sx={{ padding: '0' }} align="left">{row.approval.approver}</TableCell>
+                    <TableCell size="small" sx={{ padding: '0' }}> <Button sx={{ margin: '20px 0' }} variant="contained" color="inherit">Edit RCOP</Button></TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell style={{ paddingBottom: 0, paddingTop: 0, width: '100%' }} colSpan={12}>
@@ -80,7 +110,7 @@ export default function Body({ drawerWidth }) {
                                 >
                                     {crewOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                                 </IconButton>
-                                <Typography variant="h6" gutterBottom component="div" sx={{ display: 'inline' }}>Aircrew: {row.crewData.risk.mitigatedRisk}</Typography>
+                                <Typography variant="h6" component="div" sx={{ display: 'inline' }}>Aircrew: {row.crewData.risk.mitigatedRisk}</Typography>
                                 <Table size="small" aria-label="purchases">
                                     <TableBody>
                                         <Collapse in={crewOpen} timeout="auto" unmountOnExit>
@@ -92,11 +122,14 @@ export default function Body({ drawerWidth }) {
                                                 {row.flightInfo5484.nrcm3 && <TableCell sx={{ borderBottom: 'none' }} align="center">NRCM: {row.flightInfo5484.nrcm3}</TableCell>}
                                             </TableRow>
                                             <TableRow key='AircrewHours'>
-                                                <TableCell sx={{ borderBottom: 'none', borderRadius: '10px 0 0 10px', color: 'black', bgcolor: colorPicker(row.crewData.experience.pcHoursTotal, true) }} component="th" scope="row" align="center">({row.crewData.experience.pcHoursTotal} All / {row.crewData.experience.pcHoursNG} NG)</TableCell>
-                                                <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: colorPicker(row.crewData.experience.piHoursTotal, true) }} align="center">({row.crewData.experience.piHoursTotal} All / {row.crewData.experience.piHoursNG} NG)</TableCell>
-                                                <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: colorPicker(row.crewData.experience.nrcm1HoursTotal, false) }} align="center">({row.crewData.experience.nrcm1HoursTotal} All / {row.crewData.experience.nrcm1HoursNG} NG)</TableCell>
-                                                <TableCell sx={{ borderBottom: 'none', borderRadius: !row.flightInfo5484.nrcm3 && '0 10px 10px 0', color: 'black', bgcolor: colorPicker(row.crewData.experience.nrcm2HoursTotal, false) }} align="center">({row.crewData.experience.nrcm2HoursTotal} All / {row.crewData.experience.nrcm2HoursNG} NG)</TableCell>
-                                                {row.flightInfo5484.nrcm3 && <TableCell sx={{ borderBottom: 'none', color: 'black', borderRadius: '0 10px 10px 0', bgcolor: colorPicker(row.crewData.experience.nrcm3HoursTotal, false) }} align="center">({row.crewData.experience.nrcm3HoursTotal} All / {row.crewData.experience.nrcm3HoursNG} NG)</TableCell>}
+                                                <TableCell sx={{ borderBottom: 'none', borderRadius: '10px 0 0 10px', color: 'black', bgcolor: aircrewMemberRiskColor(row.crewData.experience.pcHoursTotal, true) }} component="th" scope="row" align="center">({row.crewData.experience.pcHoursTotal} All / {row.crewData.experience.pcHoursNG} NG)</TableCell>
+                                                <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.crewData.experience.piHoursTotal, true) }} align="center">({row.crewData.experience.piHoursTotal} All / {row.crewData.experience.piHoursNG} NG)</TableCell>
+                                                <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.crewData.experience.nrcm1HoursTotal, false) }} align="center">({row.crewData.experience.nrcm1HoursTotal} All / {row.crewData.experience.nrcm1HoursNG} NG)</TableCell>
+                                                <TableCell sx={{ borderBottom: 'none', borderRadius: !row.flightInfo5484.nrcm3 && '0 10px 10px 0', color: 'black', bgcolor: aircrewMemberRiskColor(row.crewData.experience.nrcm2HoursTotal, false) }} align="center">({row.crewData.experience.nrcm2HoursTotal} All / {row.crewData.experience.nrcm2HoursNG} NG)</TableCell>
+                                                {row.flightInfo5484.nrcm3 && <TableCell sx={{ borderBottom: 'none', color: 'black', borderRadius: '0 10px 10px 0', bgcolor: aircrewMemberRiskColor(row.crewData.experience.nrcm3HoursTotal, false) }} align="center">({row.crewData.experience.nrcm3HoursTotal} All / {row.crewData.experience.nrcm3HoursNG} NG)</TableCell>}
+                                            </TableRow>
+                                            <TableRow key='spacer'>
+                                                <TableCell colSpan={5} component="th" scope="row"> </TableCell>
                                             </TableRow>
                                             <TableRow key='RiskMitigation'>
                                                 <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.crewData.risk.riskMitigation}</TableCell>
@@ -120,7 +153,7 @@ export default function Body({ drawerWidth }) {
                                 >
                                     {missionOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                                 </IconButton>
-                                <Typography variant="h6" gutterBottom component="div" sx={{ display: 'inline' }}>Mission: {row.missionComplexity.risk.mitigatedRisk}</Typography>
+                                <Typography variant="h6" component="div" sx={{ display: 'inline' }}>Mission: {row.missionComplexity.risk.mitigatedRisk}</Typography>
                                 <Table size="small" aria-label="purchases">
                                     <TableBody>
                                         <Collapse in={missionOpen} timeout="auto" unmountOnExit>
@@ -137,6 +170,22 @@ export default function Body({ drawerWidth }) {
                                                 <TableCell>Route: {row.flightInfo5484.route}</TableCell>
                                                 <TableCell align="left">Aircraft Type: {row.flightInfo5484.aircraftType}</TableCell>
                                                 <TableCell align="left">Aircraft Tail: {row.flightInfo5484.aircraftTail}</TableCell>
+                                            </TableRow>
+                                            <Table size="small">
+                                                <TableBody>
+                                                    <TableRow key='Header'>
+                                                        <TableCell colSpan={3} sx={{ borderBottom: 'none' }}> <Typography variant="h6" component="div" align='center'>Mission Tasks</Typography></TableCell>
+                                                    </TableRow>
+                                                </TableBody>
+                                            </Table>
+                                            {/* <TableRow key='space'>
+                                                <TableCell sx={{ borderBottom: 'none' }}> </TableCell>
+                                            </TableRow> */}
+                                            <TableRow key='firstMissionRow'>
+                                                <TableCell sx={{ background: determineHighestRisk('multiship', row.missionComplexity.missionConsiderations.multiship), color: 'black', borderBottom: 'none' }} align='center'>Multiship - ({row.missionComplexity.missionConsiderations.multiship})</TableCell>
+                                                <TableCell sx={{ background: determineHighestRisk('terrainFlight', row.missionComplexity.terrainConsiderations.terrainFlight), color: 'black', borderBottom: 'none' }} align='center'>Terrain Flight - ({row.missionComplexity.terrainConsiderations.terrainFlight})</TableCell>
+                                                <TableCell sx={{ background: determineHighestRisk('hoistLive', row.missionComplexity.trainingConsiderations.hoistLive), color: 'black', borderBottom: 'none' }} align='center'>Live Hoist - ({row.missionComplexity.trainingConsiderations.hoistLive})</TableCell>
+                                                <TableCell sx={{ background: determineHighestRisk('confinedAreaOperations', row.missionComplexity.terrainConsiderations.confinedAreaOperations), color: 'black', borderBottom: 'none' }} align='center'>Confined Ops - ({row.missionComplexity.terrainConsiderations.confinedAreaOperations})</TableCell>
                                             </TableRow>
                                             <TableRow key='MissionRiskMitigation'>
                                                 <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.missionComplexity.risk.riskMitigation}</TableCell>
@@ -160,7 +209,7 @@ export default function Body({ drawerWidth }) {
                                 >
                                     {weatherOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                                 </IconButton>
-                                <Typography variant="h6" gutterBottom component="div" sx={{ display: 'inline' }}>Weather: {row.weather.risk.mitigatedRisk}</Typography>
+                                <Typography variant="h6" component="div" sx={{ display: 'inline' }}>Weather: {row.weather.risk.mitigatedRisk}</Typography>
                                 <Table size="small" aria-label="purchases">
                                     <TableBody>
                                         <Collapse in={weatherOpen} timeout="auto" unmountOnExit>
@@ -206,7 +255,7 @@ export default function Body({ drawerWidth }) {
                                 >
                                     {finalRiskOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                                 </IconButton>
-                                <Typography variant="h6" gutterBottom component="div" sx={{ display: 'inline' }}>Final: {row.weather.risk.mitigatedRisk}</Typography>
+                                <Typography variant="h6" component="div" sx={{ display: 'inline' }}>Final: {row.overallRisk.residualRisk}</Typography>
                                 <Table size="small" aria-label="purchases">
                                     <TableBody>
                                         <Collapse in={finalRiskOpen} timeout="auto" unmountOnExit>
@@ -252,7 +301,7 @@ export default function Body({ drawerWidth }) {
         >
             <Toolbar />
             <TableContainer component={Paper}>
-                <Table aria-label="collapsible table">
+                <Table aria-label="collapsible table" size="small">
                     <TableHead>
                         <TableRow>
                             <TableCell />
