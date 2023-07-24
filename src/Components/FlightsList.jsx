@@ -23,7 +23,6 @@ import './FlightsList.css';
 export default function Body({ drawerWidth }) {
 
     const [lowRisk, moderateRisk, highRisk] = ['#8CD47E', '#F8D66D', '#FF6961']
-    const [day, night, ng] = ['rgba(201, 235, 255, 1)', 'rgba(163, 124, 64, 1)', 'rgba(2, 0, 36, 1)'];
     const aircrewMemberRiskColor = (hours, pilot) => {
         if (pilot && hours > 500) {
             return lowRisk; // If hours is greater than 500, return green color
@@ -64,9 +63,6 @@ export default function Body({ drawerWidth }) {
     };
 
 
-
-
-
     function Row(props) {
         const { row } = props;
         const [open, setOpen] = React.useState(true);
@@ -75,6 +71,8 @@ export default function Body({ drawerWidth }) {
         const [weatherOpen, setWeatherOpen] = React.useState(false);
         const [finalRiskOpen, setFinalRiskOpen] = React.useState(false);
 
+        const { missionConsiderations } = row.missionComplexity
+        const missions = []
 
         return (
             <React.Fragment>
@@ -178,14 +176,23 @@ export default function Body({ drawerWidth }) {
                                                     </TableRow>
                                                 </TableBody>
                                             </Table>
-                                            {/* <TableRow key='space'>
-                                                <TableCell sx={{ borderBottom: 'none' }}> </TableCell>
-                                            </TableRow> */}
                                             <TableRow key='firstMissionRow'>
-                                                <TableCell sx={{ background: determineHighestRisk('multiship', row.missionComplexity.missionConsiderations.multiship), color: 'black', borderBottom: 'none' }} align='center'>Multiship - ({row.missionComplexity.missionConsiderations.multiship})</TableCell>
-                                                <TableCell sx={{ background: determineHighestRisk('terrainFlight', row.missionComplexity.terrainConsiderations.terrainFlight), color: 'black', borderBottom: 'none' }} align='center'>Terrain Flight - ({row.missionComplexity.terrainConsiderations.terrainFlight})</TableCell>
-                                                <TableCell sx={{ background: determineHighestRisk('hoistLive', row.missionComplexity.trainingConsiderations.hoistLive), color: 'black', borderBottom: 'none' }} align='center'>Live Hoist - ({row.missionComplexity.trainingConsiderations.hoistLive})</TableCell>
-                                                <TableCell sx={{ background: determineHighestRisk('confinedAreaOperations', row.missionComplexity.terrainConsiderations.confinedAreaOperations), color: 'black', borderBottom: 'none' }} align='center'>Confined Ops - ({row.missionComplexity.terrainConsiderations.confinedAreaOperations})</TableCell>
+                                                {/* figure out how to loop to lowest object then push to array objects that have  */}
+                                                {
+                                                    console.log(missionConsiderations)
+                                                    // Object.keys(missionConsiderations).map((mission) => {
+                                                    //     if (missionConsiderations[mission] != null) {
+                                                    // missions.push(missionConsiderations[mission]);
+                                                    //     }
+                                                    // })
+                                                }
+                                                {console.log(missions)}
+                                                {missionConsiderations.airAssault && <TableCell sx={{ background: determineHighestRisk('airAssault', missionConsiderations.airAssault), color: 'black', borderBottom: 'none' }} align='center'>Air Assault - ({missionConsiderations.airAssault})</TableCell>}
+                                                {missionConsiderations.AH64AttackReconSecurity && <TableCell sx={{ background: determineHighestRisk('AH64AttackReconSecurity', missionConsiderations.AH64AttackReconSecurity), color: 'black', borderBottom: 'none' }} align='center'>AH64 Attack/Recon/Security - ({missionConsiderations.AH64AttackReconSecurity})</TableCell>}
+                                                {missionConsiderations.medevacCasevac && <TableCell sx={{ background: determineHighestRisk('medevacCasevac', missionConsiderations.medevacCasevac), color: 'black', borderBottom: 'none' }} align='center'>Medevac/Casevac - ({missionConsiderations.medevacCasevac})</TableCell>}
+                                                {missionConsiderations.multiship && <TableCell sx={{ background: determineHighestRisk('multiship', missionConsiderations.multiship), color: 'black', borderBottom: 'none' }} align='center'>Multiship - ({missionConsiderations.multiship})</TableCell>}
+                                                {missionConsiderations.mixedMultiShip && <TableCell sx={{ background: determineHighestRisk('mixedMultiShip', missionConsiderations.mixedMultiShip), color: 'black', borderBottom: 'none' }} align='center'>Mixed Multiship - ({missionConsiderations.mixedMultiShip})</TableCell>}
+                                                {missionConsiderations.airAssault && <TableCell sx={{ background: determineHighestRisk('airAssault', missionConsiderations.airAssault), color: 'black', borderBottom: 'none' }} align='center'>Air Assault - ({missionConsiderations.airAssault})</TableCell>}
                                             </TableRow>
                                             <TableRow key='MissionRiskMitigation'>
                                                 <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.missionComplexity.risk.riskMitigation}</TableCell>

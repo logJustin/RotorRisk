@@ -1,18 +1,18 @@
 const risks = {
     lowRisk: {
-        D: ['multiship', 'terrainFlight'],
-        UN: [],
-        NG: ['multiship']
+        D: ['multiship', 'mixedMultiShip', 'externalLoads', 'airmovementVIPContinuation', 'CEFS', 'terrainFlight', 'mountainOperations', 'urbanOperations', 'progessionEvaluationEPs', 'IFRSimulatedIMC', 'CBRNE', 'nonLiveHoist', 'MTFGeneralTraining'],
+        UN: ['airmovementVIPContinuation', 'CEFS', 'progessionEvaluationEPs', 'IFRSimulatedIMC'],
+        NG: ['multiship', 'externalLoads', 'airmovementVIPContinuation', 'CEFS', 'progessionEvaluationEPs', 'IFRSimulatedIMC', 'nonLiveHoist']
     },
     moderateRisk: {
-        D: ['hoistLive', 'confinedAreaOperations'],
-        UN: ['hoistLive', 'multiship'],
-        NG: ['hoistLive', 'terrainFlight', 'confinedAreaOperations']
+        D: ['airAssault', 'AH64AttackReconSecurity', 'medevacCasevac', 'dartOneTimeFlight', 'waterBucket', 'paradrops', 'rappelSpiesFries', 'fatCow', 'overwaterOperations', 'pinnacleOperations', 'dveConditions', 'confinedOperations', 'OGEwithin10', 'IGEwithin10', 'liveHoist', 'combatManueveringFlight', 'gunneryLiveFire', 'AMS'],
+        UN: ['multiship', 'mixedMultiShip', 'dartOneTimeFlight', 'waterBucket', 'paradrops', 'rappelSpiesFries', 'externalLoads', 'fatCow', 'mountainOperations', 'urbanOperations', 'OGEwithin10', 'IGEwithin10', 'CBRNE', 'nonLiveHoist', 'liveHoist', 'gunneryLiveFire', 'MTFGeneralTraining'],
+        NG: ['airAssault', 'AH64AttackReconSecurity', 'medevacCasevac', 'mixedMultiShip', 'dartOneTimeFlight', 'blackout', 'paradrops', 'rappelSpiesFries', 'fatCow', 'terrainFlight', 'mountainOperations', 'overwaterOperations', 'pinnacleOperations', 'dveConditions', 'urbanOperations', 'confinedOperations', 'OGEwithin10', 'IGEwithin10', 'CBRNE', 'liveHoist', 'combatManueveringFlight', 'gunneryLiveFire', 'AMS', 'MTFGeneralTraining']
     },
     highRisk: {
-        D: [],
-        UN: ['terrainFlight', 'confinedAreaOperations'],
-        NG: []
+        D: ['OGEwithin5', 'IGEwithin5', 'CALFEX'],
+        UN: ['airAssault', 'AH64AttackReconSecurity', 'medevacCasevac', 'overwaterOperations', 'pinnacleOperations', 'dveConditions', 'confinedOperations', 'OGEwithin5', 'IGEwithin5'],
+        NG: ['waterBucket', 'OGEwithin5', 'IGEwithin5', 'CALFEX']
     }
 }
 
