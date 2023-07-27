@@ -1,5 +1,6 @@
 
 import * as React from 'react';
+// import { useEffect } from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -36,6 +37,9 @@ export default function Body({ drawerWidth }) {
     };
 
     const determineHighestRisk = (task, flightModes) => {
+        if (!flightModes) {
+            return '#424242'
+        }
         // Initialize the highestRisk variable with the value of lowRisk
         let highestRisk = lowRisk;
         // Iterate over each riskLevel in the risks object
@@ -72,7 +76,6 @@ export default function Body({ drawerWidth }) {
         const [finalRiskOpen, setFinalRiskOpen] = React.useState(false);
 
         const { missionConsiderations } = row.missionComplexity
-        const missions = []
 
         return (
             <React.Fragment>
@@ -177,22 +180,14 @@ export default function Body({ drawerWidth }) {
                                                 </TableBody>
                                             </Table>
                                             <TableRow key='firstMissionRow'>
-                                                {/* figure out how to loop to lowest object then push to array objects that have  */}
-                                                {
-                                                    console.log(missionConsiderations)
-                                                    // Object.keys(missionConsiderations).map((mission) => {
-                                                    //     if (missionConsiderations[mission] != null) {
-                                                    // missions.push(missionConsiderations[mission]);
-                                                    //     }
-                                                    // })
-                                                }
-                                                {console.log(missions)}
-                                                {missionConsiderations.airAssault && <TableCell sx={{ background: determineHighestRisk('airAssault', missionConsiderations.airAssault), color: 'black', borderBottom: 'none' }} align='center'>Air Assault - ({missionConsiderations.airAssault})</TableCell>}
-                                                {missionConsiderations.AH64AttackReconSecurity && <TableCell sx={{ background: determineHighestRisk('AH64AttackReconSecurity', missionConsiderations.AH64AttackReconSecurity), color: 'black', borderBottom: 'none' }} align='center'>AH64 Attack/Recon/Security - ({missionConsiderations.AH64AttackReconSecurity})</TableCell>}
-                                                {missionConsiderations.medevacCasevac && <TableCell sx={{ background: determineHighestRisk('medevacCasevac', missionConsiderations.medevacCasevac), color: 'black', borderBottom: 'none' }} align='center'>Medevac/Casevac - ({missionConsiderations.medevacCasevac})</TableCell>}
-                                                {missionConsiderations.multiship && <TableCell sx={{ background: determineHighestRisk('multiship', missionConsiderations.multiship), color: 'black', borderBottom: 'none' }} align='center'>Multiship - ({missionConsiderations.multiship})</TableCell>}
-                                                {missionConsiderations.mixedMultiShip && <TableCell sx={{ background: determineHighestRisk('mixedMultiShip', missionConsiderations.mixedMultiShip), color: 'black', borderBottom: 'none' }} align='center'>Mixed Multiship - ({missionConsiderations.mixedMultiShip})</TableCell>}
-                                                {missionConsiderations.airAssault && <TableCell sx={{ background: determineHighestRisk('airAssault', missionConsiderations.airAssault), color: 'black', borderBottom: 'none' }} align='center'>Air Assault - ({missionConsiderations.airAssault})</TableCell>}
+                                                <TableCell sx={{ background: determineHighestRisk('airAssault', missionConsiderations.airAssault), color: 'black', borderBottom: 'none' }} align='center'>Air Assault {missionConsiderations.airAssault && `(${missionConsiderations.airAssault})`}</TableCell>
+                                                <TableCell sx={{ background: determineHighestRisk('AH64AttackReconSecurity', missionConsiderations.AH64AttackReconSecurity), color: 'black', borderBottom: 'none' }} align='center'>AH64 Attack/Recon {missionConsiderations.AH64AttackReconSecurity && `(${missionConsiderations.AH64AttackReconSecurity})`}</TableCell>
+                                                <TableCell sx={{ background: determineHighestRisk('medevacCasevac', missionConsiderations.medevacCasevac), color: 'black', borderBottom: 'none' }} align='center'>MEDEVAC/CASEVAC {missionConsiderations.medevacCasevac && `(${missionConsiderations.medevacCasevac})`}</TableCell>
+                                                <TableCell sx={{ background: determineHighestRisk('multiship', missionConsiderations.multiship), color: 'black', borderBottom: 'none' }} align='center'>Multiship {missionConsiderations.multiship && `(${missionConsiderations.multiship})`}</TableCell>
+                                            </TableRow>
+                                            <TableRow key='firstMissionRow'>
+                                                <TableCell sx={{ background: determineHighestRisk('mixedMultiShip', missionConsiderations.mixedMultiShip), color: 'black', borderBottom: 'none' }} align='center'>Mixed Multiship {missionConsiderations.mixedMultiShip && `(${missionConsiderations.mixedMultiShip})`}</TableCell>
+                                                {missionConsiderations.airAssault && <TableCell sx={{ background: determineHighestRisk('airAssault', missionConsiderations.airAssault), color: 'black', borderBottom: 'none' }} align='center'>Air Assault {missionConsiderations.airAssault && `(${missionConsiderations.airAssault})`}</TableCell>}
                                             </TableRow>
                                             <TableRow key='MissionRiskMitigation'>
                                                 <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.missionComplexity.risk.riskMitigation}</TableCell>
