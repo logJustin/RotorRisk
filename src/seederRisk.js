@@ -1,8 +1,8 @@
 const risks = {
     lowRisk: {
-        D: ['multiship', 'mixedMultiShip', 'externalLoads', 'airmovementVIPContinuation', 'CEFS', 'terrainFlight', 'mountainOperations', 'urbanOperations', 'progessionEvaluationEPs', 'IFRSimulatedIMC', 'CBRNE', 'nonLiveHoist', 'MTFGeneralTraining'],
-        UN: ['airmovementVIPContinuation', 'CEFS', 'progessionEvaluationEPs', 'IFRSimulatedIMC'],
-        NG: ['multiship', 'externalLoads', 'airmovementVIPContinuation', 'CEFS', 'progessionEvaluationEPs', 'IFRSimulatedIMC', 'nonLiveHoist']
+        D: ['multiship', 'mixedMultiShip', 'externalLoads', 'airmovementVIP', 'continuation', 'CEFS', 'terrainFlight', 'mountainOperations', 'urbanOperations', 'progessionEvaluationEPs', 'IFRSimulatedIMC', 'CBRNE', 'nonLiveHoist', 'MTFGeneralTraining'],
+        UN: ['airmovementVIP', 'continuation', 'CEFS', 'progessionEvaluationEPs', 'IFRSimulatedIMC'],
+        NG: ['multiship', 'externalLoads', 'airmovementVIP', 'continuation', 'CEFS', 'progessionEvaluationEPs', 'IFRSimulatedIMC', 'nonLiveHoist']
     },
     moderateRisk: {
         D: ['airAssault', 'AH64AttackReconSecurity', 'medevacCasevac', 'dartOneTimeFlight', 'waterBucket', 'paradrops', 'rappelSpiesFries', 'fatCow', 'overwaterOperations', 'pinnacleOperations', 'dveConditions', 'confinedOperations', 'OGEwithin10', 'IGEwithin10', 'liveHoist', 'combatManueveringFlight', 'gunneryLiveFire', 'AMS'],
