@@ -71,13 +71,13 @@ export default function Body({ drawerWidth }) {
         const { row } = props;
         const [open, setOpen] = React.useState(true);
         const [crewOpen, setCrewOpen] = React.useState(false);
-        const [missionOpen, setMissionOpen] = React.useState(true);
-        const [missionTaskGroupOpen, setMissionTaskGroupOpen] = React.useState(true);
-        const [weatherOpen, setWeatherOpen] = React.useState(false);
+        const [missionOpen, setMissionOpen] = React.useState(false);
+        const [missionTaskGroupOpen, setMissionTaskGroupOpen] = React.useState(false);
+        const [weatherOpen, setWeatherOpen] = React.useState(true);
         const [finalRiskOpen, setFinalRiskOpen] = React.useState(false);
 
-        const { missionConsiderations, terrainConsiderations, powerConsiderations, trainingConsiderations, recencyOfMission } = row.missionComplexity
-
+        const { missionConsiderations, terrainConsiderations, powerConsiderations, trainingConsiderations, recencyOfMission, missionPlanningTime } = row.missionComplexity
+        const { lunar, weatherHazards, IFR, visibilityCeilings, risk } = row.weather
         return (
             <React.Fragment>
                 <TableRow size="small" sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -255,37 +255,57 @@ export default function Body({ drawerWidth }) {
                                 </TableRow>
                                 <TableRow key='recencyHeader'>
                                     <TableCell colSpan={5} sx={{ borderBottom: 'none', width: '100%' }}>
-                                        <Typography variant="h6" component="div" align='center'>Recency of Mission</Typography>
+                                        <Typography variant="h6" component="div" align='center'>Task Recency</Typography>
                                     </TableCell>
                                 </TableRow>
                                 <TableRow key='pcRecencyRow'>
-                                    <TableCell sx={{ background: determineHighestRisk('pcGt30', recencyOfMission.pcGt30), color: 'black', borderBottom: 'none' }} align='center'>PC >30 Days <br></br>{recencyOfMission.pcGt30 && `(${recencyOfMission.pcGt30})`}</TableCell>
-                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('pcGt90', recencyOfMission.pcGt60), color: 'black', borderBottom: 'none' }} align='center'>PC >60 Days <br></br>{recencyOfMission.pcGt60 && `(${recencyOfMission.pcGt60})`}</TableCell>
-                                    <TableCell sx={{ background: determineHighestRisk('pcGt90', recencyOfMission.pcGt90), color: 'black', borderBottom: 'none' }} align='center'>PC >90 Days <br></br>{recencyOfMission.pcGt90 && `(${recencyOfMission.pcGt90})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('pcGt30', recencyOfMission.pcGt30), color: 'black', borderBottom: 'none' }} align='center'>PC {'>'}30 Days <br></br>{recencyOfMission.pcGt30 && `(${recencyOfMission.pcGt30})`}</TableCell>
+                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('pcGt60', recencyOfMission.pcGt60), color: 'black', borderBottom: 'none' }} align='center'>PC {'>'}60 Days <br></br>{recencyOfMission.pcGt60 && `(${recencyOfMission.pcGt60})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('pcGt90', recencyOfMission.pcGt90), color: 'black', borderBottom: 'none' }} align='center'>PC {'>'}90 Days <br></br>{recencyOfMission.pcGt90 && `(${recencyOfMission.pcGt90})`}</TableCell>
                                 </TableRow>
                                 <TableRow key='piRecencyRow'>
-                                    <TableCell sx={{ background: determineHighestRisk('piGt30', recencyOfMission.piGt30), color: 'black', borderBottom: 'none' }} align='center'>PI >30 Days <br></br>{recencyOfMission.piGt30 && `(${recencyOfMission.piGt30})`}</TableCell>
-                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('piGt90', recencyOfMission.piGt60), color: 'black', borderBottom: 'none' }} align='center'>PI >60 Days <br></br>{recencyOfMission.piGt60 && `(${recencyOfMission.piGt60})`}</TableCell>
-                                    <TableCell sx={{ background: determineHighestRisk('piGt90', recencyOfMission.piGt90), color: 'black', borderBottom: 'none' }} align='center'>PI >90 Days <br></br>{recencyOfMission.piGt90 && `(${recencyOfMission.piGt90})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('piGt30', recencyOfMission.piGt30), color: 'black', borderBottom: 'none' }} align='center'>PI {'>'}30 Days <br></br>{recencyOfMission.piGt30 && `(${recencyOfMission.piGt30})`}</TableCell>
+                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('piGt60', recencyOfMission.piGt60), color: 'black', borderBottom: 'none' }} align='center'>PI {'>'}60 Days <br></br>{recencyOfMission.piGt60 && `(${recencyOfMission.piGt60})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('piGt90', recencyOfMission.piGt90), color: 'black', borderBottom: 'none' }} align='center'>PI {'>'}90 Days <br></br>{recencyOfMission.piGt90 && `(${recencyOfMission.piGt90})`}</TableCell>
                                 </TableRow>
                                 <TableRow key='nrcm1RecencyRow'>
-                                    <TableCell sx={{ background: determineHighestRisk('nrcm1Gt30', recencyOfMission.nrcm1Gt30), color: 'black', borderBottom: 'none' }} align='center'>NRCM 1 >30 Days <br></br>{recencyOfMission.nrcm1Gt30 && `(${recencyOfMission.nrcm1Gt30})`}</TableCell>
-                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('nrcm1Gt90', recencyOfMission.nrcm1Gt60), color: 'black', borderBottom: 'none' }} align='center'>NRCM 1 >60 Days <br></br>{recencyOfMission.nrcm1Gt60 && `(${recencyOfMission.nrcm1Gt60})`}</TableCell>
-                                    <TableCell sx={{ background: determineHighestRisk('nrcm1Gt90', recencyOfMission.nrcm1Gt90), color: 'black', borderBottom: 'none' }} align='center'>NRCM 1 >90 Days <br></br>{recencyOfMission.nrcm1Gt90 && `(${recencyOfMission.nrcm1Gt90})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('nrcm1Gt30', recencyOfMission.nrcm1Gt30), color: 'black', borderBottom: 'none' }} align='center'>NRCM 1 {'>'}30 Days <br></br>{recencyOfMission.nrcm1Gt30 && `(${recencyOfMission.nrcm1Gt30})`}</TableCell>
+                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('nrcm1Gt60', recencyOfMission.nrcm1Gt60), color: 'black', borderBottom: 'none' }} align='center'>NRCM 1 {'>'}60 Days <br></br>{recencyOfMission.nrcm1Gt60 && `(${recencyOfMission.nrcm1Gt60})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('nrcm1Gt90', recencyOfMission.nrcm1Gt90), color: 'black', borderBottom: 'none' }} align='center'>NRCM 1 {'>'}90 Days <br></br>{recencyOfMission.nrcm1Gt90 && `(${recencyOfMission.nrcm1Gt90})`}</TableCell>
                                 </TableRow>
                                 <TableRow key='nrcm2RecencyRow'>
-                                    <TableCell sx={{ background: determineHighestRisk('nrcm2Gt30', recencyOfMission.nrcm2Gt30), color: 'black', borderBottom: 'none' }} align='center'>NRCM 2 >30 Days <br></br>{recencyOfMission.nrcm2Gt30 && `(${recencyOfMission.nrcm2Gt30})`}</TableCell>
-                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('nrcm2Gt90', recencyOfMission.nrcm2Gt60), color: 'black', borderBottom: 'none' }} align='center'>NRCM 2 >60 Days <br></br>{recencyOfMission.nrcm2Gt60 && `(${recencyOfMission.nrcm2Gt60})`}</TableCell>
-                                    <TableCell sx={{ background: determineHighestRisk('nrcm2Gt90', recencyOfMission.nrcm2Gt90), color: 'black', borderBottom: 'none' }} align='center'>NRCM 2 >90 Days <br></br>{recencyOfMission.nrcm2Gt90 && `(${recencyOfMission.nrcm2Gt90})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('nrcm2Gt30', recencyOfMission.nrcm2Gt30), color: 'black', borderBottom: 'none' }} align='center'>NRCM 2 {'>'}30 Days <br></br>{recencyOfMission.nrcm2Gt30 && `(${recencyOfMission.nrcm2Gt30})`}</TableCell>
+                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('nrcm2Gt60', recencyOfMission.nrcm2Gt60), color: 'black', borderBottom: 'none' }} align='center'>NRCM 2 {'>'}60 Days <br></br>{recencyOfMission.nrcm2Gt60 && `(${recencyOfMission.nrcm2Gt60})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('nrcm2Gt90', recencyOfMission.nrcm2Gt90), color: 'black', borderBottom: 'none' }} align='center'>NRCM 2 {'>'}90 Days <br></br>{recencyOfMission.nrcm2Gt90 && `(${recencyOfMission.nrcm2Gt90})`}</TableCell>
                                 </TableRow>
                                 {
                                     row.flightInfo5484.nrcm3 &&
                                     <TableRow key='nrcm3RecencyRow'>
-                                        <TableCell sx={{ background: determineHighestRisk('nrcm3Gt30', recencyOfMission.nrcm3Gt30), color: 'black', borderBottom: 'none' }} align='center'>NRCM 3 >30 Days <br></br>{recencyOfMission.nrcm3Gt30 && `(${recencyOfMission.nrcm3Gt30})`}</TableCell>
-                                        <TableCell colSpan={2} sx={{ background: determineHighestRisk('nrcm3Gt90', recencyOfMission.nrcm3Gt60), color: 'black', borderBottom: 'none' }} align='center'>NRCM 3 >60 Days <br></br>{recencyOfMission.nrcm3Gt60 && `(${recencyOfMission.nrcm3Gt60})`}</TableCell>
-                                        <TableCell sx={{ background: determineHighestRisk('nrcm3Gt90', recencyOfMission.nrcm3Gt90), color: 'black', borderBottom: 'none' }} align='center'>NRCM 3 >90 Days <br></br>{recencyOfMission.nrcm3Gt90 && `(${recencyOfMission.nrcm3Gt90})`}</TableCell>
+                                        <TableCell sx={{ background: determineHighestRisk('nrcm3Gt30', recencyOfMission.nrcm3Gt30), color: 'black', borderBottom: 'none' }} align='center'>NRCM 3 {'>'}30 Days <br></br>{recencyOfMission.nrcm3Gt30 && `(${recencyOfMission.nrcm3Gt30})`}</TableCell>
+                                        <TableCell colSpan={2} sx={{ background: determineHighestRisk('nrcm3Gt60', recencyOfMission.nrcm3Gt60), color: 'black', borderBottom: 'none' }} align='center'>NRCM 3 {'>'}60 Days <br></br>{recencyOfMission.nrcm3Gt60 && `(${recencyOfMission.nrcm3Gt60})`}</TableCell>
+                                        <TableCell sx={{ background: determineHighestRisk('nrcm3Gt90', recencyOfMission.nrcm3Gt90), color: 'black', borderBottom: 'none' }} align='center'>NRCM 3 {'>'}90 Days <br></br>{recencyOfMission.nrcm3Gt90 && `(${recencyOfMission.nrcm3Gt90})`}</TableCell>
                                     </TableRow>
                                 }
+                                <TableRow key='hoistRecencyRow'>
+                                    <TableCell sx={{ background: determineHighestRisk('hoistGt30', recencyOfMission.hoistGt30), color: 'black', borderBottom: 'none' }} align='center'>Hoist {'>'}30 Days <br></br>{recencyOfMission.hoistGt30 && `(${recencyOfMission.hoistGt30})`}</TableCell>
+                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('hoistGt60', recencyOfMission.hoistGt60), color: 'black', borderBottom: 'none' }} align='center'>Hoist {'>'}60 Days <br></br>{recencyOfMission.hoistGt60 && `(${recencyOfMission.hoistGt60})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('hoistGt90', recencyOfMission.hoistGt90), color: 'black', borderBottom: 'none' }} align='center'>Hoist {'>'}90 Days <br></br>{recencyOfMission.hoistGt90 && `(${recencyOfMission.hoistGt90})`}</TableCell>
+                                </TableRow>
+                                <TableRow key='planningHeader'>
+                                    <TableCell colSpan={5} sx={{ borderBottom: 'none', width: '100%' }}>
+                                        <Typography variant="h6" component="div" align='center'>Planning Timeline</Typography>
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow key='specificPlanningRow'>
+                                    <TableCell sx={{ background: determineHighestRisk('specificGt12', missionPlanningTime.specificGt12), color: 'black', borderBottom: 'none' }} align='center'>Specific {'>'}12 Hours <br></br>{missionPlanningTime.specificGt12 && `(${missionPlanningTime.specificGt12})`}</TableCell>
+                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('specific2to12', missionPlanningTime.specific2to12), color: 'black', borderBottom: 'none' }} align='center'>Specific 2-12 Hours <br></br>{missionPlanningTime.specific2to12 && `(${missionPlanningTime.specific2to12})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('specificLt2', missionPlanningTime.specificLt2), color: 'black', borderBottom: 'none' }} align='center'>Specific {'<'}2 Hours <br></br>{missionPlanningTime.specificLt2 && `(${missionPlanningTime.specificLt2})`}</TableCell>
+                                </TableRow>
+                                <TableRow key='vaguePlanningRow'>
+                                    <TableCell sx={{ background: determineHighestRisk('vagueGt12', missionPlanningTime.vagueGt12), color: 'black', borderBottom: 'none' }} align='center'>Vague {'>'}12 Hours <br></br>{missionPlanningTime.vagueGt12 && `(${missionPlanningTime.vagueGt12})`}</TableCell>
+                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('vague2to12', missionPlanningTime.vague2to12), color: 'black', borderBottom: 'none' }} align='center'>Vague 2-12 Hours <br></br>{missionPlanningTime.vague2to12 && `(${missionPlanningTime.vague2to12})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('vagueLt2', missionPlanningTime.vagueLt2), color: 'black', borderBottom: 'none' }} align='center'>Vague {'<'}2 Hours <br></br>{missionPlanningTime.vagueLt2 && `(${missionPlanningTime.vagueLt2})`}</TableCell>
+                                </TableRow>
                                 <TableRow key='MissionRiskMitigation'>
                                     <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.missionComplexity.risk.riskMitigation}</TableCell>
                                 </TableRow>
@@ -306,36 +326,45 @@ export default function Body({ drawerWidth }) {
                                     >
                                         {weatherOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                                     </IconButton>
-                                    <Typography variant="h6" component="div" sx={{ display: 'inline' }}>Weather: {row.weather.risk.mitigatedRisk}</Typography>
+                                    <Typography variant="h6" component="div" sx={{ display: 'inline' }}>Weather: {risk.mitigatedRisk}</Typography>
                                 </TableCell>
                             </TableRow>
                             <Collapse in={weatherOpen} timeout="auto" unmountOnExit>
-                                <TableRow key='Ceilings'>
-                                    {row.weather.visibilityCeilings.gt1000 && <TableCell component="th" scope="row">Ceilings: Greater than 1000'</TableCell>}
-                                    {row.weather.visibilityCeilings.lt1000 && <TableCell component="th" scope="row">Ceilings: Less than 1000'</TableCell>}
-                                    {row.weather.visibilityCeilings.lt700 && <TableCell component="th" scope="row">Ceilings: Less than 700'</TableCell>}
-                                    {row.weather.visibilityCeilings.gt3 && <TableCell component="th" scope="row">Visibility: Greater than 3 SM</TableCell>}
-                                    {row.weather.visibilityCeilings.gt2 && <TableCell component="th" scope="row">Visibility: Greater than 2 SM</TableCell>}
-                                    {row.weather.visibilityCeilings.gt1 && <TableCell component="th" scope="row">Visibility: Greater than 1 SM</TableCell>}
-                                    {row.weather.visibilityCeilings.lt1 && <TableCell component="th" scope="row">Visibility: Less than 1 SM</TableCell>}
+                                <TableRow key='ceilingsHeader'>
+                                    <TableCell colSpan={100} sx={{ borderBottom: 'none', width: '100%' }}>
+                                        <Typography variant="h6" component="div" align='center'>Ceiling & Visibility</Typography>
+                                    </TableCell>
                                 </TableRow>
-                                <TableRow key='Visibility'>
+                                <TableRow key='visibilityCeilings'>
+                                    <TableCell sx={{ background: determineHighestRisk('gt1000', visibilityCeilings.gt1000), color: 'black', borderBottom: 'none' }} align='center'>Greater than 1000'<br></br>{visibilityCeilings.gt1000 && `(${visibilityCeilings.gt1000})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('lt1000', visibilityCeilings.lt1000), color: 'black', borderBottom: 'none' }} align='center'>Less than 1000' <br></br>{visibilityCeilings.lt1000 && `(${visibilityCeilings.lt1000})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('lt700', visibilityCeilings.lt700), color: 'black', borderBottom: 'none' }} align='center'>Less than 700' <br></br>{visibilityCeilings.lt700 && `(${visibilityCeilings.lt700})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('lt500', visibilityCeilings.lt500), color: 'black', borderBottom: 'none' }} align='center'>Less than 500' <br></br>{visibilityCeilings.lt500 && `(${visibilityCeilings.lt500})`}</TableCell>
+                                </TableRow>
+                                {/* input the visibility risks into seederRisk */}
+                                <TableRow key='visibilityCeilings'>
+                                    <TableCell sx={{ background: determineHighestRisk('gt3', visibilityCeilings.gt3), width: '25%', color: 'black', borderBottom: 'none' }} align='center'>Greater than 3 SM <br></br>{visibilityCeilings.gt3 && `(${visibilityCeilings.gt3})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('gt2', visibilityCeilings.gt2), width: '25%', color: 'black', borderBottom: 'none' }} align='center'>Greater than 2 SM <br></br>{visibilityCeilings.gt2 && `(${visibilityCeilings.gt2})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('gt1', visibilityCeilings.gt1), width: '25%', color: 'black', borderBottom: 'none' }} align='center'>Greater than 1 SM <br></br>{visibilityCeilings.gt1 && `(${visibilityCeilings.gt1})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('lt1', visibilityCeilings.lt1), width: '25%', color: 'black', borderBottom: 'none' }} align='center'>Less than 1 SM <br></br>{visibilityCeilings.lt1 && `(${visibilityCeilings.lt1})`}</TableCell>
                                 </TableRow>
                                 <TableRow key='LunarData'>
-                                    {row.weather.lunar.gt25IllumAndgt30degrees && <TableCell colSpan={4} component="th" scope="row">Lunar Data: Greater than 25% and 30°</TableCell>}
-                                    {row.weather.lunar.lt25IllumAndlt30degrees && <TableCell colSpan={4} component="th" scope="row">Lunar Data: Less than 25% and 30°</TableCell>}
-                                    {row.weather.lunar.gt25IllumAndgt30degreesLimitedLighting && <TableCell colSpan={4} component="th" scope="row">Lunar Data: Less than 25% and 30° (Limited Lighting)</TableCell>}
+                                    {lunar.gt25IllumAndgt30degrees && <TableCell colSpan={4} align='center'>Lunar Data: {'>'} 25% and 30°</TableCell>}
+                                    {lunar.lt25IllumAndlt30degrees && <TableCell colSpan={4} align='center'>Lunar Data: {'<'} 25% and 30°</TableCell>}
+                                    {lunar.gt25IllumAndgt30degreesLimitedLighting && <TableCell colSpan={4} align='center'>Lunar Data: {'<'} 25% and 30° (Limited Lighting)</TableCell>}
                                 </TableRow>
-                                <TableRow key='AltRequied'>
-                                    {row.weather.IFR.altRequired && <TableCell component="th" scope="row">Alternate Required: Yes</TableCell>}
-                                    {row.weather.IFR.altRequired && <TableCell component="th" scope="row">Alternate Required: Yes</TableCell>}
-                                </TableRow>
+
+                                {IFR.altRequired &&
+                                    <TableRow key='AltRequied'>
+                                        <TableCell sx={{ background: moderateRisk }} align='center'>Alternate Required: Yes</TableCell>
+                                    </TableRow>
+                                }
                                 <TableRow key='MissionRiskMitigation'>
-                                    <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.weather.risk.riskMitigation}</TableCell>
+                                    <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {risk.riskMitigation}</TableCell>
                                 </TableRow>
                                 <TableRow key='MissionRisk'>
-                                    <TableCell align="left">Initial Risk: {row.weather.risk.initialRisk}</TableCell>
-                                    <TableCell align="left">Mitigated Risk: {row.weather.risk.mitigatedRisk}</TableCell>
+                                    <TableCell align="left">Initial Risk: {risk.initialRisk}</TableCell>
+                                    <TableCell align="left">Mitigated Risk: {risk.mitigatedRisk}</TableCell>
                                 </TableRow>
                             </Collapse>
 

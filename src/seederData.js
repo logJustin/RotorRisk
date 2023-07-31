@@ -79,10 +79,10 @@ const flights = [
                 confinedOperations: 'D NG'
             },
             powerConsiderations: {
-                OGEwithin10: false,
-                IGEwithin10: false,
-                OGEwithin5: false,
-                IGEwithin5: false,
+                OGEwithin10: null,
+                IGEwithin10: null,
+                OGEwithin5: null,
+                IGEwithin5: null,
             },
             trainingConsiderations: {
                 progessionEvaluationEPs: null,
@@ -116,12 +116,12 @@ const flights = [
                 hoistGt30: null,
             },
             missionPlanningTime: {
-                specificGt12: false,
-                specific2to12: false,
-                specificLt2: false,
-                vagueGt12: false,
-                vague2to12: false,
-                vagueLt2: false,
+                specificGt12: null,
+                specific2to12: null,
+                specificLt2: null,
+                vagueGt12: null,
+                vague2to12: null,
+                vagueLt2: null,
             },
             risk: {
                 initialRisk: 'M*',
@@ -147,14 +147,14 @@ const flights = [
                 altRequired: false
             },
             visibilityCeilings: {
-                gt1000: true,
-                lt1000: false,
-                lt700: false,
-                lt500: false,
-                gt3: true,
-                gt2: false,
-                gt1: false,
-                lt1: false
+                gt1000: 'D NG',
+                lt1000: null,
+                lt700: null,
+                lt500: null,
+                gt3: null,
+                gt2: null,
+                gt1: null,
+                lt1: null
             },
             risk: {
                 initialRisk: 'H',
