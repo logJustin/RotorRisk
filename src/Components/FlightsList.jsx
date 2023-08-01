@@ -99,11 +99,11 @@ export default function Body({ drawerWidth }) {
                     <TableCell size="small" sx={{ padding: '0' }}> <Button sx={{ margin: '20px 0' }} variant="contained" color="inherit">Edit RCOP</Button></TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell style={{ paddingBottom: 0, paddingTop: 0, width: '100%' }} colSpan={12}>
+                    <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
                         <Collapse in={open} timeout="auto" unmountOnExit>
 
                             {/* AIRCREW */}
-                            <TableRow sx={{ margin: 1, width: '100%' }}>
+                            <TableRow sx={{ margin: 1 }}>
                                 <TableCell sx={{ borderBottom: 'none' }}>
                                     <IconButton
                                         aria-label="expand row"
@@ -189,8 +189,8 @@ export default function Body({ drawerWidth }) {
                                             Mission Tasks</Typography>
                                     </TableCell>
                                 </TableRow>
-                                {/* <Collapse sx={{ width: '100%' }} in={missionTaskGroupOpen} timeout="auto" unmountOnExit> */}
-                                <TableRow sx={{ width: '100%' }} key='exampleRow'>
+                                {/* <Collapse sx={ }} in={missionTaskGroupOpen} timeout="auto" unmountOnExit> */}
+                                <TableRow key='exampleRow'>
                                     <TableCell sx={{ background: lowRisk, color: 'black', borderBottom: 'none' }} align='center'>Low Risk</TableCell>
                                     <TableCell colSpan={2} sx={{ background: moderateRisk, color: 'black', borderBottom: 'none' }} align='center'>Moderate Risk</TableCell>
                                     <TableCell sx={{ background: highRisk, color: 'black', borderBottom: 'none' }} align='center'>High Risk</TableCell>
@@ -243,7 +243,7 @@ export default function Body({ drawerWidth }) {
                                 </TableRow>
                                 {/* </Collapse> */}
                                 <TableRow key='powerHeader'>
-                                    <TableCell colSpan={5} sx={{ borderBottom: 'none', width: '100%' }}>
+                                    <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
                                         <Typography variant="h6" component="div" align='center'>Power Considerations</Typography>
                                     </TableCell>
                                 </TableRow>
@@ -254,7 +254,7 @@ export default function Body({ drawerWidth }) {
                                     <TableCell sx={{ background: determineHighestRisk('IGEwithin5', powerConsiderations.IGEwithin5), color: 'black', borderBottom: 'none' }} align='center'>IGE w/in 5% of MTA <br></br>{powerConsiderations.IGEwithin5 && `(${powerConsiderations.IGEwithin5})`}</TableCell>
                                 </TableRow>
                                 <TableRow key='recencyHeader'>
-                                    <TableCell colSpan={5} sx={{ borderBottom: 'none', width: '100%' }}>
+                                    <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
                                         <Typography variant="h6" component="div" align='center'>Task Recency</Typography>
                                     </TableCell>
                                 </TableRow>
@@ -292,7 +292,7 @@ export default function Body({ drawerWidth }) {
                                     <TableCell sx={{ background: determineHighestRisk('hoistGt90', recencyOfMission.hoistGt90), color: 'black', borderBottom: 'none' }} align='center'>Hoist {'>'}90 Days <br></br>{recencyOfMission.hoistGt90 && `(${recencyOfMission.hoistGt90})`}</TableCell>
                                 </TableRow>
                                 <TableRow key='planningHeader'>
-                                    <TableCell colSpan={5} sx={{ borderBottom: 'none', width: '100%' }}>
+                                    <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
                                         <Typography variant="h6" component="div" align='center'>Planning Timeline</Typography>
                                     </TableCell>
                                 </TableRow>
@@ -315,6 +315,7 @@ export default function Body({ drawerWidth }) {
                                 </TableRow>
                             </Collapse>
 
+                            {/* try to fix the width of the Weather header to increase */}
                             {/* WEATHER */}
                             <TableRow sx={{ margin: 1 }}>
                                 <TableCell sx={{ borderBottom: 'none' }}>
@@ -330,28 +331,42 @@ export default function Body({ drawerWidth }) {
                                 </TableCell>
                             </TableRow>
                             <Collapse in={weatherOpen} timeout="auto" unmountOnExit>
-                                <TableRow key='ceilingsHeader'>
-                                    <TableCell colSpan={100} sx={{ borderBottom: 'none', width: '100%' }}>
-                                        <Typography variant="h6" component="div" align='center'>Ceiling & Visibility</Typography>
+                                <TableRow style={{ width: '100%' }} key='ceilingsHeader'>
+                                    <TableCell colSpan={10} sx={{ borderBottom: 'none' }}>
+                                        <Typography variant="h6" component="div" align='center'>Ceilings, Visibility, & Lunar</Typography>
                                     </TableCell>
                                 </TableRow>
-                                <TableRow key='visibilityCeilings'>
+                                <TableRow key='ceilingsRow'>
                                     <TableCell sx={{ background: determineHighestRisk('gt1000', visibilityCeilings.gt1000), color: 'black', borderBottom: 'none' }} align='center'>Greater than 1000'<br></br>{visibilityCeilings.gt1000 && `(${visibilityCeilings.gt1000})`}</TableCell>
                                     <TableCell sx={{ background: determineHighestRisk('lt1000', visibilityCeilings.lt1000), color: 'black', borderBottom: 'none' }} align='center'>Less than 1000' <br></br>{visibilityCeilings.lt1000 && `(${visibilityCeilings.lt1000})`}</TableCell>
                                     <TableCell sx={{ background: determineHighestRisk('lt700', visibilityCeilings.lt700), color: 'black', borderBottom: 'none' }} align='center'>Less than 700' <br></br>{visibilityCeilings.lt700 && `(${visibilityCeilings.lt700})`}</TableCell>
                                     <TableCell sx={{ background: determineHighestRisk('lt500', visibilityCeilings.lt500), color: 'black', borderBottom: 'none' }} align='center'>Less than 500' <br></br>{visibilityCeilings.lt500 && `(${visibilityCeilings.lt500})`}</TableCell>
                                 </TableRow>
-                                {/* input the visibility risks into seederRisk */}
-                                <TableRow key='visibilityCeilings'>
+                                <TableRow key='visibilityRow'>
                                     <TableCell sx={{ background: determineHighestRisk('gt3', visibilityCeilings.gt3), width: '25%', color: 'black', borderBottom: 'none' }} align='center'>Greater than 3 SM <br></br>{visibilityCeilings.gt3 && `(${visibilityCeilings.gt3})`}</TableCell>
                                     <TableCell sx={{ background: determineHighestRisk('gt2', visibilityCeilings.gt2), width: '25%', color: 'black', borderBottom: 'none' }} align='center'>Greater than 2 SM <br></br>{visibilityCeilings.gt2 && `(${visibilityCeilings.gt2})`}</TableCell>
                                     <TableCell sx={{ background: determineHighestRisk('gt1', visibilityCeilings.gt1), width: '25%', color: 'black', borderBottom: 'none' }} align='center'>Greater than 1 SM <br></br>{visibilityCeilings.gt1 && `(${visibilityCeilings.gt1})`}</TableCell>
                                     <TableCell sx={{ background: determineHighestRisk('lt1', visibilityCeilings.lt1), width: '25%', color: 'black', borderBottom: 'none' }} align='center'>Less than 1 SM <br></br>{visibilityCeilings.lt1 && `(${visibilityCeilings.lt1})`}</TableCell>
                                 </TableRow>
                                 <TableRow key='LunarData'>
-                                    {lunar.gt25IllumAndgt30degrees && <TableCell colSpan={4} align='center'>Lunar Data: {'>'} 25% and 30°</TableCell>}
-                                    {lunar.lt25IllumAndlt30degrees && <TableCell colSpan={4} align='center'>Lunar Data: {'<'} 25% and 30°</TableCell>}
-                                    {lunar.gt25IllumAndgt30degreesLimitedLighting && <TableCell colSpan={4} align='center'>Lunar Data: {'<'} 25% and 30° (Limited Lighting)</TableCell>}
+                                    {lunar.gt25IllumAndgt30degrees && <TableCell colSpan={4} sx={{ background: lowRisk, color: 'black', borderBottom: 'none' }} align='center'>Lunar Data: {'>'} 25% and 30°</TableCell>}
+                                    {lunar.lt25IllumAndlt30degrees && <TableCell colSpan={4} sx={{ background: moderateRisk, color: 'black', borderBottom: 'none' }} align='center'>Lunar Data: {'<'} 25% and 30°</TableCell>}
+                                    {lunar.gt25IllumAndgt30degreesLimitedLighting && <TableCell colSpan={4} sx={{ background: moderateRisk, color: 'black', borderBottom: 'none' }} align='center'>Lunar Data: {'<'} 25% and 30° (Limited Lighting)</TableCell>}
+                                </TableRow>
+                                <TableRow key='hazardsHeader'>
+                                    <TableCell colSpan={10} sx={{ borderBottom: 'none' }}>
+                                        <Typography variant="h6" component="div" align='center'>Weather Hazards</Typography>
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow key='firstHazardRow'>
+                                    <TableCell sx={{ background: determineHighestRisk('windGt30', weatherHazards.windGt30), color: 'black', borderBottom: 'none' }} align='center'>Wind {'>'} 30 Knots<br></br>{weatherHazards.windGt30 && `(${weatherHazards.windGt30})`}</TableCell>
+                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('windGt30Hoist', weatherHazards.windGt30Hoist), color: 'black', borderBottom: 'none' }} align='center'>Wind {'>'} 30 Knots {'(Sling/Hoist)'}<br></br>{weatherHazards.windGt30Hoist && `(${weatherHazards.windGt30Hoist})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('gustSpreadGt20', weatherHazards.gustSpreadGt20), color: 'black', borderBottom: 'none' }} align='center'>Gusts {'>'} 20 Knots <br></br>{weatherHazards.gustSpreadGt20 && `(${weatherHazards.gustSpreadGt20})`}</TableCell>
+                                </TableRow>
+                                <TableRow key='secondHazardRow'>
+                                    <TableCell sx={{ background: determineHighestRisk('forecastThunderstorms', weatherHazards.forecastThunderstorms), color: 'black', borderBottom: 'none' }} align='center'>Forecast Thunderstorms<br></br>{weatherHazards.forecastThunderstorms && `(${weatherHazards.forecastThunderstorms})`}</TableCell>
+                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('modTurbulenceIcing', weatherHazards.modTurbulenceIcing), color: 'black', borderBottom: 'none' }} align='center'>Forecast Moderate Turbulence or Icing <br></br>{weatherHazards.modTurbulenceIcing && `(${weatherHazards.modTurbulenceIcing})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('oatNegative10Positive30', weatherHazards.oatNegative10Positive30), color: 'black', borderBottom: 'none' }} align='center'>OAT {'<'}-10°C or {'>'}35°C <br></br>{weatherHazards.oatNegative10Positive30 && `(${weatherHazards.oatNegative10Positive30})`}</TableCell>
                                 </TableRow>
 
                                 {IFR.altRequired &&

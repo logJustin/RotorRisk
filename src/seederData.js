@@ -131,17 +131,17 @@ const flights = [
         },
         weather: {
             lunar: {
-                gt25IllumAndgt30degrees: false,
+                gt25IllumAndgt30degrees: true,
                 lt25IllumAndlt30degrees: false,
-                gt25IllumAndgt30degreesLimitedLighting: true,
+                gt25IllumAndgt30degreesLimitedLighting: false,
             },
             weatherHazards: {
-                windGt30: false,
-                windGt30Hoist: false,
-                gustSpreadGt20: false,
-                forecastThunderstorms: false,
-                modTurbulenceIcing: false,
-                oatNegative10Positive30: false
+                windGt30: null,
+                windGt30Hoist: null,
+                gustSpreadGt20: null,
+                forecastThunderstorms: null,
+                modTurbulenceIcing: null,
+                oatNegative10Positive30: null
             },
             IFR: {
                 altRequired: false
