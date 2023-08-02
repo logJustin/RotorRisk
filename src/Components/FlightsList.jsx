@@ -69,11 +69,11 @@ export default function Body({ drawerWidth }) {
 
     function Row(props) {
         const { row } = props;
-        const [open, setOpen] = React.useState(true);
+        const [open, setOpen] = React.useState(false);
         const [crewOpen, setCrewOpen] = React.useState(false);
         const [missionOpen, setMissionOpen] = React.useState(false);
         const [missionTaskGroupOpen, setMissionTaskGroupOpen] = React.useState(false);
-        const [weatherOpen, setWeatherOpen] = React.useState(true);
+        const [weatherOpen, setWeatherOpen] = React.useState(false);
         const [finalRiskOpen, setFinalRiskOpen] = React.useState(false);
 
         const { missionConsiderations, terrainConsiderations, powerConsiderations, trainingConsiderations, recencyOfMission, missionPlanningTime } = row.missionComplexity
@@ -139,8 +139,8 @@ export default function Body({ drawerWidth }) {
                                     <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.crewData.risk.riskMitigation}</TableCell>
                                 </TableRow>
                                 <TableRow key='FlightRisks'>
-                                    <TableCell component="th" scope="row">Initial Risk: {row.crewData.risk.initialRisk}</TableCell>
-                                    <TableCell align="left">Mitigated Risk: {row.crewData.risk.mitigatedRisk}</TableCell>
+                                    <TableCell colSpan={2} component="th" scope="row">Initial Risk: {row.crewData.risk.initialRisk}</TableCell>
+                                    <TableCell colSpan={2} align="left">Mitigated Risk: {row.crewData.risk.mitigatedRisk}</TableCell>
                                 </TableRow>
                             </Collapse>
 
@@ -310,12 +310,12 @@ export default function Body({ drawerWidth }) {
                                     <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.missionComplexity.risk.riskMitigation}</TableCell>
                                 </TableRow>
                                 <TableRow key='MissionRisk'>
-                                    <TableCell align="left">Initial Risk: {row.missionComplexity.risk.initialRisk}</TableCell>
-                                    <TableCell align="left">Mitigated Risk: {row.missionComplexity.risk.mitigatedRisk}</TableCell>
+                                    <TableCell colSpan={2} align="left">Initial Risk: {row.missionComplexity.risk.initialRisk}</TableCell>
+                                    <TableCell colSpan={2} align="left">Mitigated Risk: {row.missionComplexity.risk.mitigatedRisk}</TableCell>
                                 </TableRow>
                             </Collapse>
 
-                            {/* try to fix the width of the Weather header to increase */}
+                            {/* try to fix the width of the Weather header to increase   */}
                             {/* WEATHER */}
                             <TableRow sx={{ margin: 1 }}>
                                 <TableCell sx={{ borderBottom: 'none' }}>
@@ -331,24 +331,24 @@ export default function Body({ drawerWidth }) {
                                 </TableCell>
                             </TableRow>
                             <Collapse in={weatherOpen} timeout="auto" unmountOnExit>
-                                <TableRow style={{ width: '100%' }} key='ceilingsHeader'>
-                                    <TableCell colSpan={10} sx={{ borderBottom: 'none' }}>
+                                <TableRow key='ceilingsHeader' >
+                                    <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
                                         <Typography variant="h6" component="div" align='center'>Ceilings, Visibility, & Lunar</Typography>
                                     </TableCell>
                                 </TableRow>
-                                <TableRow key='ceilingsRow'>
+                                <TableRow key='ceilingsRow' style={{ width: '100%' }}>
                                     <TableCell sx={{ background: determineHighestRisk('gt1000', visibilityCeilings.gt1000), color: 'black', borderBottom: 'none' }} align='center'>Greater than 1000'<br></br>{visibilityCeilings.gt1000 && `(${visibilityCeilings.gt1000})`}</TableCell>
                                     <TableCell sx={{ background: determineHighestRisk('lt1000', visibilityCeilings.lt1000), color: 'black', borderBottom: 'none' }} align='center'>Less than 1000' <br></br>{visibilityCeilings.lt1000 && `(${visibilityCeilings.lt1000})`}</TableCell>
                                     <TableCell sx={{ background: determineHighestRisk('lt700', visibilityCeilings.lt700), color: 'black', borderBottom: 'none' }} align='center'>Less than 700' <br></br>{visibilityCeilings.lt700 && `(${visibilityCeilings.lt700})`}</TableCell>
                                     <TableCell sx={{ background: determineHighestRisk('lt500', visibilityCeilings.lt500), color: 'black', borderBottom: 'none' }} align='center'>Less than 500' <br></br>{visibilityCeilings.lt500 && `(${visibilityCeilings.lt500})`}</TableCell>
                                 </TableRow>
-                                <TableRow key='visibilityRow'>
+                                <TableRow key='visibilityRow' style={{ width: '100%' }}>
                                     <TableCell sx={{ background: determineHighestRisk('gt3', visibilityCeilings.gt3), width: '25%', color: 'black', borderBottom: 'none' }} align='center'>Greater than 3 SM <br></br>{visibilityCeilings.gt3 && `(${visibilityCeilings.gt3})`}</TableCell>
                                     <TableCell sx={{ background: determineHighestRisk('gt2', visibilityCeilings.gt2), width: '25%', color: 'black', borderBottom: 'none' }} align='center'>Greater than 2 SM <br></br>{visibilityCeilings.gt2 && `(${visibilityCeilings.gt2})`}</TableCell>
                                     <TableCell sx={{ background: determineHighestRisk('gt1', visibilityCeilings.gt1), width: '25%', color: 'black', borderBottom: 'none' }} align='center'>Greater than 1 SM <br></br>{visibilityCeilings.gt1 && `(${visibilityCeilings.gt1})`}</TableCell>
                                     <TableCell sx={{ background: determineHighestRisk('lt1', visibilityCeilings.lt1), width: '25%', color: 'black', borderBottom: 'none' }} align='center'>Less than 1 SM <br></br>{visibilityCeilings.lt1 && `(${visibilityCeilings.lt1})`}</TableCell>
                                 </TableRow>
-                                <TableRow key='LunarData'>
+                                <TableRow key='LunarData' style={{ width: '100%' }}>
                                     {lunar.gt25IllumAndgt30degrees && <TableCell colSpan={4} sx={{ background: lowRisk, color: 'black', borderBottom: 'none' }} align='center'>Lunar Data: {'>'} 25% and 30°</TableCell>}
                                     {lunar.lt25IllumAndlt30degrees && <TableCell colSpan={4} sx={{ background: moderateRisk, color: 'black', borderBottom: 'none' }} align='center'>Lunar Data: {'<'} 25% and 30°</TableCell>}
                                     {lunar.gt25IllumAndgt30degreesLimitedLighting && <TableCell colSpan={4} sx={{ background: moderateRisk, color: 'black', borderBottom: 'none' }} align='center'>Lunar Data: {'<'} 25% and 30° (Limited Lighting)</TableCell>}
@@ -363,7 +363,7 @@ export default function Body({ drawerWidth }) {
                                     <TableCell colSpan={2} sx={{ background: determineHighestRisk('windGt30Hoist', weatherHazards.windGt30Hoist), color: 'black', borderBottom: 'none' }} align='center'>Wind {'>'} 30 Knots {'(Sling/Hoist)'}<br></br>{weatherHazards.windGt30Hoist && `(${weatherHazards.windGt30Hoist})`}</TableCell>
                                     <TableCell sx={{ background: determineHighestRisk('gustSpreadGt20', weatherHazards.gustSpreadGt20), color: 'black', borderBottom: 'none' }} align='center'>Gusts {'>'} 20 Knots <br></br>{weatherHazards.gustSpreadGt20 && `(${weatherHazards.gustSpreadGt20})`}</TableCell>
                                 </TableRow>
-                                <TableRow key='secondHazardRow'>
+                                <TableRow colSpan={100} key='secondHazardRow'>
                                     <TableCell sx={{ background: determineHighestRisk('forecastThunderstorms', weatherHazards.forecastThunderstorms), color: 'black', borderBottom: 'none' }} align='center'>Forecast Thunderstorms<br></br>{weatherHazards.forecastThunderstorms && `(${weatherHazards.forecastThunderstorms})`}</TableCell>
                                     <TableCell colSpan={2} sx={{ background: determineHighestRisk('modTurbulenceIcing', weatherHazards.modTurbulenceIcing), color: 'black', borderBottom: 'none' }} align='center'>Forecast Moderate Turbulence or Icing <br></br>{weatherHazards.modTurbulenceIcing && `(${weatherHazards.modTurbulenceIcing})`}</TableCell>
                                     <TableCell sx={{ background: determineHighestRisk('oatNegative10Positive30', weatherHazards.oatNegative10Positive30), color: 'black', borderBottom: 'none' }} align='center'>OAT {'<'}-10°C or {'>'}35°C <br></br>{weatherHazards.oatNegative10Positive30 && `(${weatherHazards.oatNegative10Positive30})`}</TableCell>
@@ -378,8 +378,8 @@ export default function Body({ drawerWidth }) {
                                     <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {risk.riskMitigation}</TableCell>
                                 </TableRow>
                                 <TableRow key='MissionRisk'>
-                                    <TableCell align="left">Initial Risk: {risk.initialRisk}</TableCell>
-                                    <TableCell align="left">Mitigated Risk: {risk.mitigatedRisk}</TableCell>
+                                    <TableCell colSpan={2} align="left">Initial Risk: {risk.initialRisk}</TableCell>
+                                    <TableCell colSpan={2} align="left">Mitigated Risk: {risk.mitigatedRisk}</TableCell>
                                 </TableRow>
                             </Collapse>
 
@@ -399,6 +399,11 @@ export default function Body({ drawerWidth }) {
 
                             </TableRow>
                             <Collapse in={finalRiskOpen} timeout="auto" unmountOnExit>
+                                <TableRow key='riskAssessmentHeader'>
+                                    <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
+                                        <Typography variant="h6" component="div" align='center'>Risk Assessment</Typography>
+                                    </TableCell>
+                                </TableRow>
                                 <TableRow key='greatestRisk'>
                                     <TableCell colSpan={5} component="th" scope="row">Greatest Risk: {row.overallRisk.greatestRisk}</TableCell>
                                 </TableRow>
@@ -435,8 +440,8 @@ export default function Body({ drawerWidth }) {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow key='MissionRisk'>
-                                    <TableCell align="left">Initial Risk: {row.overallRisk.initialRisk}</TableCell>
-                                    <TableCell align="left">Residual Mission Risk: {row.overallRisk.residualRisk}</TableCell>
+                                    <TableCell sx={{ borderBottom: 'none' }} align="left">Initial Risk: {row.overallRisk.initialRisk}</TableCell>
+                                    <TableCell sx={{ borderBottom: 'none' }} align="left">Residual Mission Risk: {row.overallRisk.residualRisk}</TableCell>
                                 </TableRow>
                             </Collapse>
                         </Collapse>
