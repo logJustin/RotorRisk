@@ -119,7 +119,7 @@ const flights = [
                 specificGt12: null,
                 specific2to12: null,
                 specificLt2: null,
-                vagueGt12: null,
+                vagueGt12: 'D',
                 vague2to12: null,
                 vagueLt2: null,
             },

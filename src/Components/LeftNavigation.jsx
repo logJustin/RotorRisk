@@ -29,9 +29,7 @@ export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, 
 
     const drawer = (
         <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', }}>
-            <Box
-            // sx={{ height: '100%' }}
-            >
+            <Box>
                 <List
                     sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
@@ -98,7 +96,8 @@ export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, 
             sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
             aria-label="mailbox folders"
         >
-            <NewFormModal open={open} handleClose={handleClose} />
+            <NewFormModal open={open} handleClose={handleClose} lightMode={props.lightMode} />
+
             {/* Tablet & Mobile Drawer */}
             <Drawer
                 container={container}

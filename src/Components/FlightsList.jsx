@@ -132,8 +132,11 @@ export default function Body({ drawerWidth }) {
                                     <TableCell sx={{ borderBottom: 'none', borderRadius: !row.flightInfo5484.nrcm3 && '0 10px 10px 0', color: 'black', bgcolor: aircrewMemberRiskColor(row.crewData.experience.nrcm2HoursTotal, false) }} align="center">({row.crewData.experience.nrcm2HoursTotal} All / {row.crewData.experience.nrcm2HoursNG} NG)</TableCell>
                                     {row.flightInfo5484.nrcm3 && <TableCell sx={{ borderBottom: 'none', color: 'black', borderRadius: '0 10px 10px 0', bgcolor: aircrewMemberRiskColor(row.crewData.experience.nrcm3HoursTotal, false) }} align="center">({row.crewData.experience.nrcm3HoursTotal} All / {row.crewData.experience.nrcm3HoursNG} NG)</TableCell>}
                                 </TableRow>
-                                <TableRow key='spacer'>
-                                    <TableCell colSpan={5} component="th" scope="row"> </TableCell>
+
+                                <TableRow key='aircrewRiskHeader'>
+                                    <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
+                                        <Typography variant="h6" component="div" align='center'>Aircrew Risk</Typography>
+                                    </TableCell>
                                 </TableRow>
                                 <TableRow key='RiskMitigation'>
                                     <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.crewData.risk.riskMitigation}</TableCell>
@@ -306,6 +309,11 @@ export default function Body({ drawerWidth }) {
                                     <TableCell colSpan={2} sx={{ background: determineHighestRisk('vague2to12', missionPlanningTime.vague2to12), color: 'black', borderBottom: 'none' }} align='center'>Vague 2-12 Hours <br></br>{missionPlanningTime.vague2to12 && `(${missionPlanningTime.vague2to12})`}</TableCell>
                                     <TableCell sx={{ background: determineHighestRisk('vagueLt2', missionPlanningTime.vagueLt2), color: 'black', borderBottom: 'none' }} align='center'>Vague {'<'}2 Hours <br></br>{missionPlanningTime.vagueLt2 && `(${missionPlanningTime.vagueLt2})`}</TableCell>
                                 </TableRow>
+                                <TableRow key='missionHeader'>
+                                    <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
+                                        <Typography variant="h6" component="div" align='center'>Mission Risk</Typography>
+                                    </TableCell>
+                                </TableRow>
                                 <TableRow key='MissionRiskMitigation'>
                                     <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.missionComplexity.risk.riskMitigation}</TableCell>
                                 </TableRow>
@@ -315,7 +323,6 @@ export default function Body({ drawerWidth }) {
                                 </TableRow>
                             </Collapse>
 
-                            {/* try to fix the width of the Weather header to increase   */}
                             {/* WEATHER */}
                             <TableRow sx={{ margin: 1 }}>
                                 <TableCell sx={{ borderBottom: 'none' }}>
@@ -374,6 +381,11 @@ export default function Body({ drawerWidth }) {
                                         <TableCell sx={{ background: moderateRisk }} align='center'>Alternate Required: Yes</TableCell>
                                     </TableRow>
                                 }
+                                <TableRow key='missionHeader'>
+                                    <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
+                                        <Typography variant="h6" component="div" align='center'>Weather Risk</Typography>
+                                    </TableCell>
+                                </TableRow>
                                 <TableRow key='MissionRiskMitigation'>
                                     <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {risk.riskMitigation}</TableCell>
                                 </TableRow>
