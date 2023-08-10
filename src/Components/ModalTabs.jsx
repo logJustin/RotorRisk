@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -14,11 +14,62 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import { useForm, Controller } from "react-hook-form"
 import Input from "@material-ui/core/Input"
+import { Today } from '@mui/icons-material';
+
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
-    const [aircraft, setAircraft] = useState('HH60M');
-    const [tailNumber, setTailNumber] = useState('20-20128');
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+CustomTabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
+export default function BasicTabs() {
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    const { control, handleSubmit, watch } = useForm({
+        defaultValues: {
+            date: null,
+            aircraftType: "HH60M",
+            aircraftTail: '20-20128'
+        },
+    })
+    const aircraftType = watch("aircraftType")
+
+    const onSubmit = (data) => {
+        console.log(data);
+    };
+
     const [pc, setPC] = useState('');
     const [pcSeat, setPCSeat] = useState('L');
     const [pi, setPI] = useState('');
@@ -27,13 +78,6 @@ function CustomTabPanel(props) {
     const [nrcm2, setNRCM2] = useState('');
     const [nrcm3, setNRCM3] = useState('');
 
-    const handleAircraftChange = (event) => {
-        setAircraft(event.target.value);
-    };
-
-    const handleTailNumberChange = (event) => {
-        setTailNumber(event.target.value);
-    };
     const handlePCChange = (event) => {
         setPC(event.target.value);
     };
@@ -150,59 +194,14 @@ function CustomTabPanel(props) {
         }
     };
 
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
-
-CustomTabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
-
-export default function BasicTabs() {
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
-    const { control, handleSubmit } = useForm({
-        defaultValues: {
-            date: null,
-        },
-    })
-    const onSubmit = (data) => {
-        console.log(data);
-    };
 
     return (
-        <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-            <form sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+        <Box height={'100%'} sx={{ display: 'flex', flexDirection: 'column' }}>
+            <form style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 onSubmit={handleSubmit(onSubmit)}
             >
                 {/* Tabs */}
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Box borderBottom={1} borderColor={'divider'}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
                         <Tab label="Aircrew" {...a11yProps(0)} />
                         <Tab label="Mission" {...a11yProps(1)} />
@@ -213,20 +212,156 @@ export default function BasicTabs() {
 
                 {/* Tab Panels */}
                 <CustomTabPanel value={value} index={0}>
-                    <Grid container spacing={2} sx={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', marginBottom: '30px', padding: '15px' }}>
+                    <Grid container spacing={2} sx={{
+                        boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                        marginTop: '24px',
+                        padding: '5px'
+                    }}>
                         {/* Flight Date */}
-                        <Grid xs={4}>
+                        <Grid item xs={4}>
                             <Controller
                                 name="date"
                                 control={control}
                                 render={({ field }) => (
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <DatePicker {...field} label="Flight Date" />
+                                    <LocalizationProvider dateAdapter={AdapterDayjs} >
+                                        <DatePicker closeOnSelect="true" sx={{ width: '100%' }} {...field} label="Flight Date" />
                                     </LocalizationProvider>
                                 )}
                             />
                         </Grid>
+                        {/* Aircraft */}
+                        <Grid item xs={4}>
+                            <FormControl fullWidth component="fieldset">
+                                <InputLabel>Aircraft</InputLabel>
+                                <Controller
+                                    name="aircraftType"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Select
+                                            {...field}
+                                            fullWidth
+                                            label="Aircraft"
+                                        >
+                                            {Object.keys(aircraftInfo).map((helicopterType) => (
+                                                <MenuItem key={helicopterType} value={helicopterType}>
+                                                    {helicopterType}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    )}
+                                />
+                            </FormControl>
+                        </Grid>
+                        {/* Tail Number */}
+                        <Grid item xs={4}>
+                            <FormControl fullWidth component="fieldset">
+                                <InputLabel>Tail Number</InputLabel>
+                                <Controller
+                                    name="aircraftTail"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Select
+                                            // labelId="tailNumberSelect"
+                                            {...field}
+                                            label="Tail Number"
+                                            fullWidth
+                                        >
+                                            {aircraftInfo[aircraftType]?.map((tailNumber) => (
+                                                <MenuItem key={tailNumber} value={tailNumber}>
+                                                    {tailNumber}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    )}
+                                />
+                            </FormControl>
+                        </Grid>
+                        {/* Mission */}
+                        <Grid item xs={3}>
+                            <Controller
+                                name="mission"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField fullWidth {...field} label="Mission" variant="outlined" />
+                                )}>
+                            </Controller>
+                        </Grid>
+                        {/* Mission Statement */}
+                        <Grid item xs={9}>
+                            <Controller
+                                name="missionStatement"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField fullWidth {...field} label="Mission Statement" variant="outlined" />
+                                )}>
+                            </Controller>
+                        </Grid>
+                        {/* Route */}
+                        <Grid xs={12}>
+                            <Controller
+                                name="route"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField fullWidth {...field} id="outlined-basic" label="Route" variant="outlined" />
+                                )} >
+                            </Controller>
+                        </Grid>
+                        {/* Flight Conditions Selection */}
+                        <Grid item xs={12}>
+                            <FormControl fullWidth component="fieldset">
+                                <FormLabel sx={{ textAlign: 'center' }} component="legend">
+                                    Flight Conditions
+                                </FormLabel>
+                                <Controller
+                                    name="flightConditions"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <FormGroup sx={{ justifyContent: 'space-evenly' }} aria-label="position" row>
+                                            <FormControlLabel
+                                                value="1"
+                                                control={<Checkbox {...field} />}
+                                                label="1 - Day"
+                                                labelPlacement="end"
+                                            />
+                                            <FormControlLabel
+                                                value="2"
+                                                control={<Checkbox {...field} />}
+                                                label="2 - Night"
+                                                labelPlacement="end"
+                                            />
+                                            <FormControlLabel
+                                                value="3"
+                                                control={<Checkbox {...field} />}
+                                                label="3 - NG"
+                                                labelPlacement="end"
+                                            />
+                                            <FormControlLabel
+                                                value="4"
+                                                control={<Checkbox {...field} />}
+                                                label="4 - IMC/SIM IMC"
+                                                labelPlacement="end"
+                                            />
+                                            <FormControlLabel
+                                                value="5"
+                                                control={<Checkbox {...field} />}
+                                                label="5 - Multi Aircraft"
+                                                labelPlacement="end"
+                                            />
+                                            <FormControlLabel
+                                                value="6"
+                                                control={<Checkbox {...field} />}
+                                                label="6 - Terrain Flight"
+                                                labelPlacement="end"
+                                            />
+                                        </FormGroup>
+                                    )}
+                                />
+                            </FormControl>
+                        </Grid>
+
+
                     </Grid>
+
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
                     Mission
@@ -244,7 +379,7 @@ export default function BasicTabs() {
                     File RCOP
                 </Button>
             </form>
-        </Box>
+        </Box >
 
 
     );
