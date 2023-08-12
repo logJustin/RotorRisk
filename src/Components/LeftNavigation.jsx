@@ -10,7 +10,7 @@ import AddCircleOutlineSharpIcon from '@mui/icons-material/AddCircleOutlineSharp
 import CheckCircleOutlineSharpIcon from '@mui/icons-material/CheckCircleOutlineSharp';
 import CheckCircleSharpIcon from '@mui/icons-material/CheckCircleSharp';
 import ListIcon from '@mui/icons-material/List';
-import NewFormModal from './NewFormModal';
+import FormModal from './Modal/FormModal';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import IconButton from '@mui/material/IconButton';
@@ -96,7 +96,7 @@ export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, 
             sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
             aria-label="mailbox folders"
         >
-            <NewFormModal open={open} handleClose={handleClose} lightMode={props.lightMode} />
+            <FormModal open={open} handleClose={handleClose} lightMode={props.lightMode} />
 
             {/* Tablet & Mobile Drawer */}
             <Drawer
