@@ -139,7 +139,7 @@ export default function Body({ drawerWidth }) {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow key='RiskMitigation'>
-                                    <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.crewData.risk.riskMitigation}</TableCell>
+                                    <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.crewData.risk.aircrewRiskMitigation}</TableCell>
                                 </TableRow>
                                 <TableRow key='FlightRisks'>
                                     <TableCell colSpan={2} component="th" scope="row">Initial Risk: {row.crewData.risk.initialRisk}</TableCell>
@@ -315,7 +315,7 @@ export default function Body({ drawerWidth }) {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow key='MissionRiskMitigation'>
-                                    <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.missionComplexity.risk.riskMitigation}</TableCell>
+                                    <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.missionComplexity.risk.missionRiskMitigation}</TableCell>
                                 </TableRow>
                                 <TableRow key='MissionRisk'>
                                     <TableCell colSpan={2} align="left">Initial Risk: {row.missionComplexity.risk.initialRisk}</TableCell>

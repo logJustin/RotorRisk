@@ -37,9 +37,9 @@ const flights = [
                 nrcm325HoursInAO: true,
             },
             risk: {
-                initialRisk: 'M',
-                riskMitigation: 'PC with >180 hours in AO paired with PC/MTP. Low risk NRCMs paired with Moderate risk PC. CE/MO have >50 hours in AO & are familiar with route to be flown.',
-                mitigatedRisk: 'L'
+                aircrewInitialRisk: 'M',
+                aircrewRiskMitigation: 'PC with >180 hours in AO paired with PC/MTP. Low risk NRCMs paired with Moderate risk PC. CE/MO have >50 hours in AO & are familiar with route to be flown.',
+                aircrewMitigatedRisk: 'L'
             },
             fighterManagement: {
                 hundredHoursinLast30Days: false,
@@ -124,9 +124,9 @@ const flights = [
                 vagueLt2: null,
             },
             risk: {
-                initialRisk: 'M*',
-                riskMitigation: 'Crew will use exterior lighting as required.',
-                mitigatedRisk: 'M*'
+                missionInitialRisk: 'M*',
+                missionRiskMitigation: 'Crew will use exterior lighting as required.',
+                missionMitigatedRisk: 'M*'
             }
         },
         weather: {
@@ -157,16 +157,16 @@ const flights = [
                 lt1: null
             },
             risk: {
-                initialRisk: 'H',
-                riskMitigation: 'Crew will use exterior lighting as required.',
-                mitigatedRisk: 'M'
+                weatherInitialRisk: 'H',
+                weatherRiskMitigation: 'Crew will use exterior lighting as required.',
+                weatherMitigatedRisk: 'M'
             }
         },
         overallRisk: {
             initialRisk: 'M*',
-            residualRisk: 'M*',
+            finalMitigatedRisk: 'M*',
             greatestRisk: 'Combat maneuvering flight in NG conditions.',
-            riskMitigation: 'Detailed table talk and brief will be conducted by crew prior to flight.'
+            finalRiskMitigation: 'Detailed table talk and brief will be conducted by crew prior to flight.'
         },
         approval: {
             briefer: 'CW2 Trinity',

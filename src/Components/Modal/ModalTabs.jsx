@@ -13,12 +13,12 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import { useForm, Controller, FormProvider } from "react-hook-form"
-import Input from "@material-ui/core/Input"
+import Input from "@mui/material/Input"
 import { Today } from '@mui/icons-material';
-import MissionTasksCheckbox from './MissionTasksCheckboxes'
-import FlightConditionsCheckboxes from './FlightConditionsCheckboxes'
 import Aircrew from './Tabs/Aircrew'
 import Mission from './Tabs/Mission'
+import Weather from './Tabs/Weather'
+import FinalRisk from './Tabs/FinalRisk'
 
 
 function CustomTabPanel(props) {
@@ -54,7 +54,7 @@ function a11yProps(index) {
     };
 }
 
-export default function BasicTabs() {
+export default function ModalTabs() {
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -76,7 +76,9 @@ export default function BasicTabs() {
             nrcm1: '',
             nrcm2: '',
             nrcm3: '',
-            riskMitigation: '',
+            aircrewRiskMitigation: '',
+            aircrewInitialRisk: 'L',
+            aircrewMitigatedRisk: '',
             airAssault: '',
             AH64AttackReconSecurity: '',
             medevacCasevac: '',
@@ -136,13 +138,38 @@ export default function BasicTabs() {
             vagueGt12: '',
             vague2to12: '',
             vagueLt2: '',
+            missionRiskMitigation: '',
+            missionInitialRisk: 'M',
+            missionMitigatedRisk: '',
+            gt1000: '',
+            lt1000: '',
+            lt700: '',
+            lt500: '',
+            gt3: '',
+            gt2: '',
+            gt1: '',
+            lt1: '',
+            altRequired: '',
+            gt25IllumAndgt30degrees: '',
+            lt25IllumAndlt30degrees: '',
+            gt25IllumAndgt30degreesLimitedLighting: '',
+            windGt30: '',
+            windGt30Hoist: '',
+            gustSpreadGt20: '',
+            forecastThunderstorms: '',
+            modTurbulenceIcing: '',
+            oatNegative10Positive30: '',
+            weatherRiskMitigation: '',
+            weatherInitialRisk: 'H',
+            weatherMitigatedRisk: '',
+            finalRiskMitigation: '',
+            finalMitigatedRisk: ''
         },
     });
 
     const onSubmit = (data) => {
         console.log(data);
     };
-
 
     return (
         <Box height={'100%'} sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -156,6 +183,8 @@ export default function BasicTabs() {
                         <Tab label="Mission" {...a11yProps(1)} />
                         <Tab label="Weather" {...a11yProps(2)} />
                         <Tab label="Final Risk" {...a11yProps(3)} />
+                        <Tab label="MBO" {...a11yProps(4)} />
+                        <Tab label="FMAA" {...a11yProps(5)} />
                     </Tabs>
                 </Box>
 
@@ -164,25 +193,19 @@ export default function BasicTabs() {
                     <Aircrew control={control} watch={watch} />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <Mission control={control} />
+                    <Mission control={control} watch={watch} />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={2}>
-                    <Grid container spacing={2} sx={{
-                        boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                        marginTop: '24px',
-                        padding: '5px'
-                    }}>
-                        Weather
-                    </Grid>
+                    <Weather control={control} watch={watch} />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={3}>
-                    <Grid container spacing={2} sx={{
-                        boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                        marginTop: '24px',
-                        padding: '5px'
-                    }}>
-                        Final Risk
-                    </Grid>
+                    <FinalRisk control={control} watch={watch} />
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={4}>
+                    Placeholder
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={5}>
+                    Placeholder
                 </CustomTabPanel>
 
                 {/* Submit Button */}

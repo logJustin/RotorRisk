@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormControlLabel, FormLabel, Grid, Checkbox } from '@mui/material';
 
-const MissionTasksCheckboxes = ({ value, onChange, task }) => {
+const CheckboxesModeOfFlight = ({ value, onChange, task }) => {
 
     const handleCheckboxChange = (newValue) => {
         const updatedValues = value
@@ -60,4 +60,4 @@ const MissionTasksCheckboxes = ({ value, onChange, task }) => {
     );
 };
 
-export default MissionTasksCheckboxes;
+export default CheckboxesModeOfFlight;

@@ -13,10 +13,10 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import { useForm, Controller, FormProvider } from "react-hook-form"
-import Input from "@material-ui/core/Input"
+import Input from "@mui/material/Input"
 import { Today } from '@mui/icons-material';
-import MissionTasksCheckbox from '../MissionTasksCheckboxes'
-import FlightConditionsCheckboxes from '../FlightConditionsCheckboxes'
+import CheckboxesModeOfFlight from '../Components/CheckboxesModeOfFlight'
+import CheckboxesFlightConditions from '../Components/CheckboxesFlightConditions'
 
 export default function Aircrew({ control, watch }) {
 
@@ -93,6 +93,8 @@ export default function Aircrew({ control, watch }) {
                 </MenuItem>
             ))
     )
+
+    const aircrewInitialRisk = watch('aircrewInitialRisk', '');
 
     // Add block for ETD & ETE, a lookup function for hours, and a risk input
     return (
@@ -197,7 +199,7 @@ export default function Aircrew({ control, watch }) {
                 <Grid xs={12} padding={'8px'}>
                     {/* Flight Conditions Selection */}
                     <Controller name="flightConditions" control={control} render={({ field }) => (
-                        <FlightConditionsCheckboxes title={'Flight Conditions'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesFlightConditions title={'Flight Conditions'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
             </Grid>
@@ -306,14 +308,28 @@ export default function Aircrew({ control, watch }) {
                     )}>
                     </Controller>
                 </Grid>
+            </Grid >
+
+
+            <Grid container justifyContent="space-evenly" spacing={2} sx={{
+                boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                marginTop: '24px',
+                padding: '5px'
+            }}>
+                <Grid xs={12}>
+                    <FormLabel sx={{ textAlign: 'Center' }} component="legend">Aircrew Risk Assessment</FormLabel>
+                </Grid>
+                <Grid xs={12}>
+                    <FormLabel sx={{ textAlign: 'left' }} component="legend">Initial Risk: {aircrewInitialRisk}</FormLabel>
+                </Grid>
                 {/* Aircrew Mitigation */}
                 <Grid xs={12} >
-                    <Controller name="riskMitigation" control={control} render={({ field }) => (
-                        <TextField {...field} multiline rows={2} fullWidth label="Crew Mitigation Techniques" />
+                    <Controller name="aircrewRiskMitigation" control={control} render={({ field }) => (
+                        <TextField {...field} multiline rows={2} fullWidth label="Risk Mitigation Techniques" />
                     )}>
                     </Controller>
                 </Grid>
-            </Grid >
+            </Grid>
         </>
     )
 }
