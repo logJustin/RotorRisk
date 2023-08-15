@@ -23,7 +23,9 @@ const MissionTasksCheckboxes = ({ value, onChange, task }) => {
     return (
         <>
             <FormLabel sx={{ textAlign: 'center' }} component="legend">{task}</FormLabel>
-            <Grid container justifyContent="space-evenly">
+            <Grid container justifyContent="space-evenly"
+            // borderBottom={'1px solid white'}
+            >
                 <FormControlLabel
                     control={
                         <Checkbox

@@ -63,144 +63,84 @@ export default function BasicTabs() {
     const { control, handleSubmit, watch } = useForm({
         defaultValues: {
             date: null,
-            aircraftType: "HH60M",
+            aircraftType: 'HH60M',
             aircraftTail: '',
             mission: '',
             missionStatement: '',
             route: '',
             flightConditions: '',
-            airAssault: ''
+            pc: '',
+            pcSeat: '',
+            pi: '',
+            piSeat: '',
+            nrcm1: '',
+            nrcm2: '',
+            nrcm3: '',
+            riskMitigation: '',
+            airAssault: '',
+            AH64AttackReconSecurity: '',
+            medevacCasevac: '',
+            multiship: '',
+            mixedMultiShip: '',
+            MTFGeneralTraining: '',
+            dartOneTimeFlight: '',
+            blackout: '',
+            waterBucket: '',
+            paradrops: '',
+            rappelSpiesFries: '',
+            externalLoads: '',
+            airmovementVIP: '',
+            continuation: '',
+            CEFS: '',
+            fatCow: '',
+            terrainFlight: '',
+            mountainOperations: '',
+            overwaterOperations: '',
+            pinnacleOperations: '',
+            urbanOperations: '',
+            confinedOperations: '',
+            OGEwithin10: '',
+            IGEwithin10: '',
+            OGEwithin5: '',
+            IGEwithin5: '',
+            progessionEvaluationEPs: '',
+            IFRSimulatedIMC: '',
+            CBRNE: '',
+            nonLiveHoist: '',
+            liveHoist: '',
+            combatManueveringFlight: '',
+            gunneryLiveFire: '',
+            CALFEX: '',
+            AMS: '',
+            pcGt90: '',
+            pcGt60: '',
+            pcGt30: '',
+            piGt90: '',
+            piGt60: '',
+            piGt30: '',
+            nrcm1Gt90: '',
+            nrcm1Gt60: '',
+            nrcm1Gt30: '',
+            nrcm2Gt90: '',
+            nrcm2Gt60: '',
+            nrcm2Gt30: '',
+            nrcm3Gt90: '',
+            nrcm3Gt60: '',
+            nrcm3Gt30: '',
+            hoistGt90: '',
+            hoistGt60: '',
+            hoistGt30: '',
+            specificGt12: '',
+            specific2to12: '',
+            specificLt2: '',
+            vagueGt12: '',
+            vague2to12: '',
+            vagueLt2: '',
         },
     });
 
-    const aircraftType = watch("aircraftType")
-
     const onSubmit = (data) => {
         console.log(data);
-    };
-
-    const [pc, setPC] = useState('');
-    const [pcSeat, setPCSeat] = useState('L');
-    const [pi, setPI] = useState('');
-    const [piSeat, setPISeat] = useState('R');
-    const [nrcm1, setNRCM1] = useState('');
-    const [nrcm2, setNRCM2] = useState('');
-    const [nrcm3, setNRCM3] = useState('');
-
-    const handlePCChange = (event) => {
-        setPC(event.target.value);
-    };
-    const handlePCSeatChange = (event) => {
-        setPCSeat(event.target.value);
-    };
-    const handlePIChange = (event) => {
-        setPI(event.target.value);
-    };
-    const handlePISeatChange = (event) => {
-        setPISeat(event.target.value);
-    };
-    const handleNRCM1Change = (event) => {
-        setNRCM1(event.target.value);
-    };
-    const handleNRCM2Change = (event) => {
-        setNRCM2(event.target.value);
-    };
-    const handleNRCM3Change = (event) => {
-        setNRCM3(event.target.value);
-    };
-
-    const aircraftInfo = {
-        HH60M: [
-            '20-20128',
-            '20-20129',
-            '20-20130',
-            '20-20131',
-            '20-20132',
-            '20-20133'
-        ],
-        AH64E: [
-            '19-20134',
-            '19-20135',
-            '19-20136',
-            '19-20137',
-            '19-20138',
-            '19-20139',
-        ],
-        CH47F: [
-            '18-20134',
-            '18-20135',
-            '18-20136',
-            '18-20137',
-            '18-20138',
-            '18-20139',
-        ],
-        UH60V: [
-            '17-20134',
-            '17-20135',
-            '17-20136',
-            '17-20137',
-            '17-20138',
-            '17-20139',
-        ],
-
-    };
-
-    const aircrews = {
-        'CPT Reynolds': {
-            position: 'pilot',
-            aircraft: 500,
-            NG: 115
-        },
-        'CPT Smith': {
-            position: 'pilot',
-            aircraft: 310,
-            NG: 115
-        },
-        'SGT Daniels': {
-            position: 'nrcm',
-            aircraft: 2050,
-            NG: 800
-        },
-        'CPT Johnson': {
-            position: 'pilot',
-            aircraft: 1520,
-            NG: 620
-        },
-        'CPT Williams': {
-            position: 'pilot',
-            aircraft: 920,
-            NG: 260
-        },
-        '1LT Davis': {
-            position: 'pilot',
-            aircraft: 1830,
-            NG: 470
-        },
-        '1LT Anderson': {
-            position: 'pilot',
-            aircraft: 1150,
-            NG: 540
-        },
-        'SGT Martinez': {
-            position: 'nrcm',
-            aircraft: 630,
-            NG: 310
-        },
-        'SGT Walker': {
-            position: 'nrcm',
-            aircraft: 1240,
-            NG: 870
-        },
-        'CPL Lopez': {
-            position: 'nrcm',
-            aircraft: 1480,
-            NG: 720
-        },
-        'CPL Scott': {
-            position: 'nrcm',
-            aircraft: 860,
-            NG: 420
-        }
     };
 
 
@@ -221,7 +161,7 @@ export default function BasicTabs() {
 
                 {/* Tab Panels */}
                 <CustomTabPanel value={value} index={0}>
-                    <Aircrew control={control} aircraftInfo={aircraftInfo} aircraftType={aircraftType} />
+                    <Aircrew control={control} watch={watch} />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
                     <Mission control={control} />
