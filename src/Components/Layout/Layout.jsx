@@ -2,8 +2,8 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Header from './Header'
 import LeftNavigation from './LeftNavigation'
-import FlightsList from './FlightsList'
-import './Layout.css'
+import FlightsList from '../FlightsTable/FlightsList'
+import '../FlightsTable/FlightsList.css'
 
 
 const drawerWidth = 240;

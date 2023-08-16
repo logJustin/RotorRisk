@@ -8,18 +8,11 @@ import Grid from '@mui/material/Unstable_Grid2';
 import FormLabel from '@mui/material/FormLabel';
 import { Controller } from "react-hook-form"
 import CheckboxesFlightConditions from '../Components/CheckboxesFlightConditions'
-import aircrews from '../../../seederCrewData'
+import aircrews from '../../../data/seederCrewData'
+import aircraftInfo from '../../../data/aircraftTailNumbers'
 
 export default function Aircrew({ control, watch }) {
 
-    const aircraftInfo = {
-        HH60M: ['20-20128', '20-20129', '20-20130', '20-20131', '20-20132', '20-20133'],
-        AH64E: ['19-20134', '19-20135', '19-20136', '19-20137', '19-20138', '19-20139'],
-        CH47F: ['18-20134', '18-20135', '18-20136', '18-20137', '18-20138', '18-20139'],
-        UH60V: ['17-20134', '17-20135', '17-20136', '17-20137', '17-20138', '17-20139'],
-    };
-
-    const aircraftType = watch("aircraftType")
     const crewSelect = (position) => (
         Object.entries(aircrews)
             .filter(([crewmember, info]) => info.position === position)
@@ -30,6 +23,7 @@ export default function Aircrew({ control, watch }) {
             ))
     )
 
+    const aircraftType = watch("aircraftType")
     const aircrewInitialRisk = watch('aircrewInitialRisk', '');
 
     return (

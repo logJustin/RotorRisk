@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -11,8 +11,9 @@ import Weather from './Tabs/Weather'
 import FinalRisk from './Tabs/FinalRisk'
 import MBO from './Tabs/MBO'
 import FMAA from './Tabs/FMAA'
-import flights from '../../seederFlightData'
-import aircrews from '../../seederCrewData';
+import flights from '../../data/seederFlightData'
+import aircrews from '../../data/seederCrewData';
+import riskMatrix from '../../data/riskMatrix'
 
 
 function CustomTabPanel(props) {
@@ -226,7 +227,15 @@ export default function ModalTabs() {
         flights.push(data);
     };
 
+    // Watch and useEffect for multiple fields
+    const fieldsToWatch = ['pc', 'pi', 'nrcm1', 'nrcm2', 'nrcm3'];
 
+    useEffect(() => {
+        fieldsToWatch.forEach(fieldName => {
+            const fieldValue = watch(fieldName);
+            console.log(`${fieldName} field value changed:`, fieldValue);
+        });
+    }, fieldsToWatch.map(fieldName => watch(fieldName)));
 
 
     return (

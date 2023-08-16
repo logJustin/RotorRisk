@@ -15,55 +15,17 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Button from '@mui/material/Button';
-import flights from '../seederFlightData';
-import risks from '../seederRisk';
+import determineHighestRisk from '../../utils/RiskLookupColor'
+import aircrewMemberRiskColor from '../../utils/AircrewRiskLookupColor'
+import flights from '../../data/seederFlightData';
+import risks from '../../data/riskMatrix';
 import './FlightsList.css';
 
 
 export default function Body({ drawerWidth }) {
 
+
     const [lowRisk, moderateRisk, highRisk] = ['#8CD47E', '#F8D66D', '#FF6961']
-    const aircrewMemberRiskColor = (hours, pilot) => {
-        if (pilot && hours > 500) {
-            return lowRisk; // If hours is greater than 500, return green color
-        } else if (pilot && hours > 100) {
-            return moderateRisk; // If hours is greater than 100, return yellow color
-        } else if (!pilot && hours > 150) {
-            return lowRisk; // If hours is greater than 500, return green color
-        } else {
-            return highRisk; // Default case for hours less than or equal to 100, return red color
-        }
-    };
-
-    const determineHighestRisk = (task, flightModes) => {
-        if (!flightModes) {
-            return '#424242'
-        }
-        // Initialize the highestRisk variable with the value of lowRisk
-        let highestRisk = lowRisk;
-        // Iterate over each riskLevel in the risks object
-        for (const riskLevel in risks) {
-            // Iterate over each mode in the risks[riskLevel] object
-            for (const mode in risks[riskLevel]) {
-                // Check if the flightModes array includes the current mode and if the nested risks[riskLevel][mode] array includes the task
-                if (flightModes.includes(mode) && risks[riskLevel][mode].includes(task)) {
-                    // Update the highestRisk variable with the current riskLevel
-                    highestRisk = riskLevel;
-                    break;
-                }
-            }
-        }
-
-        // Check the value of highestRisk using a switch statement and return the corresponding risk level
-        switch (highestRisk) {
-            case 'lowRisk':
-                return lowRisk;
-            case 'moderateRisk':
-                return moderateRisk;
-            case 'highRisk':
-                return highRisk;
-        }
-    };
 
 
     function Row(props) {
@@ -123,11 +85,11 @@ export default function Body({ drawerWidth }) {
                                     {row.nrcm3 && <TableCell sx={{ borderBottom: 'none' }} align="center">NRCM: {row.nrcm3}</TableCell>}
                                 </TableRow>
                                 <TableRow key='AircrewHours'>
-                                    <TableCell sx={{ borderBottom: 'none', borderRadius: '10px 0 0 10px', color: 'black', bgcolor: aircrewMemberRiskColor(row.pcHoursTotal, true) }} component="th" scope="row" align="center">({row.pcHoursTotal} All / {row.pcHoursNG} NG)</TableCell>
+                                    <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.pcHoursTotal, true) }} component="th" scope="row" align="center">({row.pcHoursTotal} All / {row.pcHoursNG} NG)</TableCell>
                                     <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.piHoursTotal, true) }} align="center">({row.piHoursTotal} All / {row.piHoursNG} NG)</TableCell>
                                     <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.nrcm1HoursTotal, false) }} align="center">({row.nrcm1HoursTotal} All / {row.nrcm1HoursNG} NG)</TableCell>
-                                    <TableCell sx={{ borderBottom: 'none', borderRadius: !row.nrcm3 && '0 10px 10px 0', color: 'black', bgcolor: aircrewMemberRiskColor(row.nrcm2HoursTotal, false) }} align="center">({row.nrcm2HoursTotal} All / {row.nrcm2HoursNG} NG)</TableCell>
-                                    {row.nrcm3 && <TableCell sx={{ borderBottom: 'none', color: 'black', borderRadius: '0 10px 10px 0', bgcolor: aircrewMemberRiskColor(row.nrcm3HoursTotal, false) }} align="center">({row.nrcm3HoursTotal} All / {row.nrcm3HoursNG} NG)</TableCell>}
+                                    <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.nrcm2HoursTotal, false) }} align="center">({row.nrcm2HoursTotal} All / {row.nrcm2HoursNG} NG)</TableCell>
+                                    {row.nrcm3 && <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.nrcm3HoursTotal, false) }} align="center">({row.nrcm3HoursTotal} All / {row.nrcm3HoursNG} NG)</TableCell>}
                                 </TableRow>
 
                                 <TableRow key='aircrewRiskHeader'>

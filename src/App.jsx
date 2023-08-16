@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import Layout from './Components/Layout.jsx'
+import Layout from './Components/Layout/Layout'
 
 function App() {
   const [lightMode, setLightMode] = useState(false);

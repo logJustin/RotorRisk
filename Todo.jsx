@@ -1,11 +1,13 @@
 
 // DO
-//     Write a look up for risk values to watch & append to initial risk on form
+//     Implement RiskLookupValue on utils & implement how to update categorical risks
+//     Hoist > 30/60/90 doesn't return a color on FlightsList
 //     Add Fighter Management
 //     Write functionality for Brief and Approve buttons in LeftNavigation
 //     Margin bottom on File RCOP Button
 //     File vs Edit RCOP button text
 //     Change collapse functionality to rid error, each subcomponent would need to be it's own table
+//     Make backend :(
 
 
 // COMPLETED
