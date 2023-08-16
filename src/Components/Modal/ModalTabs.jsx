@@ -1,27 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import { Box, Modal, InputLabel, MenuItem, FormControl, Select, TextField, Paper, Button } from '@mui/material';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import Grid from '@mui/material/Unstable_Grid2';
-import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
-import { useForm, Controller, FormProvider } from "react-hook-form"
-import Input from "@mui/material/Input"
-import { Today } from '@mui/icons-material';
+import { Box, Button } from '@mui/material';
+import { useForm } from "react-hook-form"
 import Aircrew from './Tabs/Aircrew'
 import Mission from './Tabs/Mission'
 import Weather from './Tabs/Weather'
 import FinalRisk from './Tabs/FinalRisk'
 import MBO from './Tabs/MBO'
 import FMAA from './Tabs/FMAA'
-import flights from '../../seederData'
+import flights from '../../seederFlightData'
+import aircrews from '../../seederCrewData';
 
 
 function CustomTabPanel(props) {
@@ -82,6 +73,21 @@ export default function ModalTabs() {
             nrcm1: '',
             nrcm2: '',
             nrcm3: '',
+            pcHoursTotal: '',
+            pcHoursNG: '',
+            pc25HoursInAO: '',
+            piHoursTotal: '',
+            piHoursNG: '',
+            pi25HoursInAO: '',
+            nrcm1HoursTotal: '',
+            nrcm1HoursNG: '',
+            nrcm125HoursInAO: '',
+            nrcm2HoursTotal: '',
+            nrcm2HoursNG: '',
+            nrcm225HoursInAO: '',
+            nrcm3HoursTotal: '',
+            nrcm3HoursNG: '',
+            nrcm325HoursInAO: '',
             aircrewRiskMitigation: '',
             aircrewInitialRisk: 'L',
             aircrewMitigatedRisk: '',
@@ -180,22 +186,47 @@ export default function ModalTabs() {
         return `${day}${month}${year}`;
     };
 
+    const crewmemberUpdate = (crewmember, hoursProperties) => {
+        const selectedCrewmember = aircrews[crewmember];
+        if (selectedCrewmember) {
+            hoursProperties.aircraft = selectedCrewmember.aircraft;
+            hoursProperties.NG = selectedCrewmember.NG;
+            hoursProperties.atleast25InAO = selectedCrewmember.atleast25InAO;
+        }
+    };
+
     const onSubmit = (data) => {
         // Flight Date
-        const selectedDate = data.date;
-        data.date = formatDate(selectedDate);
+        data.date = formatDate(data.date);
 
         // ETD
-        const selectedTime = data.etd;
-        const etdHours = selectedTime.$H;
-        const etdMinutes = String(selectedTime.$m).padStart(2, '0');
+        const etdHours = data.etd.$H;
+        const etdMinutes = String(data.etd.$m).padStart(2, '0');
         data.etd = `${etdHours}:${etdMinutes}`;
 
+        const crewMembers = ['pc', 'pi', 'nrcm1', 'nrcm2', 'nrcm3'];
+
+        // update crewmembers
+        for (const crewmember of crewMembers) {
+            // initialize an hoursProperties object so it can be updated
+            const hoursProperties = {
+                aircraft: data[`${crewmember}HoursTotal`],
+                NG: data[`${crewmember}HoursNG`],
+                atleast25InAO: data[`${crewmember}25HoursInAO`]
+            };
+            crewmemberUpdate(data[crewmember], hoursProperties);
+
+            data[`${crewmember}HoursTotal`] = hoursProperties.aircraft;
+            data[`${crewmember}HoursNG`] = hoursProperties.NG;
+            data[`${crewmember}25HoursInAO`] = hoursProperties.atleast25InAO;
+        }
+
         console.log(data);
+
         flights.push(data);
-        // const filePath = '../../seederData.js';
-        // fs.writeFileSync(filePath, `export default ${JSON.stringify(flights)};`);
     };
+
+
 
 
     return (

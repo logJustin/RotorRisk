@@ -34,7 +34,7 @@ export default function FMAA({ control }) {
                 </Grid>
                 <Grid xs={12}>
                     <Controller
-                        name="brieferComment"
+                        name="approverComment"
                         control={control}
                         render={({ field }) => (
                             <TextField multiline rows={4} fullWidth {...field} label="FMAA Comments" variant="outlined" />

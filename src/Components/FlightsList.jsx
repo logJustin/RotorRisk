@@ -15,7 +15,7 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Button from '@mui/material/Button';
-import flights from '../seederData';
+import flights from '../seederFlightData';
 import risks from '../seederRisk';
 import './FlightsList.css';
 
@@ -473,7 +473,7 @@ export default function Body({ drawerWidth }) {
                     </TableHead>
                     <TableBody>
                         {flights.map((flight) => (
-                            <Row key={flight.pc} row={flight} />
+                            <Row key={`${flight.pc} - ${flight.date}`} row={flight} />
                         ))}
                     </TableBody>
                 </Table>
