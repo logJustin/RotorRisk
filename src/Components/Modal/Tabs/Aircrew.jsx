@@ -7,6 +7,9 @@ import { Box, Modal, InputLabel, MenuItem, FormControl, Select, TextField, Paper
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import Grid from '@mui/material/Unstable_Grid2';
 import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
@@ -96,7 +99,6 @@ export default function Aircrew({ control, watch }) {
 
     const aircrewInitialRisk = watch('aircrewInitialRisk', '');
 
-    // Add block for ETD & ETE, a lookup function for hours, and a risk input
     return (
         <>
             <Grid container justifyContent="space-evenly" spacing={2} sx={{
@@ -192,8 +194,26 @@ export default function Aircrew({ control, watch }) {
                         control={control}
                         render={({ field }) => (
                             <TextField fullWidth {...field} id="outlined-basic" label="Route" variant="outlined" />
-                        )} >
-                    </Controller>
+                        )} />
+                </Grid>
+                <Grid xs={6}>
+                    <Controller
+                        name="etd"
+                        control={control}
+                        render={({ field }) => (
+                            <LocalizationProvider fullWidth dateAdapter={AdapterDayjs}>
+                                <DesktopTimePicker {...field} fullWidth label="ETD" views={['hours', 'minutes']} timeSteps={{ minutes: 15 }} ampm={false} />
+                            </LocalizationProvider>
+                        )} />
+                </Grid>
+                <Grid xs={6}>
+                    <Controller
+                        name="ete"
+                        control={control}
+                        render={({ field }) => (
+                            <TextField {...field} fullWidth label="ETE (Duration)" placeholder='1.5' type='number' />
+                        )}
+                    />
                 </Grid>
 
                 <Grid xs={12} padding={'8px'}>

@@ -16,7 +16,7 @@ const CheckboxesBinary = ({ value, onChange, task }) => {
                         checked={value === 'true'}
                         onChange={() => handleCheckboxChange('true')}
                     />
-                    True
+                    Yes
                 </label>
                 <label htmlFor="false">
                     <Checkbox
@@ -24,7 +24,7 @@ const CheckboxesBinary = ({ value, onChange, task }) => {
                         checked={value === 'false'}
                         onChange={() => handleCheckboxChange('false')}
                     />
-                    False
+                    No
                 </label>
             </Grid>
         </>

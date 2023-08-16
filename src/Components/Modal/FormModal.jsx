@@ -13,9 +13,10 @@ export default function FormModal({ open, handleClose }) {
         bgcolor: 'background.paper',
         boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
         padding: ' 0 32px 32px 32px',
+        marginbottom: '32px',
         overflow: 'auto',
         height: '85%',
-        flexGrow: 1
+        // flexGrow: 1
     };
 
     return (

@@ -19,6 +19,9 @@ import Aircrew from './Tabs/Aircrew'
 import Mission from './Tabs/Mission'
 import Weather from './Tabs/Weather'
 import FinalRisk from './Tabs/FinalRisk'
+import MBO from './Tabs/MBO'
+import FMAA from './Tabs/FMAA'
+import flights from '../../seederData'
 
 
 function CustomTabPanel(props) {
@@ -55,6 +58,7 @@ function a11yProps(index) {
 }
 
 export default function ModalTabs() {
+
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -68,6 +72,8 @@ export default function ModalTabs() {
             mission: '',
             missionStatement: '',
             route: '',
+            etd: '',
+            ete: '',
             flightConditions: '',
             pc: '',
             pcSeat: '',
@@ -166,54 +172,76 @@ export default function ModalTabs() {
             finalMitigatedRisk: ''
         },
     });
-
-    const onSubmit = (data) => {
-        console.log(data);
+    const formatDate = (dateObject) => {
+        const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+        const day = dateObject.$D;
+        const month = months[dateObject.$M];
+        const year = dateObject.$d.getFullYear().toString().substr(-2); // Extract the last two digits of the year
+        return `${day}${month}${year}`;
     };
 
+    const onSubmit = (data) => {
+        // Flight Date
+        const selectedDate = data.date;
+        data.date = formatDate(selectedDate);
+
+        // ETD
+        const selectedTime = data.etd;
+        const etdHours = selectedTime.$H;
+        const etdMinutes = String(selectedTime.$m).padStart(2, '0');
+        data.etd = `${etdHours}:${etdMinutes}`;
+
+        console.log(data);
+        flights.push(data);
+        // const filePath = '../../seederData.js';
+        // fs.writeFileSync(filePath, `export default ${JSON.stringify(flights)};`);
+    };
+
+
     return (
-        <Box height={'100%'} sx={{ display: 'flex', flexDirection: 'column' }}>
-            <form style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                onSubmit={handleSubmit(onSubmit)}
-            >
-                {/* Tabs */}
-                <Box borderBottom={1} borderColor={'divider'}>
-                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
-                        <Tab label="Aircrew" {...a11yProps(0)} />
-                        <Tab label="Mission" {...a11yProps(1)} />
-                        <Tab label="Weather" {...a11yProps(2)} />
-                        <Tab label="Final Risk" {...a11yProps(3)} />
-                        <Tab label="MBO" {...a11yProps(4)} />
-                        <Tab label="FMAA" {...a11yProps(5)} />
-                    </Tabs>
-                </Box>
+        <form style={{ height: '100%', display: 'flex', flexDirection: 'column', marginBottom: '15px' }}
+            onSubmit={handleSubmit(onSubmit)}
+        >
+            {/* Tabs */}
+            <Box borderBottom={1} borderColor={'divider'}>
+                <Tabs value={value} onChange={handleChange} variant="scrollable"
+                    scrollButtons
+                    allowScrollButtonsMobile
+                >
+                    <Tab label="Aircrew" {...a11yProps(0)} />
+                    <Tab label="Mission" {...a11yProps(1)} />
+                    <Tab label="Weather" {...a11yProps(2)} />
+                    <Tab label="Final Risk" {...a11yProps(3)} />
+                    <Tab label="MBO" {...a11yProps(4)} />
+                    <Tab label="FMAA" {...a11yProps(5)} />
+                </Tabs>
+            </Box>
 
-                {/* Tab Panels */}
-                <CustomTabPanel value={value} index={0}>
-                    <Aircrew control={control} watch={watch} />
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={1}>
-                    <Mission control={control} watch={watch} />
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={2}>
-                    <Weather control={control} watch={watch} />
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={3}>
-                    <FinalRisk control={control} watch={watch} />
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={4}>
-                    Placeholder
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={5}>
-                    Placeholder
-                </CustomTabPanel>
+            {/* Tab Panels */}
+            <CustomTabPanel value={value} index={0}>
+                <Aircrew control={control} watch={watch} />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+                <Mission control={control} watch={watch} />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={2}>
+                <Weather control={control} watch={watch} />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={3}>
+                <FinalRisk control={control} watch={watch} />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={4}>
+                <MBO control={control} watch={watch} />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={5}>
+                <FMAA control={control} watch={watch} />
+            </CustomTabPanel>
 
-                {/* Submit Button */}
-                <Button variant="contained" type="submit" fullWidth sx={{ marginTop: 'auto', marginBottom: '5px' }}>
-                    File RCOP
-                </Button>
-            </form>
-        </Box >
+            {/* Submit Button */}
+            <Button variant="contained" type="submit" fullWidth sx={{ marginTop: 'auto', marginBottom: '15px' }}>
+                File RCOP
+            </Button>
+        </form>
 
 
     );

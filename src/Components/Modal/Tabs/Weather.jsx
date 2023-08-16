@@ -112,17 +112,17 @@ export default function Weather({ control, watch }) {
                 </Grid>
                 <Grid xs={12} sm={6} md={4} marginBottom={3}>
                     <Controller name="gt25IllumAndgt30degrees" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'Greater than 25% and 30°'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'Greater than 25% and 30°'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={4} marginBottom={3}>
                     <Controller name="lt25IllumAndlt30degrees" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'Less than 25% and 30°'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'Less than 25% and 30°'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={4} marginBottom={3}>
                     <Controller name="gt25IllumAndgt30degreesLimitedLighting" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={`< 25% and 30° (Limited Lighting)`} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={`< 25% and 30° (Limited Lighting)`} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
             </Grid>
