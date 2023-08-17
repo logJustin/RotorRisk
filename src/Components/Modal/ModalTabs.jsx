@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -51,12 +51,12 @@ function a11yProps(index) {
 
 export default function ModalTabs() {
 
-    const [value, setValue] = React.useState(0);
+    const [tabValue, setTabValue] = React.useState(0);
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        setTabValue(newValue);
     };
 
-    const { control, handleSubmit, watch } = useForm({
+    const { control, handleSubmit, watch, setValue } = useForm({
         defaultValues: {
             date: null,
             aircraftType: 'HH60M',
@@ -196,6 +196,7 @@ export default function ModalTabs() {
         }
     };
 
+    const crewMembers = ['pc', 'pi', 'nrcm1', 'nrcm2', 'nrcm3'];
     const onSubmit = (data) => {
         // Flight Date
         data.date = formatDate(data.date);
@@ -205,7 +206,6 @@ export default function ModalTabs() {
         const etdMinutes = String(data.etd.$m).padStart(2, '0');
         data.etd = `${etdHours}:${etdMinutes}`;
 
-        const crewMembers = ['pc', 'pi', 'nrcm1', 'nrcm2', 'nrcm3'];
 
         // update crewmembers
         for (const crewmember of crewMembers) {
@@ -223,19 +223,33 @@ export default function ModalTabs() {
         }
 
         console.log(data);
-
         flights.push(data);
     };
 
-    // Watch and useEffect for multiple fields
-    const fieldsToWatch = ['pc', 'pi', 'nrcm1', 'nrcm2', 'nrcm3'];
+
+    const previousFieldValues = useRef({});
+    const isFirstRender = useRef(true);
 
     useEffect(() => {
-        fieldsToWatch.forEach(fieldName => {
-            const fieldValue = watch(fieldName);
-            console.log(`${fieldName} field value changed:`, fieldValue);
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return; // Skip the initial render
+        }
+
+        crewMembers.forEach(crewRole => {
+            const crewMember = watch(crewRole);
+            const previousValue = previousFieldValues.current[crewRole];
+
+            if (crewMember !== previousValue) {
+                console.log(`${crewRole} field value changed:`, crewMember);
+
+                // Update the previous value in the ref
+                previousFieldValues.current[crewRole] = crewMember;
+
+            }
         });
-    }, fieldsToWatch.map(fieldName => watch(fieldName)));
+    }, [crewMembers.map(crewRole => watch(crewRole))]);
+
 
 
     return (
@@ -244,7 +258,7 @@ export default function ModalTabs() {
         >
             {/* Tabs */}
             <Box borderBottom={1} borderColor={'divider'}>
-                <Tabs value={value} onChange={handleChange} variant="scrollable"
+                <Tabs value={tabValue} onChange={handleChange} variant="scrollable"
                     scrollButtons
                     allowScrollButtonsMobile
                 >
@@ -258,22 +272,22 @@ export default function ModalTabs() {
             </Box>
 
             {/* Tab Panels */}
-            <CustomTabPanel value={value} index={0}>
+            <CustomTabPanel value={tabValue} index={0}>
                 <Aircrew control={control} watch={watch} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
+            <CustomTabPanel value={tabValue} index={1}>
                 <Mission control={control} watch={watch} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={2}>
+            <CustomTabPanel value={tabValue} index={2}>
                 <Weather control={control} watch={watch} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={3}>
+            <CustomTabPanel value={tabValue} index={3}>
                 <FinalRisk control={control} watch={watch} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={4}>
+            <CustomTabPanel value={tabValue} index={4}>
                 <MBO control={control} watch={watch} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={5}>
+            <CustomTabPanel value={tabValue} index={5}>
                 <FMAA control={control} watch={watch} />
             </CustomTabPanel>
 
