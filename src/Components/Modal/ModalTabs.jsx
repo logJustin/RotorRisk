@@ -13,7 +13,6 @@ import MBO from './Tabs/MBO'
 import FMAA from './Tabs/FMAA'
 import flights from '../../data/seederFlightData'
 import aircrews from '../../data/seederCrewData';
-import riskMatrix from '../../data/riskMatrix'
 
 
 function CustomTabPanel(props) {
@@ -216,7 +215,6 @@ export default function ModalTabs() {
                 atleast25InAO: data[`${crewmember}25HoursInAO`]
             };
             crewmemberUpdate(data[crewmember], hoursProperties);
-
             data[`${crewmember}HoursTotal`] = hoursProperties.aircraft;
             data[`${crewmember}HoursNG`] = hoursProperties.NG;
             data[`${crewmember}25HoursInAO`] = hoursProperties.atleast25InAO;
@@ -225,30 +223,6 @@ export default function ModalTabs() {
         console.log(data);
         flights.push(data);
     };
-
-
-    const previousFieldValues = useRef({});
-    const isFirstRender = useRef(true);
-
-    useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            return; // Skip the initial render
-        }
-
-        crewMembers.forEach(crewRole => {
-            const crewMember = watch(crewRole);
-            const previousValue = previousFieldValues.current[crewRole];
-
-            if (crewMember !== previousValue) {
-                console.log(`${crewRole} field value changed:`, crewMember);
-
-                // Update the previous value in the ref
-                previousFieldValues.current[crewRole] = crewMember;
-
-            }
-        });
-    }, [crewMembers.map(crewRole => watch(crewRole))]);
 
 
 
@@ -273,7 +247,7 @@ export default function ModalTabs() {
 
             {/* Tab Panels */}
             <CustomTabPanel value={tabValue} index={0}>
-                <Aircrew control={control} watch={watch} />
+                <Aircrew control={control} watch={watch} setValue={setValue} />
             </CustomTabPanel>
             <CustomTabPanel value={tabValue} index={1}>
                 <Mission control={control} watch={watch} />

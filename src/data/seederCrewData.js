@@ -1,7 +1,7 @@
 const aircrews = {
     'CPT Reynolds': {
         position: 'pilot',
-        aircraft: 500,
+        aircraft: 501,
         NG: 115,
         atleast25InAO: true
     },
@@ -61,7 +61,7 @@ const aircrews = {
     },
     'CPL Scott': {
         position: 'nrcm',
-        aircraft: 860,
+        aircraft: 149,
         NG: 420,
         atleast25InAO: true
     }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { InputLabel, MenuItem, FormControl, Select, TextField } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -10,8 +10,10 @@ import { Controller } from "react-hook-form"
 import CheckboxesFlightConditions from '../Components/CheckboxesFlightConditions'
 import aircrews from '../../../data/seederCrewData'
 import aircraftInfo from '../../../data/aircraftTailNumbers'
+import AircrewRiskLookupValue from '../../../utils/AircrewRiskLookupValue';
+import CalculateHighestRisk from '../../../utils/CalculateHighestRisk';
 
-export default function Aircrew({ control, watch }) {
+export default function Aircrew({ control, watch, setValue }) {
 
     const crewSelect = (position) => (
         Object.entries(aircrews)
@@ -23,9 +25,31 @@ export default function Aircrew({ control, watch }) {
             ))
     )
 
+    const firstRender = useRef(true)
     const aircraftType = watch("aircraftType")
-    const aircrewInitialRisk = watch('aircrewInitialRisk', '');
+    const aircrewInitialRisk = watch('aircrewInitialRisk')
+    const pc = watch('pc')
+    const pi = watch('pi')
+    const nrcm1 = watch('nrcm1')
+    const nrcm2 = watch('nrcm2')
+    const nrcm3 = watch('nrcm3')
 
+    useEffect(() => {
+        if (!firstRender.current) {
+            const newAircrewInitialRiskPC = AircrewRiskLookupValue(aircrews[pc]?.aircraft, true)
+            const newAircrewInitialRiskPI = AircrewRiskLookupValue(aircrews[pi]?.aircraft, true)
+            const newAircrewInitialRiskNRCM1 = AircrewRiskLookupValue(aircrews[nrcm1]?.aircraft, false)
+            const newAircrewInitialRiskNRCM2 = AircrewRiskLookupValue(aircrews[nrcm2]?.aircraft, false)
+            const newAircrewInitialRiskNRCM3 = AircrewRiskLookupValue(aircrews[nrcm3]?.aircraft, false)
+
+            // Determine the highest risk level
+            const risks = [newAircrewInitialRiskPC, newAircrewInitialRiskPI, newAircrewInitialRiskNRCM1, newAircrewInitialRiskNRCM2, newAircrewInitialRiskNRCM3];
+            const highestRisk = CalculateHighestRisk(risks)
+            setValue('aircrewInitialRisk', highestRisk);
+        } else {
+            firstRender.current = false;
+        }
+    }, [pc, pi, nrcm1, nrcm2, nrcm3]);
     return (
         <>
             <Grid container justifyContent="space-evenly" spacing={2} sx={{

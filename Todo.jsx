@@ -2,6 +2,7 @@
 // DO
 //     Implement RiskLookupValue on utils & implement how to update categorical risks
 //     Hoist > 30/60/90 doesn't return a color on FlightsList
+//     Evalute NG risk, not only overall aircraft risk
 //     Add Fighter Management
 //     Write functionality for Brief and Approve buttons in LeftNavigation
 //     Margin bottom on File RCOP Button
