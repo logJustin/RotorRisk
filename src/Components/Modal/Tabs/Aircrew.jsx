@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { InputLabel, MenuItem, FormControl, Select, TextField } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -11,6 +12,7 @@ import CheckboxesFlightConditions from '../Components/CheckboxesFlightConditions
 import aircrews from '../../../data/seederCrewData'
 import aircraftInfo from '../../../data/aircraftTailNumbers'
 import AircrewRiskLookupValue from '../../../utils/AircrewRiskLookupValue';
+import AircrewRiskLookupValueNG from '../../../utils/AircrewRiskLookupValueNG';
 import CalculateHighestRisk from '../../../utils/CalculateHighestRisk';
 
 export default function Aircrew({ control, watch, setValue }) {
@@ -34,16 +36,22 @@ export default function Aircrew({ control, watch, setValue }) {
     const nrcm2 = watch('nrcm2')
     const nrcm3 = watch('nrcm3')
 
+
     useEffect(() => {
         if (!firstRender.current) {
-            const newAircrewInitialRiskPC = AircrewRiskLookupValue(aircrews[pc]?.aircraft, true)
-            const newAircrewInitialRiskPI = AircrewRiskLookupValue(aircrews[pi]?.aircraft, true)
-            const newAircrewInitialRiskNRCM1 = AircrewRiskLookupValue(aircrews[nrcm1]?.aircraft, false)
-            const newAircrewInitialRiskNRCM2 = AircrewRiskLookupValue(aircrews[nrcm2]?.aircraft, false)
-            const newAircrewInitialRiskNRCM3 = AircrewRiskLookupValue(aircrews[nrcm3]?.aircraft, false)
+            const newRiskPC = AircrewRiskLookupValue(aircrews[pc]?.aircraft, true)
+            const newRiskPI = AircrewRiskLookupValue(aircrews[pi]?.aircraft, true)
+            const newRiskNRCM1 = AircrewRiskLookupValue(aircrews[nrcm1]?.aircraft, false)
+            const newRiskNRCM2 = AircrewRiskLookupValue(aircrews[nrcm2]?.aircraft, false)
+            const newRiskNRCM3 = AircrewRiskLookupValue(aircrews[nrcm3]?.aircraft, false)
+            const newRiskPCNG = AircrewRiskLookupValueNG(aircrews[pc]?.NG, aircrews[pc]?.NG)
+            const newRiskPING = AircrewRiskLookupValueNG(aircrews[pi]?.NG, aircrews[pc]?.NG)
+            const newRiskNRCM1NG = AircrewRiskLookupValueNG(aircrews[nrcm1]?.NG, aircrews[pc]?.NG)
+            const newRiskNRCM2NG = AircrewRiskLookupValueNG(aircrews[nrcm2]?.NG, aircrews[pc]?.NG)
+            const newRiskNRCM3NG = AircrewRiskLookupValueNG(aircrews[nrcm3]?.NG, aircrews[pc]?.NG)
 
             // Determine the highest risk level
-            const risks = [newAircrewInitialRiskPC, newAircrewInitialRiskPI, newAircrewInitialRiskNRCM1, newAircrewInitialRiskNRCM2, newAircrewInitialRiskNRCM3];
+            const risks = [newRiskPC, newRiskPI, newRiskNRCM1, newRiskNRCM2, newRiskNRCM3];
             const highestRisk = CalculateHighestRisk(risks)
             setValue('aircrewInitialRisk', highestRisk);
         } else {

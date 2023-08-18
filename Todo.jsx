@@ -1,8 +1,9 @@
 
 // DO
-//     Implement RiskLookupValue on utils & implement how to update categorical risks
-//     Hoist > 30/60/90 doesn't return a color on FlightsList
 //     Evalute NG risk, not only overall aircraft risk
+//     Implement 25 Hours AO consideration for NG and Aircraft Risk Lookups
+//     Implement Mission Risk update
+//     Hoist > 30/60/90 doesn't return a color on FlightsList
 //     Add Fighter Management
 //     Write functionality for Brief and Approve buttons in LeftNavigation
 //     Margin bottom on File RCOP Button
@@ -20,3 +21,5 @@
 //  ✓  Residual Risk and Weather Mitigated Risk update the same value
 //  ✓  Delete unnecessary imports on the Tabs
 //  ✓  Add hours look up function and display on the FormModal
+//  ✓  Implement Yes/No logic for the riskMatrix
+//  ✓  Implement RiskLookupValue on utils & implement how to update categorical risks

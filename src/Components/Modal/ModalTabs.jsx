@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import { Box, Button } from '@mui/material';
 import { useForm } from "react-hook-form"
+import dayjs from 'dayjs';
 import Aircrew from './Tabs/Aircrew'
 import Mission from './Tabs/Mission'
 import Weather from './Tabs/Weather'
@@ -55,21 +56,22 @@ export default function ModalTabs() {
         setTabValue(newValue);
     };
 
+
     const { control, handleSubmit, watch, setValue } = useForm({
         defaultValues: {
-            date: null,
+            date: dayjs(new Date()),
             aircraftType: 'HH60M',
             aircraftTail: '',
             mission: '',
             missionStatement: '',
             route: '',
-            etd: '',
+            etd: dayjs(new Date()),
             ete: '',
             flightConditions: '',
             pc: '',
-            pcSeat: '',
+            pcSeat: 'Left',
             pi: '',
-            piSeat: '',
+            piSeat: 'Right',
             nrcm1: '',
             nrcm2: '',
             nrcm3: '',
@@ -151,7 +153,7 @@ export default function ModalTabs() {
             vague2to12: '',
             vagueLt2: '',
             missionRiskMitigation: '',
-            missionInitialRisk: 'M',
+            missionInitialRisk: 'L',
             missionMitigatedRisk: '',
             gt1000: '',
             lt1000: '',
@@ -172,7 +174,7 @@ export default function ModalTabs() {
             modTurbulenceIcing: '',
             oatNegative10Positive30: '',
             weatherRiskMitigation: '',
-            weatherInitialRisk: 'H',
+            weatherInitialRisk: 'L',
             weatherMitigatedRisk: '',
             finalRiskMitigation: '',
             finalMitigatedRisk: ''
@@ -253,7 +255,7 @@ export default function ModalTabs() {
                 <Mission control={control} watch={watch} />
             </CustomTabPanel>
             <CustomTabPanel value={tabValue} index={2}>
-                <Weather control={control} watch={watch} />
+                <Weather control={control} watch={watch} setValue={setValue} />
             </CustomTabPanel>
             <CustomTabPanel value={tabValue} index={3}>
                 <FinalRisk control={control} watch={watch} />

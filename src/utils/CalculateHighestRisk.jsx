@@ -1,4 +1,4 @@
-const riskOrder = ["L", "M", "H"];
+const riskOrder = ["L", "M", "M*", "H", "H*", "EH", "EH*"];
 
 const CalculateHighestRisk = (risks) => {
     return risks.reduce((prevRisk, currentRisk) => {

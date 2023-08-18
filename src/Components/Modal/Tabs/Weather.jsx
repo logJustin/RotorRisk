@@ -1,43 +1,70 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { TextField } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import FormLabel from '@mui/material/FormLabel';
 import { Controller } from "react-hook-form"
 import CheckboxesModeOfFlight from '../Components/CheckboxesModeOfFlight'
 import CheckboxesBinary from '../Components/CheckboxesBinary'
-import AircrewRiskLookupValue from '../../../utils/AircrewRiskLookupValue';
 import CalculateHighestRisk from '../../../utils/CalculateHighestRisk';
+import LookupRiskValue from '../../../utils/LookupRiskValue';
 
-export default function Weather({ control, watch }) {
-    const weatherInitialRisk = watch('weatherInitialRisk', '');
-
+export default function Weather({ control, watch, setValue }) {
 
     // implement this for the Weather Tab
-    // const firstRender = useRef(true)
-    // const aircraftType = watch("aircraftType")
-    // const aircrewInitialRisk = watch('aircrewInitialRisk')
-    // const pc = watch('pc')
-    // const pi = watch('pi')
-    // const nrcm1 = watch('nrcm1')
-    // const nrcm2 = watch('nrcm2')
-    // const nrcm3 = watch('nrcm3')
+    const firstRender = useRef(true)
+    const weatherInitialRisk = watch('weatherInitialRisk')
+    const gt1000 = watch('gt1000')
+    const lt1000 = watch('lt1000')
+    const lt700 = watch('lt700')
+    const lt500 = watch('lt500')
+    const gt3 = watch('gt3')
+    const gt2 = watch('gt2')
+    const gt1 = watch('gt1')
+    const lt1 = watch('lt1')
+    const altRequired = watch('altRequired')
+    const gt25IllumAndgt30degrees = watch('gt25IllumAndgt30degrees')
+    const lt25IllumAndlt30degrees = watch('lt25IllumAndlt30degrees')
+    const gt25IllumAndgt30degreesLimitedLighting = watch('gt25IllumAndgt30degreesLimitedLighting')
+    const windGt30 = watch('windGt30')
+    const windGt30Hoist = watch('windGt30Hoist')
+    const gustSpreadGt20 = watch('gustSpreadGt20')
+    const forecastThunderstorms = watch('forecastThunderstorms')
+    const modTurbulenceIcing = watch('modTurbulenceIcing')
+    const oatNegative10Positive30 = watch('oatNegative10Positive30')
 
-    // useEffect(() => {
-    //     if (!firstRender.current) {
-    //         const newAircrewInitialRiskPC = AircrewRiskLookupValue(aircrews[pc]?.aircraft, true)
-    //         const newAircrewInitialRiskPI = AircrewRiskLookupValue(aircrews[pi]?.aircraft, true)
-    //         const newAircrewInitialRiskNRCM1 = AircrewRiskLookupValue(aircrews[nrcm1]?.aircraft, false)
-    //         const newAircrewInitialRiskNRCM2 = AircrewRiskLookupValue(aircrews[nrcm2]?.aircraft, false)
-    //         const newAircrewInitialRiskNRCM3 = AircrewRiskLookupValue(aircrews[nrcm3]?.aircraft, false)
+    useEffect(() => {
+        if (!firstRender.current) {
+            const newgt1000 = LookupRiskValue('gt1000', gt1000)
+            const newlt1000 = LookupRiskValue('lt1000', lt1000)
+            const newlt700 = LookupRiskValue('lt700', lt700)
+            const newlt500 = LookupRiskValue('lt500', lt500)
+            const newgt3 = LookupRiskValue('gt3', gt3)
+            const newgt2 = LookupRiskValue('gt2', gt2)
+            const newgt1 = LookupRiskValue('gt1', gt1)
+            const newlt1 = LookupRiskValue('lt1', lt1)
+            const newaltRequired = LookupRiskValue('altRequired', altRequired)
+            const newgt25IllumAndgt30degrees = LookupRiskValue('gt25IllumAndgt30degrees', gt25IllumAndgt30degrees)
+            const newlt25IllumAndlt30degrees = LookupRiskValue('lt25IllumAndlt30degrees', lt25IllumAndlt30degrees)
+            const newgt25IllumAndgt30degreesLimitedLighting = LookupRiskValue('gt25IllumAndgt30degreesLimitedLighting', gt25IllumAndgt30degreesLimitedLighting)
+            const newWinds = LookupRiskValue('windGt30', windGt30)
+            const newWindsHoist = LookupRiskValue('windGt30Hoist', windGt30Hoist)
+            const newGustSpread = LookupRiskValue('gustSpreadGt20', gustSpreadGt20)
+            const newThunderstorms = LookupRiskValue('forecastThunderstorms', forecastThunderstorms)
+            const newTurbulence = LookupRiskValue('modTurbulenceIcing', modTurbulenceIcing)
+            const newOAT = LookupRiskValue('oatNegative10Positive30', oatNegative10Positive30)
 
-    //         // Determine the highest risk level
-    //         const risks = [newAircrewInitialRiskPC, newAircrewInitialRiskPI, newAircrewInitialRiskNRCM1, newAircrewInitialRiskNRCM2, newAircrewInitialRiskNRCM3];
-    //         const highestRisk = CalculateHighestRisk(risks)
-    //         setValue('aircrewInitialRisk', highestRisk);
-    //     } else {
-    //         firstRender.current = false;
-    //     }
-    // }, [pc, pi, nrcm1, nrcm2, nrcm3]);
+            // Determine the highest risk level
+            const risks = [newWinds, newWindsHoist, newGustSpread, newThunderstorms, newTurbulence, newOAT, newgt1000, newlt1000, newlt700, newlt500, newgt3, newgt2, newgt1, newlt1, newaltRequired, , newgt25IllumAndgt30degrees, newlt25IllumAndlt30degrees, newgt25IllumAndgt30degreesLimitedLighting];
+            const highestRisk = CalculateHighestRisk(risks)
+
+            // set the initial risk of weather
+            setValue('weatherInitialRisk', highestRisk);
+        } else {
+            firstRender.current = false;
+        }
+    }, [windGt30, windGt30, windGt30Hoist, gustSpreadGt20, forecastThunderstorms, modTurbulenceIcing, oatNegative10Positive30, gt1000, lt1000, lt700, lt500, gt3, gt2, gt1, lt1, altRequired, gt25IllumAndgt30degrees, lt25IllumAndlt30degrees, gt25IllumAndgt30degreesLimitedLighting]);
+
+
     return (
         <>
             <Grid container justifyContent="space-evenly" spacing={2} sx={{
