@@ -8,7 +8,7 @@ import '../FlightsTable/FlightsList.css'
 
 const drawerWidth = 240;
 
-function ResponsiveDrawer(props, lightMode, handleLightModeToggle) {
+function Layout(props, lightMode, handleLightModeToggle) {
 
     // state for the navBar on a mobile format is saved here
     // so it can be passed as props both Header & LeftNavigation
@@ -20,14 +20,39 @@ function ResponsiveDrawer(props, lightMode, handleLightModeToggle) {
         setMobileOpen(!mobileOpen);
     };
 
+    // used for Editing an RCOP, then passing it into FormModal
+    const [flightData, setFlightData] = React.useState(null);
+    const [formMode, setFormMode] = React.useState('File')
+
+    // State for Modal
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = (flight, mode) => {
+        setOpen(true)
+        setFlightData(flight);
+        setFormMode(mode)
+    };
+    const handleClose = () => setOpen(false);
+
+
     return (
         <Box sx={{ display: 'flex' }}>
             <Header drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle} />
-            <LeftNavigation drawerWidth={drawerWidth} props={props} mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} lightMode={props.lightMode} handleLightModeToggle={props.handleLightModeToggle} />
-            <FlightsList drawerWidth={drawerWidth} />
+            <LeftNavigation
+                drawerWidth={drawerWidth}
+                props={props} mobileOpen={mobileOpen}
+                handleDrawerToggle={handleDrawerToggle}
+                lightMode={props.lightMode}
+                handleLightModeToggle={props.handleLightModeToggle}
+                open={open}
+                handleClose={handleClose}
+                handleOpen={handleOpen}
+                flightData={flightData}
+                formMode={formMode}
+            />
+            <FlightsList drawerWidth={drawerWidth} open={open} handleClose={handleClose} handleOpen={handleOpen} />
         </Box>
     );
 }
 
 
-export default ResponsiveDrawer;
+export default Layout;

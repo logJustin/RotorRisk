@@ -1,14 +1,33 @@
-const AircrewRiskLookupValue = (hours, pilot) => {
-    if (hours === undefined) {
-        return 'L'; // If hours is undefined, return low risk
-    } else if (pilot && hours > 499) {
-        return 'L'; // If hours is greater than 500
-    } else if (pilot && hours > 100) {
-        return 'M'; // If hours is greater than 100
-    } else if (!pilot && hours > 149) {
-        return 'L'; // If hours is greater than 149
+const AircrewRiskLookupValue = (hours, pilot, timeInAO) => {
+    if (pilot) {
+        if (timeInAO) {
+            if (hours === undefined || hours > 499) {
+                return 'L'; // Low risk
+            } else if (hours > 100) {
+                return 'M'; // Medium risk
+            }
+        } else {
+            if (hours === undefined || hours > 1000) {
+                return 'L'; // Low risk
+            } else {
+                return 'M'; // Medium risk
+            }
+        }
     } else {
-        return 'H'; // Default case for hours less than or equal to 100
+        if (timeInAO) {
+            if (hours === undefined || hours > 149) {
+                return 'L'; // Low risk
+            } else {
+                return 'M'; // Medium risk
+            }
+        } else {
+            if (hours === undefined || hours > 499) {
+                return 'L'; // Low risk
+            } else {
+                return 'M'; // Medium risk
+            }
+        }
     }
 };
+
 export default AircrewRiskLookupValue;

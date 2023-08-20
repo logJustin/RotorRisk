@@ -24,13 +24,13 @@ const CheckboxesModeOfFlight = ({ value, onChange, task }) => {
         <>
             <FormLabel sx={{ textAlign: 'center' }} component="legend">{task}</FormLabel>
             <Grid container justifyContent="space-evenly"
-            // borderBottom={'1px solid white'}
             >
                 <FormControlLabel
                     control={
                         <Checkbox
                             checked={value.includes('D')}
                             onChange={() => handleCheckboxChange('D')}
+                            disabled={task === 'Blackout Operations'}
                         />
                     }
                     label="D"
@@ -41,6 +41,8 @@ const CheckboxesModeOfFlight = ({ value, onChange, task }) => {
                         <Checkbox
                             checked={value.includes('UN')}
                             onChange={() => handleCheckboxChange('UN')}
+                            disabled={
+                                task === 'Blackout Operations' || task === 'Terrain Flight' || task === 'Combat Manuevering Flight' || task === 'CALFEX' || task === 'AMS Training'}
                         />
                     }
                     label="UN"

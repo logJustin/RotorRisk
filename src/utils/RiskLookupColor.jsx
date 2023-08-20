@@ -1,6 +1,6 @@
 
 import risks from '../data/riskMatrix';
-const [lowRisk, moderateRisk, highRisk] = ['#8CD47E', '#F8D66D', '#FF6961']
+const [lowRisk, moderateRisk, highRisk, extremelyHighRisk] = ['#8CD47E', '#F8D66D', '#FF6961', '#653239']
 
 const determineHighestRisk = (task, flightModes) => {
     if (!flightModes) {
@@ -27,8 +27,16 @@ const determineHighestRisk = (task, flightModes) => {
             return lowRisk;
         case 'moderateRisk':
             return moderateRisk;
+        case 'moderateNonmitigableRisk':
+            return moderateRisk;
         case 'highRisk':
             return highRisk;
+        case 'highNonmitigableRisk':
+            return highRisk;
+        case 'extremelyHighRisk':
+            return extremelyHighRisk;
+        case 'extremelyHighNonmitigableRisk':
+            return extremelyhighRisk;
     }
 };
 

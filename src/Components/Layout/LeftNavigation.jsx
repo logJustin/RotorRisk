@@ -16,11 +16,8 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 
 
-export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, mobileOpen, lightMode, handleLightModeToggle }) {
-    // State for Modal
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, mobileOpen, lightMode, handleLightModeToggle, open, handleClose, handleOpen, flightData, formMode }) {
+
 
     const { window } = props;
     const container = window !== undefined ? () => window().document.body : undefined;
@@ -42,7 +39,7 @@ export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, 
                     </ListItem>
 
                     <ListItem key='Create' disablePadding>
-                        <ListItemButton onClick={handleOpen}>
+                        <ListItemButton onClick={() => { handleOpen('', 'File') }}>
                             <ListItemIcon>
                                 <AddCircleOutlineSharpIcon />
                             </ListItemIcon>
@@ -95,7 +92,7 @@ export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, 
             sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
             aria-label="mailbox folders"
         >
-            <FormModal open={open} handleClose={handleClose} lightMode={props.lightMode} />
+            <FormModal open={open} handleClose={handleClose} lightMode={props.lightMode} flightData={flightData} formMode={formMode} />
 
             {/* Tablet & Mobile Drawer */}
             <Drawer

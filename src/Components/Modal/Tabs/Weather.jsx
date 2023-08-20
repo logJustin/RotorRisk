@@ -10,7 +10,6 @@ import LookupRiskValue from '../../../utils/LookupRiskValue';
 
 export default function Weather({ control, watch, setValue }) {
 
-    // implement this for the Weather Tab
     const firstRender = useRef(true)
     const weatherInitialRisk = watch('weatherInitialRisk')
     const gt1000 = watch('gt1000')
@@ -62,7 +61,7 @@ export default function Weather({ control, watch, setValue }) {
         } else {
             firstRender.current = false;
         }
-    }, [windGt30, windGt30, windGt30Hoist, gustSpreadGt20, forecastThunderstorms, modTurbulenceIcing, oatNegative10Positive30, gt1000, lt1000, lt700, lt500, gt3, gt2, gt1, lt1, altRequired, gt25IllumAndgt30degrees, lt25IllumAndlt30degrees, gt25IllumAndgt30degreesLimitedLighting]);
+    }, [windGt30, windGt30Hoist, gustSpreadGt20, forecastThunderstorms, modTurbulenceIcing, oatNegative10Positive30, gt1000, lt1000, lt700, lt500, gt3, gt2, gt1, lt1, altRequired, gt25IllumAndgt30degrees, lt25IllumAndlt30degrees, gt25IllumAndgt30degreesLimitedLighting]);
 
 
     return (

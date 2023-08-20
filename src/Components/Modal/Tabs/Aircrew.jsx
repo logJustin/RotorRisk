@@ -1,13 +1,12 @@
 import React, { useEffect, useRef } from 'react';
+import { Controller } from "react-hook-form"
 import { InputLabel, MenuItem, FormControl, Select, TextField } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import Grid from '@mui/material/Unstable_Grid2';
 import FormLabel from '@mui/material/FormLabel';
-import { Controller } from "react-hook-form"
 import CheckboxesFlightConditions from '../Components/CheckboxesFlightConditions'
 import aircrews from '../../../data/seederCrewData'
 import aircraftInfo from '../../../data/aircraftTailNumbers'
@@ -35,23 +34,46 @@ export default function Aircrew({ control, watch, setValue }) {
     const nrcm1 = watch('nrcm1')
     const nrcm2 = watch('nrcm2')
     const nrcm3 = watch('nrcm3')
+    const pcRisk = watch('pcRisk')
+    const piRisk = watch('piRisk')
+    const nrcm1Risk = watch('nrcm1Risk')
+    const nrcm2Risk = watch('nrcm2Risk')
+    const nrcm3Risk = watch('nrcm3Risk')
 
 
     useEffect(() => {
         if (!firstRender.current) {
-            const newRiskPC = AircrewRiskLookupValue(aircrews[pc]?.aircraft, true)
-            const newRiskPI = AircrewRiskLookupValue(aircrews[pi]?.aircraft, true)
-            const newRiskNRCM1 = AircrewRiskLookupValue(aircrews[nrcm1]?.aircraft, false)
-            const newRiskNRCM2 = AircrewRiskLookupValue(aircrews[nrcm2]?.aircraft, false)
-            const newRiskNRCM3 = AircrewRiskLookupValue(aircrews[nrcm3]?.aircraft, false)
-            const newRiskPCNG = AircrewRiskLookupValueNG(aircrews[pc]?.NG, aircrews[pc]?.NG)
-            const newRiskPING = AircrewRiskLookupValueNG(aircrews[pi]?.NG, aircrews[pc]?.NG)
-            const newRiskNRCM1NG = AircrewRiskLookupValueNG(aircrews[nrcm1]?.NG, aircrews[pc]?.NG)
-            const newRiskNRCM2NG = AircrewRiskLookupValueNG(aircrews[nrcm2]?.NG, aircrews[pc]?.NG)
-            const newRiskNRCM3NG = AircrewRiskLookupValueNG(aircrews[nrcm3]?.NG, aircrews[pc]?.NG)
+            const newRiskPC = AircrewRiskLookupValue(aircrews[pc]?.aircraft, true, aircrews[pc]?.atleast25InAO)
+            const newRiskPI = AircrewRiskLookupValue(aircrews[pi]?.aircraft, true, aircrews[pi]?.atleast25InAO)
+            const newRiskNRCM1 = AircrewRiskLookupValue(aircrews[nrcm1]?.aircraft, false, aircrews[nrcm1]?.atleast25InAO)
+            const newRiskNRCM2 = AircrewRiskLookupValue(aircrews[nrcm2]?.aircraft, false, aircrews[nrcm2]?.atleast25InAO)
+            const newRiskNRCM3 = AircrewRiskLookupValue(aircrews[nrcm3]?.aircraft, false, aircrews[nrcm3]?.atleast25InAO)
+            const newRiskPCNG = AircrewRiskLookupValueNG(aircrews[pc]?.NG, aircrews[pc]?.atleast25InAO)
+            const newRiskPING = AircrewRiskLookupValueNG(aircrews[pi]?.NG, aircrews[pi]?.atleast25InAO)
+            const newRiskNRCM1NG = AircrewRiskLookupValueNG(aircrews[nrcm1]?.NG, aircrews[nrcm1]?.atleast25InAO)
+            const newRiskNRCM2NG = AircrewRiskLookupValueNG(aircrews[nrcm2]?.NG, aircrews[nrcm2]?.atleast25InAO)
+            const newRiskNRCM3NG = AircrewRiskLookupValueNG(aircrews[nrcm3]?.NG, aircrews[nrcm3]?.atleast25InAO)
+
+            function compareRiskLevels(risk1, risk2) {
+                const hierarchy = ["L", "M"];
+                return hierarchy.indexOf(risk1) < hierarchy.indexOf(risk2) ? risk2 : risk1;
+            }
+
+            const biggestpcRisk = compareRiskLevels(newRiskPC, newRiskPCNG)
+            const biggestpiRisk = compareRiskLevels(newRiskPI, newRiskPING)
+            const biggestnrcm1Risk = compareRiskLevels(newRiskNRCM1, newRiskNRCM1NG)
+            const biggestnrcm2Risk = compareRiskLevels(newRiskNRCM2, newRiskNRCM2NG)
+            const biggestnrcm3Risk = compareRiskLevels(newRiskNRCM3, newRiskNRCM3NG)
+
+            setValue('pcRisk', biggestpcRisk)
+            setValue('piRisk', biggestpiRisk)
+            setValue('nrcm1Risk', biggestnrcm1Risk)
+            setValue('nrcm2Risk', biggestnrcm2Risk)
+            setValue('nrcm3Risk', biggestnrcm3Risk)
+
 
             // Determine the highest risk level
-            const risks = [newRiskPC, newRiskPI, newRiskNRCM1, newRiskNRCM2, newRiskNRCM3];
+            const risks = [biggestpcRisk, biggestpiRisk, biggestnrcm1Risk, biggestnrcm2Risk, biggestnrcm3Risk];
             const highestRisk = CalculateHighestRisk(risks)
             setValue('aircrewInitialRisk', highestRisk);
         } else {
@@ -160,8 +182,8 @@ export default function Aircrew({ control, watch, setValue }) {
                         name="etd"
                         control={control}
                         render={({ field }) => (
-                            <LocalizationProvider fullWidth dateAdapter={AdapterDayjs}>
-                                <DesktopTimePicker {...field} fullWidth label="ETD" views={['hours', 'minutes']} timeSteps={{ minutes: 15 }} ampm={false} />
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DesktopTimePicker sx={{ width: '100%' }} {...field} label="ETD" views={['hours', 'minutes']} timeSteps={{ minutes: 15 }} ampm={false} />
                             </LocalizationProvider>
                         )} />
                 </Grid>

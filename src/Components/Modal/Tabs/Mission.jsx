@@ -1,12 +1,150 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { TextField } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import FormLabel from '@mui/material/FormLabel';
 import { Controller } from "react-hook-form"
 import CheckboxesModeOfFlight from '../Components/CheckboxesModeOfFlight'
+import CheckboxesBinary from '../Components/CheckboxesBinary'
+import CalculateHighestRisk from '../../../utils/CalculateHighestRisk';
+import LookupRiskValue from '../../../utils/LookupRiskValue';
 
-export default function Mission({ control, watch }) {
-    const missionInitialRisk = watch('missionInitialRisk', '');
+export default function Mission({ control, watch, setValue }) {
+
+    const firstRender = useRef(true)
+    const missionInitialRisk = watch('missionInitialRisk');
+    const airAssault = watch('airAssault')
+    const AH64AttackReconSecurity = watch('AH64AttackReconSecurity')
+    const medevacCasevac = watch('medevacCasevac')
+    const multiship = watch('multiship')
+    const mixedMultiShip = watch('mixedMultiShip')
+    const MTFGeneralTraining = watch('MTFGeneralTraining')
+    const dartOneTimeFlight = watch('dartOneTimeFlight')
+    const blackout = watch('blackout')
+    const waterBucket = watch('waterBucket')
+    const paradrops = watch('paradrops')
+    const rappelSpiesFries = watch('rappelSpiesFries')
+    const externalLoads = watch('externalLoads')
+    const airmovementVIP = watch('airmovementVIP')
+    const continuation = watch('continuation')
+    const CEFS = watch('CEFS')
+    const fatCow = watch('fatCow')
+    const terrainFlight = watch('terrainFlight')
+    const mountainOperations = watch('mountainOperations')
+    const overwaterOperations = watch('overwaterOperations')
+    const pinnacleOperations = watch('pinnacleOperations')
+    const urbanOperations = watch('urbanOperations')
+    const confinedOperations = watch('confinedOperations')
+    const OGEwithin10 = watch('OGEwithin10')
+    const IGEwithin10 = watch('IGEwithin10')
+    const OGEwithin5 = watch('OGEwithin5')
+    const IGEwithin5 = watch('IGEwithin5')
+    const progessionEvaluationEPs = watch('progessionEvaluationEPs')
+    const IFRSimulatedIMC = watch('IFRSimulatedIMC')
+    const CBRNE = watch('CBRNE')
+    const nonLiveHoist = watch('nonLiveHoist')
+    const liveHoist = watch('liveHoist')
+    const combatManueveringFlight = watch('combatManueveringFlight')
+    const gunneryLiveFire = watch('gunneryLiveFire')
+    const CALFEX = watch('CALFEX')
+    const AMS = watch('AMS')
+    const pcGt90 = watch('pcGt90')
+    const pcGt60 = watch('pcGt60')
+    const pcGt30 = watch('pcGt30')
+    const piGt90 = watch('piGt90')
+    const piGt60 = watch('piGt60')
+    const piGt30 = watch('piGt30')
+    const nrcm1Gt90 = watch('nrcm1Gt90')
+    const nrcm1Gt60 = watch('nrcm1Gt60')
+    const nrcm1Gt30 = watch('nrcm1Gt30')
+    const nrcm2Gt90 = watch('nrcm2Gt90')
+    const nrcm2Gt60 = watch('nrcm2Gt60')
+    const nrcm2Gt30 = watch('nrcm2Gt30')
+    const nrcm3Gt90 = watch('nrcm3Gt90')
+    const nrcm3Gt60 = watch('nrcm3Gt60')
+    const nrcm3Gt30 = watch('nrcm3Gt30')
+    const hoistGt90 = watch('hoistGt90')
+    const hoistGt60 = watch('hoistGt60')
+    const hoistGt30 = watch('hoistGt30')
+    const specificGt12 = watch('specificGt12')
+    const specific2to12 = watch('specific2to12')
+    const specificLt2 = watch('specificLt2')
+    const vagueGt12 = watch('vagueGt12')
+    const vague2to12 = watch('vague2to12')
+    const vagueLt2 = watch('vagueLt2')
+
+    useEffect(() => {
+        if (!firstRender.current) {
+            const newairAssault = LookupRiskValue('airAssault', airAssault)
+            const newAH64AttackReconSecurity = LookupRiskValue('AH64AttackReconSecurity', AH64AttackReconSecurity)
+            const newmedevacCasevac = LookupRiskValue('medevacCasevac', medevacCasevac)
+            const newmultiship = LookupRiskValue('multiship', multiship)
+            const newmixedMultiShip = LookupRiskValue('mixedMultiShip', mixedMultiShip)
+            const newMTFGeneralTraining = LookupRiskValue('MTFGeneralTraining', MTFGeneralTraining)
+            const newdartOneTimeFlight = LookupRiskValue('dartOneTimeFlight', dartOneTimeFlight)
+            const newblackout = LookupRiskValue('blackout', blackout)
+            const newwaterBucket = LookupRiskValue('waterBucket', waterBucket)
+            const newparadrops = LookupRiskValue('paradrops', paradrops)
+            const newrappelSpiesFries = LookupRiskValue('rappelSpiesFries', rappelSpiesFries)
+            const newexternalLoads = LookupRiskValue('externalLoads', externalLoads)
+            const newairmovementVIP = LookupRiskValue('airmovementVIP', airmovementVIP)
+            const newcontinuation = LookupRiskValue('continuation', continuation)
+            const newCEFS = LookupRiskValue('CEFS', CEFS)
+            const newfatCow = LookupRiskValue('fatCow', fatCow)
+            const newterrainFlight = LookupRiskValue('terrainFlight', terrainFlight)
+            const newmountainOperations = LookupRiskValue('mountainOperations', mountainOperations)
+            const newoverwaterOperations = LookupRiskValue('overwaterOperations', overwaterOperations)
+            const newpinnacleOperations = LookupRiskValue('pinnacleOperations', pinnacleOperations)
+            const newurbanOperations = LookupRiskValue('urbanOperations', urbanOperations)
+            const newconfinedOperations = LookupRiskValue('confinedOperations', confinedOperations)
+            const newOGEwithin10 = LookupRiskValue('OGEwithin10', OGEwithin10)
+            const newIGEwithin10 = LookupRiskValue('IGEwithin10', IGEwithin10)
+            const newOGEwithin5 = LookupRiskValue('OGEwithin5', OGEwithin5)
+            const newIGEwithin5 = LookupRiskValue('IGEwithin5', IGEwithin5)
+            const newprogessionEvaluationEPs = LookupRiskValue('progessionEvaluationEPs', progessionEvaluationEPs)
+            const newIFRSimulatedIMC = LookupRiskValue('IFRSimulatedIMC', IFRSimulatedIMC)
+            const newCBRNE = LookupRiskValue('CBRNE', CBRNE)
+            const newnonLiveHoist = LookupRiskValue('nonLiveHoist', nonLiveHoist)
+            const newliveHoist = LookupRiskValue('liveHoist', liveHoist)
+            const newcombatManueveringFlight = LookupRiskValue('combatManueveringFlight', combatManueveringFlight)
+            const newgunneryLiveFire = LookupRiskValue('gunneryLiveFire', gunneryLiveFire)
+            const newCALFEX = LookupRiskValue('CALFEX', CALFEX)
+            const newAMS = LookupRiskValue('AMS', AMS)
+            const newpcGt90 = LookupRiskValue('pcGt90', pcGt90)
+            const newpcGt60 = LookupRiskValue('pcGt60', pcGt60)
+            const newpcGt30 = LookupRiskValue('pcGt30', pcGt30)
+            const newpiGt90 = LookupRiskValue('piGt90', piGt90)
+            const newpiGt60 = LookupRiskValue('piGt60', piGt60)
+            const newpiGt30 = LookupRiskValue('piGt30', piGt30)
+            const newnrcm1Gt90 = LookupRiskValue('nrcm1Gt90', nrcm1Gt90)
+            const newnrcm1Gt60 = LookupRiskValue('nrcm1Gt60', nrcm1Gt60)
+            const newnrcm1Gt30 = LookupRiskValue('nrcm1Gt30', nrcm1Gt30)
+            const newnrcm2Gt90 = LookupRiskValue('nrcm2Gt90', nrcm2Gt90)
+            const newnrcm2Gt60 = LookupRiskValue('nrcm2Gt60', nrcm2Gt60)
+            const newnrcm2Gt30 = LookupRiskValue('nrcm2Gt30', nrcm2Gt30)
+            const newnrcm3Gt90 = LookupRiskValue('nrcm3Gt90', nrcm3Gt90)
+            const newnrcm3Gt60 = LookupRiskValue('nrcm3Gt60', nrcm3Gt60)
+            const newnrcm3Gt30 = LookupRiskValue('nrcm3Gt30', nrcm3Gt30)
+            const newhoistGt90 = LookupRiskValue('hoistGt90', hoistGt90)
+            const newhoistGt60 = LookupRiskValue('hoistGt60', hoistGt60)
+            const newhoistGt30 = LookupRiskValue('hoistGt30', hoistGt30)
+            const newspecificGt12 = LookupRiskValue('specificGt12', specificGt12)
+            const newspecific2to12 = LookupRiskValue('specific2to12', specific2to12)
+            const newspecificLt2 = LookupRiskValue('specificLt2', specificLt2)
+            const newvagueGt12 = LookupRiskValue('vagueGt12', vagueGt12)
+            const newvague2to12 = LookupRiskValue('vague2to12', vague2to12)
+            const newvagueLt2 = LookupRiskValue('vagueLt2', vagueLt2)
+
+            // Determine the highest risk level
+            const risks = [newairAssault, newAH64AttackReconSecurity, newmedevacCasevac, newmultiship, newmixedMultiShip, newMTFGeneralTraining, newdartOneTimeFlight, newblackout, newwaterBucket, newparadrops, newrappelSpiesFries, newexternalLoads, newairmovementVIP, newcontinuation, newCEFS, newfatCow, newterrainFlight, newmountainOperations, newoverwaterOperations, newpinnacleOperations, newurbanOperations, newconfinedOperations, newOGEwithin10, newIGEwithin10, newOGEwithin5, newIGEwithin5, newprogessionEvaluationEPs, newIFRSimulatedIMC, newCBRNE, newnonLiveHoist, newliveHoist, newcombatManueveringFlight, newgunneryLiveFire, newCALFEX, newAMS, newpcGt90, newpcGt60, newpcGt30, newpiGt90, newpiGt60, newpiGt30, newnrcm1Gt90, newnrcm1Gt60, newnrcm1Gt30, newnrcm2Gt90, newnrcm2Gt60, newnrcm2Gt30, newnrcm3Gt90, newnrcm3Gt60, newnrcm3Gt30, newhoistGt90, newhoistGt60, newhoistGt30, newspecificGt12, newspecific2to12, newspecificLt2, newvagueGt12, newvague2to12, newvagueLt2];
+            const highestRisk = CalculateHighestRisk(risks)
+
+            // set the initial risk of weather
+            setValue('missionInitialRisk', highestRisk);
+        } else {
+            firstRender.current = false;
+        }
+    }, [airAssault, AH64AttackReconSecurity, medevacCasevac, multiship, mixedMultiShip, MTFGeneralTraining, dartOneTimeFlight, blackout, waterBucket, paradrops, rappelSpiesFries, externalLoads, airmovementVIP, continuation, CEFS, fatCow, terrainFlight, mountainOperations, overwaterOperations, pinnacleOperations, urbanOperations, confinedOperations, OGEwithin10, IGEwithin10, OGEwithin5, IGEwithin5, progessionEvaluationEPs, IFRSimulatedIMC, CBRNE, nonLiveHoist, liveHoist, combatManueveringFlight, gunneryLiveFire, CALFEX, AMS, pcGt90, pcGt60, pcGt30, piGt90, piGt60, piGt30, nrcm1Gt90, nrcm1Gt60, nrcm1Gt30, nrcm2Gt90, nrcm2Gt60, nrcm2Gt30, nrcm3Gt90, nrcm3Gt60, nrcm3Gt30, hoistGt90, hoistGt60, hoistGt30, specificGt12, specific2to12, specificLt2, vagueGt12, vague2to12, vagueLt2]);
+
 
     return (
         <>
@@ -275,62 +413,62 @@ export default function Mission({ control, watch }) {
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="nrcm1Gt90" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'NRCM 1 > 90 days'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'NRCM 1 > 90 days'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="nrcm1Gt60" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'NRCM 1 > 60 days'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'NRCM 1 > 60 days'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="nrcm1Gt30" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'NRCM 1 > 30 days'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'NRCM 1 > 30 days'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="nrcm2Gt90" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'NRCM 2 > 90 days'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'NRCM 2 > 90 days'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="nrcm2Gt60" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'NRCM 2 > 60 days'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'NRCM 2 > 60 days'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="nrcm2Gt30" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'NRCM 2 > 30 days'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'NRCM 2 > 30 days'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="nrcm3Gt90" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'NRCM 3 > 90 days'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'NRCM 3 > 90 days'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="nrcm3Gt60" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'NRCM 3 > 60 days'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'NRCM 3 > 60 days'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="nrcm3Gt30" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'NRCM 3 > 30 days'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'NRCM 3 > 30 days'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="hoistGt90" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'Hoist > 90 days'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'Hoist > 90 days'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="hoistGt60" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'Hoist > 60 days'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'Hoist > 60 days'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="hoistGt30" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'Hoist > 30 days'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'Hoist > 30 days'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
             </Grid>
@@ -348,32 +486,32 @@ export default function Mission({ control, watch }) {
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="specificGt12" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'Specific: > 12 Hours'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'Specific: > 12 Hours'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="specific2to12" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'Specific: 2-12 Hours'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'Specific: 2-12 Hours'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="specificLt2" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'Specific: < 2 Hours'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'Specific: < 2 Hours'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="vagueGt12" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'Vague: > 12 Hours'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'Vague: > 12 Hours'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="vague2to12" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'Vague: 2-12 Hours'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'Vague: 2-12 Hours'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="vagueLt2" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'Vague: < 2 Hours'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'Vague: < 2 Hours'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
             </Grid>

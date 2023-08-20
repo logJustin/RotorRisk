@@ -1,14 +1,10 @@
 
 // DO
-//     Evalute NG risk, not only overall aircraft risk
-//     Implement 25 Hours AO consideration for NG and Aircraft Risk Lookups
-//     Implement Mission Risk update
-//     Hoist > 30/60/90 doesn't return a color on FlightsList
+//     Change the select one sections to a different format, i.e. vague vs specific planning
+//     Binary checkboxes don't allow unclick
+//     Margin bottom on File RCOP Button
 //     Add Fighter Management
 //     Write functionality for Brief and Approve buttons in LeftNavigation
-//     Margin bottom on File RCOP Button
-//     File vs Edit RCOP button text
-//     Change collapse functionality to rid error, each subcomponent would need to be it's own table
 //     Make backend :(
 
 
@@ -23,3 +19,11 @@
 //  ✓  Add hours look up function and display on the FormModal
 //  ✓  Implement Yes/No logic for the riskMatrix
 //  ✓  Implement RiskLookupValue on utils & implement how to update categorical risks
+//  ✓  Implement Mission Risk update
+//  ✓  Evalute NG risk, not only overall aircraft risk
+//  ✓  Implement 25 Hours AO consideration for NG and Aircraft Risk Lookups
+//  ✓  Hoist > 30/60/90 doesn't return a color on FlightsList
+//  ✓  Edit RCOP button functionality
+//  ✓  File vs Update RCOP button text
+//  ✓  Change collapse functionality to rid error, each subcomponent would need to be it's own table
+//  ✓  Breakout the subtables into their own components
