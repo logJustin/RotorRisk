@@ -1,12 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { Controller } from "react-hook-form"
-import { InputLabel, MenuItem, FormControl, Select, TextField } from '@mui/material';
+import { InputLabel, MenuItem, FormControl, Select, TextField, FormLabel } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import Grid from '@mui/material/Unstable_Grid2';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
-import Grid from '@mui/material/Unstable_Grid2';
-import FormLabel from '@mui/material/FormLabel';
 import CheckboxesFlightConditions from '../Components/CheckboxesFlightConditions'
 import aircrews from '../../../data/seederCrewData'
 import aircraftInfo from '../../../data/aircraftTailNumbers'
@@ -39,7 +38,6 @@ export default function Aircrew({ control, watch, setValue }) {
     const nrcm1Risk = watch('nrcm1Risk')
     const nrcm2Risk = watch('nrcm2Risk')
     const nrcm3Risk = watch('nrcm3Risk')
-
 
     useEffect(() => {
         if (!firstRender.current) {
@@ -113,6 +111,7 @@ export default function Aircrew({ control, watch, setValue }) {
                                     {...field}
                                     fullWidth
                                     label="Aircraft"
+                                    onChange={() => { setValue('aircraftTail', '') }}
                                 >
                                     {Object.keys(aircraftInfo).map((helicopterType) => (
                                         <MenuItem key={helicopterType} value={helicopterType}>
@@ -154,7 +153,7 @@ export default function Aircrew({ control, watch, setValue }) {
                         name="mission"
                         control={control}
                         render={({ field }) => (
-                            <TextField fullWidth {...field} label="Mission" variant="outlined" />
+                            <TextField fullWidth required {...field} label="Mission" variant="outlined" />
                         )}>
                     </Controller>
                 </Grid>
@@ -164,7 +163,7 @@ export default function Aircrew({ control, watch, setValue }) {
                         name="missionStatement"
                         control={control}
                         render={({ field }) => (
-                            <TextField fullWidth {...field} label="Mission Statement" variant="outlined" />
+                            <TextField fullWidth required {...field} label="Mission Statement" variant="outlined" />
                         )}>
                     </Controller>
                 </Grid>
@@ -174,7 +173,7 @@ export default function Aircrew({ control, watch, setValue }) {
                         name="route"
                         control={control}
                         render={({ field }) => (
-                            <TextField fullWidth {...field} id="outlined-basic" label="Route" variant="outlined" />
+                            <TextField fullWidth required {...field} id="outlined-basic" label="Route" variant="outlined" />
                         )} />
                 </Grid>
                 <Grid xs={6}>
@@ -192,7 +191,7 @@ export default function Aircrew({ control, watch, setValue }) {
                         name="ete"
                         control={control}
                         render={({ field }) => (
-                            <TextField {...field} fullWidth label="ETE (Duration)" placeholder='1.5' type='number' />
+                            <TextField fullWidth required {...field} label="ETE (Duration)" placeholder='1.5' type='number' />
                         )}
                     />
                 </Grid>
@@ -218,7 +217,7 @@ export default function Aircrew({ control, watch, setValue }) {
                 {/* PC */}
                 <Grid xs={4}>
                     <Controller name="pc" control={control} render={({ field }) => (
-                        <FormControl fullWidth>
+                        <FormControl required fullWidth>
                             <InputLabel id="pcSelect">Pilot in Command</InputLabel>
                             <Select label="Pilot in Command" {...field}>
                                 {crewSelect('pilot')}
@@ -246,7 +245,7 @@ export default function Aircrew({ control, watch, setValue }) {
                 {/* PI */}
                 <Grid xs={4}>
                     <Controller name="pi" control={control} render={({ field }) => (
-                        <FormControl fullWidth>
+                        <FormControl required fullWidth>
                             <InputLabel id="piSelect">Pilot</InputLabel>
                             <Select label="Pilot" {...field}>
                                 {crewSelect('pilot')}
@@ -326,7 +325,7 @@ export default function Aircrew({ control, watch, setValue }) {
                 {/* Aircrew Mitigation */}
                 <Grid xs={12} >
                     <Controller name="aircrewRiskMitigation" control={control} render={({ field }) => (
-                        <TextField {...field} multiline rows={2} fullWidth label="Risk Mitigation Techniques" />
+                        <TextField required {...field} multiline rows={2} fullWidth label="Risk Mitigation Techniques" />
                     )}>
                     </Controller>
                 </Grid>

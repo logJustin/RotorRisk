@@ -1,10 +1,14 @@
 
 // DO
-//     Change the select one sections to a different format, i.e. vague vs specific planning
-//     Binary checkboxes don't allow unclick
+//     Change the select one sections to a different format
+//       (requires a change to each state, consider how riskLookup works, how they're rendered on FlightsList)
+//       Form Sections to reflect this:
+//         CrewMember Recency
+//         Specific Vague Planning
+//     Form Validation
 //     Margin bottom on File RCOP Button
-//     Add Fighter Management
 //     Write functionality for Brief and Approve buttons in LeftNavigation
+//     Add Fighter Management
 //     Make backend :(
 
 
@@ -27,3 +31,7 @@
 //  ✓  File vs Update RCOP button text
 //  ✓  Change collapse functionality to rid error, each subcomponent would need to be it's own table
 //  ✓  Breakout the subtables into their own components
+//  ✓  Combine App & Main jsx
+//  ✓  Binary checkboxes don't allow unclick
+//  ✓  Adjust selected risks depending on the Initial Risk
+//  ✓  Reset TailNumber when AircraftType Changes

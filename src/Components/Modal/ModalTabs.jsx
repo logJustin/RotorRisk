@@ -57,7 +57,7 @@ export default function ModalTabs({ flightData, formMode }) {
         setTabValue(newValue);
     };
     const {
-        flightID, date, aircraftType, aircraftTail, mission, missionStatement, route, etd, ete, flightConditions, pc, pcRisk, pcSeat, pi, piRisk, piSeat, nrcm1, nrcm1Risk, nrcm2, nrcm2Risk, nrcm3, nrcm3Risk, pcHoursTotal, pcHoursNG, pc25HoursInAO, piHoursTotal, piHoursNG, pi25HoursInAO, nrcm1HoursTotal, nrcm1HoursNG, nrcm125HoursInAO, nrcm2HoursTotal, nrcm2HoursNG, nrcm225HoursInAO, nrcm3HoursTotal, nrcm3HoursNG, nrcm325HoursInAO, aircrewRiskMitigation, aircrewInitialRisk, aircrewMitigatedRisk, airAssault, AH64AttackReconSecurity, medevacCasevac, multiship, mixedMultiShip, MTFGeneralTraining, dartOneTimeFlight, blackout, waterBucket, paradrops, rappelSpiesFries, externalLoads, airmovementVIP, continuation, CEFS, fatCow, terrainFlight, mountainOperations, overwaterOperations, pinnacleOperations, urbanOperations, confinedOperations, OGEwithin10, IGEwithin10, OGEwithin5, IGEwithin5, progessionEvaluationEPs, IFRSimulatedIMC, CBRNE, nonLiveHoist, liveHoist, combatManueveringFlight, gunneryLiveFire, CALFEX, AMS, pcGt90, pcGt60, pcGt30, piGt90, piGt60, piGt30, nrcm1Gt90, nrcm1Gt60, nrcm1Gt30, nrcm2Gt90, nrcm2Gt60, nrcm2Gt30, nrcm3Gt90, nrcm3Gt60, nrcm3Gt30, hoistGt90, hoistGt60, hoistGt30, specificGt12, specific2to12, specificLt2, vagueGt12, vague2to12, vagueLt2, missionRiskMitigation, missionInitialRisk, missionMitigatedRisk, gt1000, lt1000, lt700, lt500, gt3, gt2, gt1, lt1, altRequired, gt25IllumAndgt30degrees, lt25IllumAndlt30degrees, gt25IllumAndgt30degreesLimitedLighting, windGt30, windGt30Hoist, gustSpreadGt20, forecastThunderstorms, modTurbulenceIcing, oatNegative10Positive30, weatherRiskMitigation, weatherInitialRisk, weatherMitigatedRisk, finalRiskMitigation, finalMitigatedRisk, briefer, brieferComment, brieferCommentDate, approver, approverComment, approverCommentDate
+        flightID, date, aircraftType, aircraftTail, mission, missionStatement, route, etd, ete, flightConditions, pc, pcRisk, pcSeat, pi, piRisk, piSeat, nrcm1, nrcm1Risk, nrcm2, nrcm2Risk, nrcm3, nrcm3Risk, pcHoursTotal, pcHoursNG, pc25HoursInAO, piHoursTotal, piHoursNG, pi25HoursInAO, nrcm1HoursTotal, nrcm1HoursNG, nrcm125HoursInAO, nrcm2HoursTotal, nrcm2HoursNG, nrcm225HoursInAO, nrcm3HoursTotal, nrcm3HoursNG, nrcm325HoursInAO, aircrewRiskMitigation, aircrewInitialRisk, aircrewMitigatedRisk, airAssault, AH64AttackReconSecurity, medevacCasevac, multiship, mixedMultiShip, MTFGeneralTraining, dartOneTimeFlight, blackout, waterBucket, paradrops, rappelSpiesFries, externalLoads, airmovementVIP, continuation, CEFS, fatCow, terrainFlight, mountainOperations, overwaterOperations, pinnacleOperations, urbanOperations, confinedOperations, OGEwithin10, IGEwithin10, OGEwithin5, IGEwithin5, progessionEvaluationEPs, IFRSimulatedIMC, CBRNE, nonLiveHoist, liveHoist, combatManueveringFlight, gunneryLiveFire, CALFEX, AMS, pcGt90, pcGt60, pcGt30, piGt90, piGt60, piGt30, nrcm1Gt90, nrcm1Gt60, nrcm1Gt30, nrcm2Gt90, nrcm2Gt60, nrcm2Gt30, nrcm3Gt90, nrcm3Gt60, nrcm3Gt30, hoistGt90, hoistGt60, hoistGt30, specificGt12, specific2to12, specificLt2, vagueGt12, vague2to12, vagueLt2, missionRiskMitigation, missionInitialRisk, missionMitigatedRisk, gt1000, lt1000, lt700, lt500, gt3, gt2, gt1, lt1, altRequired, gt25IllumAndgt30degrees, lt25IllumAndlt30degrees, gt25IllumAndgt30degreesLimitedLighting, windGt30, windGt30Hoist, gustSpreadGt20, forecastThunderstorms, modTurbulenceIcing, oatNegative10Positive30, weatherRiskMitigation, weatherInitialRisk, weatherMitigatedRisk, finalRiskMitigation, finalMitigatedRisk, briefer, brieferComment, brieferCommentDate, approver, approverComment, approverCommentDate, finalInitialRisk
     } = flightData
 
     const { control, handleSubmit, watch, setValue } = useForm({
@@ -185,6 +185,7 @@ export default function ModalTabs({ flightData, formMode }) {
             weatherRiskMitigation: weatherRiskMitigation !== undefined ? weatherRiskMitigation : '',
             weatherInitialRisk: weatherInitialRisk !== undefined ? weatherInitialRisk : 'L',
             weatherMitigatedRisk: weatherMitigatedRisk !== undefined ? weatherMitigatedRisk : '',
+            finalInitialRisk: finalInitialRisk !== undefined ? finalInitialRisk : '',
             finalRiskMitigation: finalRiskMitigation !== undefined ? finalRiskMitigation : '',
             finalMitigatedRisk: finalMitigatedRisk !== undefined ? finalMitigatedRisk : '',
             briefer: briefer !== undefined ? briefer : '',
@@ -238,7 +239,16 @@ export default function ModalTabs({ flightData, formMode }) {
         }
 
         console.log(data);
-        flights.push(data);
+        // Check if flight ID already exists
+        const existingFlightIndex = flights.findIndex(flight => flight.flightID === data.flightID);
+
+        if (existingFlightIndex !== -1) {
+            // If flight ID exists, replace the existing entry
+            flights[existingFlightIndex] = data;
+        } else {
+            // If flight ID doesn't exist, add it as a new entry
+            flights.push(data);
+        }
     };
 
 
@@ -273,7 +283,7 @@ export default function ModalTabs({ flightData, formMode }) {
                 <Weather control={control} watch={watch} setValue={setValue} />
             </CustomTabPanel>
             <CustomTabPanel value={tabValue} index={3}>
-                <FinalRisk control={control} watch={watch} />
+                <FinalRisk control={control} watch={watch} setValue={setValue} />
             </CustomTabPanel>
             <CustomTabPanel value={tabValue} index={4}>
                 <MBO control={control} watch={watch} />

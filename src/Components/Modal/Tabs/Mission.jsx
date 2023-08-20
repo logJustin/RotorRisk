@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import { TextField } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
-import FormLabel from '@mui/material/FormLabel';
 import { Controller } from "react-hook-form"
+import { TextField, FormLabel } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import CheckboxesModeOfFlight from '../Components/CheckboxesModeOfFlight'
 import CheckboxesBinary from '../Components/CheckboxesBinary'
+import RecencyToggleButton from '../Components/RecencyToggleButton'
 import CalculateHighestRisk from '../../../utils/CalculateHighestRisk';
 import LookupRiskValue from '../../../utils/LookupRiskValue';
 
@@ -411,9 +411,27 @@ export default function Mission({ control, watch, setValue }) {
                         <CheckboxesModeOfFlight task={'PI > 30 days'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
+                {/* <Grid xs={12} sm={6} md={3} marginBottom={3}>
+                    <RecencyToggleButton
+                        task={'NRCM 1 > 90 days'}
+                        value={nrcm1Gt90}       // Pass the value from your state management
+                        onChange={(newValue) => {
+                            setValue('nrcm1Gt90', newValue); // Update the state
+                            // Perform other actions if needed
+                        }}
+                        setValue={setValue}
+                        ninety={nrcm1Gt90}      // Set the initial value of the ToggleButton
+                        sixty={nrcm1Gt60}      // Assuming nrcm1Gt60 and nrcm1Gt30 are defined somewhere
+                        thirty={nrcm1Gt30}
+                        control={control}
+                    />
+                </Grid> */}
+
+
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="nrcm1Gt90" control={control} render={({ field }) => (
-                        <CheckboxesBinary task={'NRCM 1 > 90 days'} value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesBinary task={'NRCM 1 > 90 days'} value={field.value} onChange={field.onChange} />
+                    )}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
@@ -533,7 +551,7 @@ export default function Mission({ control, watch, setValue }) {
                 {/* Mission Mitigation */}
                 <Grid xs={12} >
                     <Controller name="missionRiskMitigation" control={control} render={({ field }) => (
-                        <TextField {...field} multiline rows={2} fullWidth label="Risk Mitigation Techniques" />
+                        <TextField required  {...field} multiline rows={2} fullWidth label="Risk Mitigation Techniques" />
                     )}>
                     </Controller>
                 </Grid>

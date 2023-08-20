@@ -130,21 +130,21 @@ export default function Mission({ row }) {
                                     <TableCell sx={{ background: determineHighestRisk('piGt90', row.piGt90), color: 'black', borderBottom: 'none' }} align='center'>PI {'>'}90 Days <br></br>{row.piGt90 && `(${row.piGt90})`}</TableCell>
                                 </TableRow>
                                 <TableRow key='nrcm1RecencyRow'>
-                                    <TableCell sx={{ background: determineHighestRisk('nrcm1Gt30', row.nrcm1Gt30), color: 'black', borderBottom: 'none' }} align='center'>NRCM 1 {'>'}30 Days <br></br>{row.nrcm1Gt30 && `(${row.nrcm1Gt30})`}</TableCell>
-                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('nrcm1Gt60', row.nrcm1Gt60), color: 'black', borderBottom: 'none' }} align='center'>NRCM 1 {'>'}60 Days <br></br>{row.nrcm1Gt60 && `(${row.nrcm1Gt60})`}</TableCell>
-                                    <TableCell sx={{ background: determineHighestRisk('nrcm1Gt90', row.nrcm1Gt90), color: 'black', borderBottom: 'none' }} align='center'>NRCM 1 {'>'}90 Days <br></br>{row.nrcm1Gt90 && `(${row.nrcm1Gt90})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('nrcm1Gt30', row.nrcm1Gt30), color: 'black', borderBottom: 'none' }} align='center'>NRCM 1 {'>'}30 Days</TableCell>
+                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('nrcm1Gt60', row.nrcm1Gt60), color: 'black', borderBottom: 'none' }} align='center'>NRCM 1 {'>'}60 Days</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('nrcm1Gt90', row.nrcm1Gt90), color: 'black', borderBottom: 'none' }} align='center'>NRCM 1 {'>'}90 Days</TableCell>
                                 </TableRow>
                                 <TableRow key='nrcm2RecencyRow'>
-                                    <TableCell sx={{ background: determineHighestRisk('nrcm2Gt30', row.nrcm2Gt30), color: 'black', borderBottom: 'none' }} align='center'>NRCM 2 {'>'}30 Days <br></br>{row.nrcm2Gt30 && `(${row.nrcm2Gt30})`}</TableCell>
-                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('nrcm2Gt60', row.nrcm2Gt60), color: 'black', borderBottom: 'none' }} align='center'>NRCM 2 {'>'}60 Days <br></br>{row.nrcm2Gt60 && `(${row.nrcm2Gt60})`}</TableCell>
-                                    <TableCell sx={{ background: determineHighestRisk('nrcm2Gt90', row.nrcm2Gt90), color: 'black', borderBottom: 'none' }} align='center'>NRCM 2 {'>'}90 Days <br></br>{row.nrcm2Gt90 && `(${row.nrcm2Gt90})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('nrcm2Gt30', row.nrcm2Gt30), color: 'black', borderBottom: 'none' }} align='center'>NRCM 2 {'>'}30 Days</TableCell>
+                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('nrcm2Gt60', row.nrcm2Gt60), color: 'black', borderBottom: 'none' }} align='center'>NRCM 2 {'>'}60 Days</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('nrcm2Gt90', row.nrcm2Gt90), color: 'black', borderBottom: 'none' }} align='center'>NRCM 2 {'>'}90 Days</TableCell>
                                 </TableRow>
                                 {
                                     row.nrcm3 &&
                                     <TableRow key='nrcm3RecencyRow'>
-                                        <TableCell sx={{ background: determineHighestRisk('nrcm3Gt30', row.nrcm3Gt30), color: 'black', borderBottom: 'none' }} align='center'>NRCM 3 {'>'}30 Days <br></br>{row.nrcm3Gt30 && `(${row.nrcm3Gt30})`}</TableCell>
-                                        <TableCell colSpan={2} sx={{ background: determineHighestRisk('nrcm3Gt60', row.nrcm3Gt60), color: 'black', borderBottom: 'none' }} align='center'>NRCM 3 {'>'}60 Days <br></br>{row.nrcm3Gt60 && `(${row.nrcm3Gt60})`}</TableCell>
-                                        <TableCell sx={{ background: determineHighestRisk('nrcm3Gt90', row.nrcm3Gt90), color: 'black', borderBottom: 'none' }} align='center'>NRCM 3 {'>'}90 Days <br></br>{row.nrcm3Gt90 && `(${row.nrcm3Gt90})`}</TableCell>
+                                        <TableCell sx={{ background: determineHighestRisk('nrcm3Gt30', row.nrcm3Gt30), color: 'black', borderBottom: 'none' }} align='center'>NRCM 3 {'>'}30 Days</TableCell>
+                                        <TableCell colSpan={2} sx={{ background: determineHighestRisk('nrcm3Gt60', row.nrcm3Gt60), color: 'black', borderBottom: 'none' }} align='center'>NRCM 3 {'>'}60 Days</TableCell>
+                                        <TableCell sx={{ background: determineHighestRisk('nrcm3Gt90', row.nrcm3Gt90), color: 'black', borderBottom: 'none' }} align='center'>NRCM 3 {'>'}90 Days</TableCell>
                                     </TableRow>
                                 }
                                 <TableRow key='hoistRecencyRow'>

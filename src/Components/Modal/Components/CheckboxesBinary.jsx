@@ -1,34 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FormLabel, Grid, Checkbox } from '@mui/material';
 
-const CheckboxesBinary = ({ value, onChange, task }) => {
-    const handleCheckboxChange = (newValue) => {
-        onChange(newValue);
+const TESTCheckboxesBinary = ({ value, onChange, task }) => {
+    const [checkbox, setCheckbox] = useState(value === 'true');
+
+    const handleCheckboxChange = () => {
+        const newValue = !checkbox;
+        setCheckbox(newValue);
+        if (onChange) {
+            onChange(newValue ? 'true' : 'false');
+        }
     };
 
     return (
         <>
             <FormLabel sx={{ textAlign: 'center' }} component="legend">{task}</FormLabel>
             <Grid container justifyContent="space-evenly">
-                <label htmlFor="true">
+                <label>
                     <Checkbox
                         id="true"
-                        checked={value === 'true'}
-                        onChange={() => handleCheckboxChange('true')}
+                        checked={checkbox}
+                        onChange={handleCheckboxChange}
                     />
-                    Yes
-                </label>
-                <label htmlFor="false">
-                    <Checkbox
-                        id="false"
-                        checked={value === 'false'}
-                        onChange={() => handleCheckboxChange('false')}
-                    />
-                    No
+                    Applicable
                 </label>
             </Grid>
         </>
     );
 };
 
-export default CheckboxesBinary;
+export default TESTCheckboxesBinary;

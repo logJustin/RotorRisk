@@ -1,17 +1,36 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { TextField } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import FormLabel from '@mui/material/FormLabel';
 import { Controller } from "react-hook-form"
 import CheckboxesRiskLevel from '../Components/CheckboxesRiskLevel'
+import CalculateHighestRisk from '../../../utils/CalculateHighestRisk';
 
-export default function FinalRisk({ control, watch }) {
-    const aircrewRiskMitigation = watch('aircrewRiskMitigation', '');
-    const aircrewInitialRisk = watch('aircrewInitialRisk', '');
-    const missionRiskMitigation = watch('missionRiskMitigation', '');
-    const missionInitialRisk = watch('missionInitialRisk', '');
-    const weatherRiskMitigation = watch('weatherRiskMitigation', '');
-    const weatherInitialRisk = watch('weatherInitialRisk', '');
+export default function FinalRisk({ control, watch, setValue }) {
+
+    const firstRender = useRef(true)
+    const aircrewInitialRisk = watch('aircrewInitialRisk');
+    const missionInitialRisk = watch('missionInitialRisk');
+    const weatherInitialRisk = watch('weatherInitialRisk');
+    const aircrewRiskMitigation = watch('aircrewRiskMitigation');
+    const missionRiskMitigation = watch('missionRiskMitigation');
+    const weatherRiskMitigation = watch('weatherRiskMitigation');
+    const aircrewMitigatedRisk = watch('aircrewMitigatedRisk');
+    const missionMitigatedRisk = watch('missionMitigatedRisk');
+    const weatherMitigatedRisk = watch('weatherMitigatedRisk');
+    const finalInitialRisk = watch('finalInitialRisk')
+
+
+    useEffect(() => {
+        if (!firstRender.current) {
+            // Determine the highest risk level
+            const risks = [aircrewInitialRisk, missionInitialRisk, weatherInitialRisk, aircrewMitigatedRisk, missionMitigatedRisk, weatherMitigatedRisk];
+            const highestRisk = CalculateHighestRisk(risks)
+            setValue('finalInitialRisk', highestRisk);
+        } else {
+            firstRender.current = false;
+        }
+    }, [aircrewInitialRisk, missionInitialRisk, weatherInitialRisk, aircrewMitigatedRisk, missionMitigatedRisk, weatherMitigatedRisk]);
 
     return (
         <>
@@ -27,7 +46,7 @@ export default function FinalRisk({ control, watch }) {
                 </Grid>
                 <Grid xs={12}>
                     <Controller name="aircrewMitigatedRisk" control={control} render={({ field }) => (
-                        <CheckboxesRiskLevel title="Residual Risk" value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesRiskLevel title="Residual Risk" value={field.value} onChange={field.onChange} initialRisk={aircrewInitialRisk} />)}
                     />
                 </Grid>
             </Grid>
@@ -44,7 +63,7 @@ export default function FinalRisk({ control, watch }) {
                 </Grid>
                 <Grid xs={12}>
                     <Controller name="missionMitigatedRisk" control={control} render={({ field }) => (
-                        <CheckboxesRiskLevel title="Residual Risk" value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesRiskLevel title="Residual Risk" value={field.value} onChange={field.onChange} initialRisk={missionInitialRisk} />)}
                     />
                 </Grid>
             </Grid>
@@ -61,7 +80,7 @@ export default function FinalRisk({ control, watch }) {
                 </Grid>
                 <Grid xs={12}>
                     <Controller name="weatherMitigatedRisk" control={control} render={({ field }) => (
-                        <CheckboxesRiskLevel title="Residual Risk" value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesRiskLevel title="Residual Risk" value={field.value} onChange={field.onChange} initialRisk={weatherInitialRisk} />)}
                     />
                 </Grid>
             </Grid>
@@ -77,19 +96,19 @@ export default function FinalRisk({ control, watch }) {
                 </Grid>
                 <Grid xs={12} >
                     <Controller name="greatestRisk" control={control} render={({ field }) => (
-                        <TextField {...field} multiline rows={2} fullWidth label="What is the greatest risk to mission?" />
+                        <TextField required {...field} multiline rows={2} fullWidth label="What is the greatest risk to mission?" />
                     )}>
                     </Controller>
                 </Grid>
                 <Grid xs={12} >
                     <Controller name="finalRiskMitigation" control={control} render={({ field }) => (
-                        <TextField {...field} multiline rows={2} fullWidth label="Risk Mitigation Technique" />
+                        <TextField required {...field} multiline rows={2} fullWidth label="Risk Mitigation Technique" />
                     )}>
                     </Controller>
                 </Grid>
                 <Grid xs={12}>
                     <Controller name="finalMitigatedRisk" control={control} render={({ field }) => (
-                        <CheckboxesRiskLevel title="Residual Risk" value={field.value} onChange={field.onChange} />)}
+                        <CheckboxesRiskLevel title="Residual Risk" value={field.value} onChange={field.onChange} initialRisk={finalInitialRisk} />)}
                     />
                 </Grid>
             </Grid>

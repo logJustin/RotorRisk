@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom/client';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import Layout from './Components/Layout/Layout'
+import AppLayout from './Components/Layout/Layout';
 
 function App() {
   const [lightMode, setLightMode] = useState(false);
   const [loading, setLoading] = useState(true); // New loading state
 
   useEffect(() => {
-    const existingPreference = localStorage.getItem("lightMode");
+    const existingPreference = localStorage.getItem('lightMode');
     if (existingPreference) {
-      setLightMode(existingPreference === "true");
+      setLightMode(existingPreference === 'true');
     }
     setLoading(false); // Mark loading as false when the effect completes
   }, []);
@@ -29,15 +30,19 @@ function App() {
   const handleLightModeToggle = () => {
     const newLightMode = !lightMode;
     setLightMode(newLightMode);
-    localStorage.setItem("lightMode", newLightMode.toString());
-  }
+    localStorage.setItem('lightMode', newLightMode.toString());
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Layout lightMode={lightMode} handleLightModeToggle={handleLightModeToggle} />
+      <AppLayout lightMode={lightMode} handleLightModeToggle={handleLightModeToggle} />
     </ThemeProvider>
   );
 }
 
-export default App;
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
