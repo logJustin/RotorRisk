@@ -14,7 +14,9 @@ export default function Mission({ control, watch, setValue }) {
     const missionInitialRisk = watch('missionInitialRisk');
     const airAssault = watch('airAssault')
     const AH64AttackReconSecurity = watch('AH64AttackReconSecurity')
-    const medevacCasevac = watch('medevacCasevac')
+    const MEDEVAC = watch('MEDEVAC')
+    const CASEVAC = watch('CASEVAC')
+    const FARP = watch('FARP')
     const multiship = watch('multiship')
     const mixedMultiShip = watch('mixedMultiShip')
     const MTFGeneralTraining = watch('MTFGeneralTraining')
@@ -47,6 +49,13 @@ export default function Mission({ control, watch, setValue }) {
     const gunneryLiveFire = watch('gunneryLiveFire')
     const CALFEX = watch('CALFEX')
     const AMS = watch('AMS')
+    const blackoutCurtain = watch('blackoutCurtain')
+    const OWUntrained = watch('OWUntrained')
+    const famFlight = watch('famFlight')
+    const hoverWXRlt500 = watch('hoverWXRlt500')
+    const UH60DoorsOff = watch('UH60DoorsOff')
+    const OWSea4to5 = watch('OWSea4to5')
+    const OWSeaGt6 = watch('OWSeaGt6')
     const pcGt90 = watch('pcGt90')
     const pcGt60 = watch('pcGt60')
     const pcGt30 = watch('pcGt30')
@@ -76,7 +85,9 @@ export default function Mission({ control, watch, setValue }) {
         if (!firstRender.current) {
             const newairAssault = LookupRiskValue('airAssault', airAssault)
             const newAH64AttackReconSecurity = LookupRiskValue('AH64AttackReconSecurity', AH64AttackReconSecurity)
-            const newmedevacCasevac = LookupRiskValue('medevacCasevac', medevacCasevac)
+            const newMEDEVAC = LookupRiskValue('MEDEVAC', MEDEVAC)
+            const newCASEVAC = LookupRiskValue('CASEVAC', CASEVAC)
+            const newFARP = LookupRiskValue('FARP', FARP)
             const newmultiship = LookupRiskValue('multiship', multiship)
             const newmixedMultiShip = LookupRiskValue('mixedMultiShip', mixedMultiShip)
             const newMTFGeneralTraining = LookupRiskValue('MTFGeneralTraining', MTFGeneralTraining)
@@ -109,6 +120,13 @@ export default function Mission({ control, watch, setValue }) {
             const newgunneryLiveFire = LookupRiskValue('gunneryLiveFire', gunneryLiveFire)
             const newCALFEX = LookupRiskValue('CALFEX', CALFEX)
             const newAMS = LookupRiskValue('AMS', AMS)
+            const newblackoutCurtain = LookupRiskValue('blackoutCurtain', blackoutCurtain)
+            const newOWUntrained = LookupRiskValue('OWUntrained', OWUntrained)
+            const newfamFlight = LookupRiskValue('famFlight', famFlight)
+            const newhoverWXRlt500 = LookupRiskValue('hoverWXRlt500', hoverWXRlt500)
+            const newUH60DoorsOff = LookupRiskValue('UH60DoorsOff', UH60DoorsOff)
+            const newOWSea4to5 = LookupRiskValue('OWSea4to5', OWSea4to5)
+            const newOWSeaGt6 = LookupRiskValue('OWSeaGt6', OWSeaGt6)
             const newpcGt90 = LookupRiskValue('pcGt90', pcGt90)
             const newpcGt60 = LookupRiskValue('pcGt60', pcGt60)
             const newpcGt30 = LookupRiskValue('pcGt30', pcGt30)
@@ -135,7 +153,7 @@ export default function Mission({ control, watch, setValue }) {
             const newvagueLt2 = LookupRiskValue('vagueLt2', vagueLt2)
 
             // Determine the highest risk level
-            const risks = [newairAssault, newAH64AttackReconSecurity, newmedevacCasevac, newmultiship, newmixedMultiShip, newMTFGeneralTraining, newdartOneTimeFlight, newblackout, newwaterBucket, newparadrops, newrappelSpiesFries, newexternalLoads, newairmovementVIP, newcontinuation, newCEFS, newfatCow, newterrainFlight, newmountainOperations, newoverwaterOperations, newpinnacleOperations, newurbanOperations, newconfinedOperations, newOGEwithin10, newIGEwithin10, newOGEwithin5, newIGEwithin5, newprogessionEvaluationEPs, newIFRSimulatedIMC, newCBRNE, newnonLiveHoist, newliveHoist, newcombatManueveringFlight, newgunneryLiveFire, newCALFEX, newAMS, newpcGt90, newpcGt60, newpcGt30, newpiGt90, newpiGt60, newpiGt30, newnrcm1Gt90, newnrcm1Gt60, newnrcm1Gt30, newnrcm2Gt90, newnrcm2Gt60, newnrcm2Gt30, newnrcm3Gt90, newnrcm3Gt60, newnrcm3Gt30, newhoistGt90, newhoistGt60, newhoistGt30, newspecificGt12, newspecific2to12, newspecificLt2, newvagueGt12, newvague2to12, newvagueLt2];
+            const risks = [newairAssault, newAH64AttackReconSecurity, newMEDEVAC, newCASEVAC, newFARP, newmultiship, newmixedMultiShip, newMTFGeneralTraining, newdartOneTimeFlight, newblackout, newwaterBucket, newparadrops, newrappelSpiesFries, newexternalLoads, newairmovementVIP, newcontinuation, newCEFS, newfatCow, newterrainFlight, newmountainOperations, newoverwaterOperations, newpinnacleOperations, newurbanOperations, newconfinedOperations, newOGEwithin10, newIGEwithin10, newOGEwithin5, newIGEwithin5, newprogessionEvaluationEPs, newIFRSimulatedIMC, newCBRNE, newnonLiveHoist, newliveHoist, newcombatManueveringFlight, newgunneryLiveFire, newCALFEX, newAMS, newblackoutCurtain, newOWUntrained, newfamFlight, newhoverWXRlt500, newUH60DoorsOff, newOWSea4to5, newOWSeaGt6, newblackoutCurtain, newpcGt90, newpcGt60, newpcGt30, newpiGt90, newpiGt60, newpiGt30, newnrcm1Gt90, newnrcm1Gt60, newnrcm1Gt30, newnrcm2Gt90, newnrcm2Gt60, newnrcm2Gt30, newnrcm3Gt90, newnrcm3Gt60, newnrcm3Gt30, newhoistGt90, newhoistGt60, newhoistGt30, newspecificGt12, newspecific2to12, newspecificLt2, newvagueGt12, newvague2to12, newvagueLt2];
             const highestRisk = CalculateHighestRisk(risks)
 
             // set the initial risk of weather
@@ -143,7 +161,7 @@ export default function Mission({ control, watch, setValue }) {
         } else {
             firstRender.current = false;
         }
-    }, [airAssault, AH64AttackReconSecurity, medevacCasevac, multiship, mixedMultiShip, MTFGeneralTraining, dartOneTimeFlight, blackout, waterBucket, paradrops, rappelSpiesFries, externalLoads, airmovementVIP, continuation, CEFS, fatCow, terrainFlight, mountainOperations, overwaterOperations, pinnacleOperations, urbanOperations, confinedOperations, OGEwithin10, IGEwithin10, OGEwithin5, IGEwithin5, progessionEvaluationEPs, IFRSimulatedIMC, CBRNE, nonLiveHoist, liveHoist, combatManueveringFlight, gunneryLiveFire, CALFEX, AMS, pcGt90, pcGt60, pcGt30, piGt90, piGt60, piGt30, nrcm1Gt90, nrcm1Gt60, nrcm1Gt30, nrcm2Gt90, nrcm2Gt60, nrcm2Gt30, nrcm3Gt90, nrcm3Gt60, nrcm3Gt30, hoistGt90, hoistGt60, hoistGt30, specificGt12, specific2to12, specificLt2, vagueGt12, vague2to12, vagueLt2]);
+    }, [airAssault, AH64AttackReconSecurity, MEDEVAC, CASEVAC, FARP, multiship, mixedMultiShip, MTFGeneralTraining, dartOneTimeFlight, blackout, waterBucket, paradrops, rappelSpiesFries, externalLoads, airmovementVIP, continuation, CEFS, fatCow, terrainFlight, mountainOperations, overwaterOperations, pinnacleOperations, urbanOperations, confinedOperations, OGEwithin10, IGEwithin10, OGEwithin5, IGEwithin5, progessionEvaluationEPs, IFRSimulatedIMC, CBRNE, nonLiveHoist, liveHoist, combatManueveringFlight, gunneryLiveFire, CALFEX, AMS, blackoutCurtain, OWUntrained, famFlight, hoverWXRlt500, UH60DoorsOff, OWSea4to5, OWSeaGt6, blackoutCurtain, pcGt90, pcGt60, pcGt30, piGt90, piGt60, piGt30, nrcm1Gt90, nrcm1Gt60, nrcm1Gt30, nrcm2Gt90, nrcm2Gt60, nrcm2Gt30, nrcm3Gt90, nrcm3Gt60, nrcm3Gt30, hoistGt90, hoistGt60, hoistGt30, specificGt12, specific2to12, specificLt2, vagueGt12, vague2to12, vagueLt2]);
 
 
     return (
@@ -166,8 +184,8 @@ export default function Mission({ control, watch, setValue }) {
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
-                    <Controller name="medevacCasevac" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'MEDEVAC/CASEVAC'} value={field.value} onChange={field.onChange} />)}
+                    <Controller name="MEDEVAC" control={control} render={({ field }) => (
+                        <CheckboxesModeOfFlight task={'MEDEVAC'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
@@ -216,6 +234,26 @@ export default function Mission({ control, watch, setValue }) {
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
+                    <Controller name="CEFS" control={control} render={({ field }) => (
+                        <CheckboxesModeOfFlight task={'CEFS Operations'} value={field.value} onChange={field.onChange} />)}
+                    />
+                </Grid>
+                <Grid xs={12} sm={6} md={3} marginBottom={3}>
+                    <Controller name="fatCow" control={control} render={({ field }) => (
+                        <CheckboxesModeOfFlight task={'FAT COW / WET HAWK'} value={field.value} onChange={field.onChange} />)}
+                    />
+                </Grid>
+                <Grid xs={12} sm={6} md={3} marginBottom={3}>
+                    <Controller name="CASEVAC" control={control} render={({ field }) => (
+                        <CheckboxesModeOfFlight task={'CASEVAC'} value={field.value} onChange={field.onChange} />)}
+                    />
+                </Grid>
+                <Grid xs={12} sm={6} md={3} marginBottom={3}>
+                    <Controller name="FARP" control={control} render={({ field }) => (
+                        <CheckboxesModeOfFlight task={'FARP'} value={field.value} onChange={field.onChange} />)}
+                    />
+                </Grid>
+                <Grid xs={12} sm={6} md={3} marginBottom={3}>
                     <Controller name="airmovementVIP" control={control} render={({ field }) => (
                         <CheckboxesModeOfFlight task={'Air Movement/VIP'} value={field.value} onChange={field.onChange} />)}
                     />
@@ -226,13 +264,8 @@ export default function Mission({ control, watch, setValue }) {
                     />
                 </Grid>
                 <Grid xs={12} sm={6} md={3} marginBottom={3}>
-                    <Controller name="CEFS" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'CEFS Operations'} value={field.value} onChange={field.onChange} />)}
-                    />
-                </Grid>
-                <Grid xs={12} sm={6} md={3} marginBottom={3}>
-                    <Controller name="fatCow" control={control} render={({ field }) => (
-                        <CheckboxesModeOfFlight task={'FAT COW / WET HAWK'} value={field.value} onChange={field.onChange} />)}
+                    <Controller name="crossCountryBorder" control={control} render={({ field }) => (
+                        <CheckboxesModeOfFlight task={'Cross Country/Border'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
             </Grid>
@@ -311,6 +344,11 @@ export default function Mission({ control, watch, setValue }) {
                         <CheckboxesModeOfFlight task={'IGE within 5% MTA'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
+                <Grid xs={12} sm={6} md={3} marginBottom={3}>
+                    <Controller name="Cruisewithin10" control={control} render={({ field }) => (
+                        <CheckboxesModeOfFlight task={'Cruise within 10% MTA'} value={field.value} onChange={field.onChange} />)}
+                    />
+                </Grid>
             </Grid>
 
 
@@ -368,9 +406,55 @@ export default function Mission({ control, watch, setValue }) {
                         <CheckboxesModeOfFlight task={'AMS Training'} value={field.value} onChange={field.onChange} />)}
                     />
                 </Grid>
+                <Grid xs={12} sm={6} md={3} marginBottom={3}>
+                    <Controller name="blackoutCurtain" control={control} render={({ field }) => (
+                        <CheckboxesModeOfFlight task={'Blackout Curtain (AH)'} value={field.value} onChange={field.onChange} />)}
+                    />
+                </Grid>
             </Grid>
 
 
+
+
+            <Grid container justifyContent="space-evenly" spacing={2} sx={{
+                boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                marginTop: '24px',
+                padding: '5px'
+            }}>
+                <Grid xs={12}>
+                    <FormLabel sx={{ textAlign: 'center' }} component="legend">Unit Tasks</FormLabel>
+                </Grid>
+                <Grid xs={12} sm={6} md={3} marginBottom={3}>
+                    <Controller name="OWUntrained" control={control} render={({ field }) => (
+                        <CheckboxesModeOfFlight task={'OW Untrained ACMs'} value={field.value} onChange={field.onChange} />)}
+                    />
+                </Grid>
+                <Grid xs={12} sm={6} md={3} marginBottom={3}>
+                    <Controller name="famFlight" control={control} render={({ field }) => (
+                        <CheckboxesModeOfFlight task={'Familiarization Flight'} value={field.value} onChange={field.onChange} />)}
+                    />
+                </Grid>
+                <Grid xs={12} sm={6} md={3} marginBottom={3}>
+                    <Controller name="hoverWXRlt500" control={control} render={({ field }) => (
+                        <CheckboxesModeOfFlight task={'Hover Wx <500 / 1SM'} value={field.value} onChange={field.onChange} />)}
+                    />
+                </Grid>
+                <Grid xs={12} sm={6} md={3} marginBottom={3}>
+                    <Controller name="UH60DoorsOff" control={control} render={({ field }) => (
+                        <CheckboxesModeOfFlight task={'UH60 Doors Off'} value={field.value} onChange={field.onChange} />)}
+                    />
+                </Grid>
+                <Grid xs={12} sm={6} md={3} marginBottom={3}>
+                    <Controller name="OWSea4to5" control={control} render={({ field }) => (
+                        <CheckboxesModeOfFlight task={'OW Sea State 4-5'} value={field.value} onChange={field.onChange} />)}
+                    />
+                </Grid>
+                <Grid xs={12} sm={6} md={3} marginBottom={3}>
+                    <Controller name="OWSeaGt6" control={control} render={({ field }) => (
+                        <CheckboxesModeOfFlight task={'OW Sea State ≥ 6'} value={field.value} onChange={field.onChange} />)}
+                    />
+                </Grid>
+            </Grid>
 
 
             <Grid container justifyContent="space-evenly" spacing={2} sx={{

@@ -12,8 +12,8 @@ export default function FormModal({ open, handleClose, flightData, formMode }) {
         width: '85%',
         bgcolor: 'background.paper',
         boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-        padding: ' 0 32px 32px 32px',
-        marginbottom: '32px',
+        padding: ' 0 32px 8px 32px',
+        marginbottom: '16px',
         overflow: 'auto',
         height: '85%',
         // flexGrow: 1

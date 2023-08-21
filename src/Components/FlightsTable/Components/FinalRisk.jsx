@@ -21,8 +21,8 @@ export default function FinalRisk({ row }) {
                         sx={{ display: 'inline' }}
                     >
                         {finalRiskOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                        <Typography variant="h6" component="div" sx={{ display: 'inline' }}> Final: {row.finalMitigatedRisk}</Typography>
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ display: 'inline' }}>Final: {row.finalMitigatedRisk}</Typography>
                 </TableCell>
             </TableRow>
             <TableRow sx={{ padding: '0px' }}>

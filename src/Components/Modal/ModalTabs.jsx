@@ -26,6 +26,7 @@ function CustomTabPanel(props) {
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
+            style={{ height: '100%' }}
             {...other}
         >
             {value === index && (
@@ -57,7 +58,7 @@ export default function ModalTabs({ flightData, formMode }) {
         setTabValue(newValue);
     };
     const {
-        flightID, date, aircraftType, aircraftTail, mission, missionStatement, route, etd, ete, flightConditions, pc, pcRisk, pcSeat, pi, piRisk, piSeat, nrcm1, nrcm1Risk, nrcm2, nrcm2Risk, nrcm3, nrcm3Risk, pcHoursTotal, pcHoursNG, pc25HoursInAO, piHoursTotal, piHoursNG, pi25HoursInAO, nrcm1HoursTotal, nrcm1HoursNG, nrcm125HoursInAO, nrcm2HoursTotal, nrcm2HoursNG, nrcm225HoursInAO, nrcm3HoursTotal, nrcm3HoursNG, nrcm325HoursInAO, aircrewRiskMitigation, aircrewInitialRisk, aircrewMitigatedRisk, airAssault, AH64AttackReconSecurity, medevacCasevac, multiship, mixedMultiShip, MTFGeneralTraining, dartOneTimeFlight, blackout, waterBucket, paradrops, rappelSpiesFries, externalLoads, airmovementVIP, continuation, CEFS, fatCow, terrainFlight, mountainOperations, overwaterOperations, pinnacleOperations, urbanOperations, confinedOperations, OGEwithin10, IGEwithin10, OGEwithin5, IGEwithin5, progessionEvaluationEPs, IFRSimulatedIMC, CBRNE, nonLiveHoist, liveHoist, combatManueveringFlight, gunneryLiveFire, CALFEX, AMS, pcGt90, pcGt60, pcGt30, piGt90, piGt60, piGt30, nrcm1Gt90, nrcm1Gt60, nrcm1Gt30, nrcm2Gt90, nrcm2Gt60, nrcm2Gt30, nrcm3Gt90, nrcm3Gt60, nrcm3Gt30, hoistGt90, hoistGt60, hoistGt30, specificGt12, specific2to12, specificLt2, vagueGt12, vague2to12, vagueLt2, missionRiskMitigation, missionInitialRisk, missionMitigatedRisk, gt1000, lt1000, lt700, lt500, gt3, gt2, gt1, lt1, altRequired, gt25IllumAndgt30degrees, lt25IllumAndlt30degrees, gt25IllumAndgt30degreesLimitedLighting, windGt30, windGt30Hoist, gustSpreadGt20, forecastThunderstorms, modTurbulenceIcing, oatNegative10Positive30, weatherRiskMitigation, weatherInitialRisk, weatherMitigatedRisk, finalRiskMitigation, finalMitigatedRisk, briefer, brieferComment, brieferCommentDate, approver, approverComment, approverCommentDate, finalInitialRisk
+        flightID, date, aircraftType, aircraftTail, mission, missionStatement, route, etd, ete, flightConditions, pc, pcRisk, pcSeat, pi, piRisk, piSeat, nrcm1, nrcm1Risk, nrcm2, nrcm2Risk, nrcm3, nrcm3Risk, pcHoursTotal, pcHoursNG, pc25HoursInAO, piHoursTotal, piHoursNG, pi25HoursInAO, nrcm1HoursTotal, nrcm1HoursNG, nrcm125HoursInAO, nrcm2HoursTotal, nrcm2HoursNG, nrcm225HoursInAO, nrcm3HoursTotal, nrcm3HoursNG, nrcm325HoursInAO, aircrewRiskMitigation, aircrewInitialRisk, aircrewMitigatedRisk, airAssault, AH64AttackReconSecurity, MEDEVAC, CASEVAC, FARP, crossCountryBorder, multiship, mixedMultiShip, MTFGeneralTraining, dartOneTimeFlight, blackout, waterBucket, paradrops, rappelSpiesFries, externalLoads, airmovementVIP, continuation, CEFS, fatCow, terrainFlight, mountainOperations, overwaterOperations, pinnacleOperations, urbanOperations, confinedOperations, OGEwithin10, IGEwithin10, OGEwithin5, IGEwithin5, Cruisewithin10, progessionEvaluationEPs, IFRSimulatedIMC, CBRNE, nonLiveHoist, liveHoist, combatManueveringFlight, gunneryLiveFire, CALFEX, AMS, blackoutCurtain, OWUntrained, famFlight, hoverWXRlt500, UH60DoorsOff, OWSea4to5, OWSeaGt6, pcGt90, pcGt60, pcGt30, piGt90, piGt60, piGt30, nrcm1Gt90, nrcm1Gt60, nrcm1Gt30, nrcm2Gt90, nrcm2Gt60, nrcm2Gt30, nrcm3Gt90, nrcm3Gt60, nrcm3Gt30, hoistGt90, hoistGt60, hoistGt30, specificGt12, specific2to12, specificLt2, vagueGt12, vague2to12, vagueLt2, missionRiskMitigation, missionInitialRisk, missionMitigatedRisk, gt1000, lt1000, lt700, lt500, gt3, gt2, gt1, lt1, altRequired, gt25IllumAndgt30degrees, lt25IllumAndlt30degrees, gt25IllumAndgt30degreesLimitedLighting, windGt30, windGt30Hoist, gustSpreadGt20, forecastThunderstorms, modTurbulenceIcing, oatNegative10Positive30, weatherRiskMitigation, weatherInitialRisk, weatherMitigatedRisk, finalRiskMitigation, finalMitigatedRisk, briefer, brieferComment, brieferCommentDate, approver, approverComment, approverCommentDate, finalInitialRisk
     } = flightData
 
     const { control, handleSubmit, watch, setValue } = useForm({
@@ -104,7 +105,10 @@ export default function ModalTabs({ flightData, formMode }) {
             aircrewMitigatedRisk: aircrewMitigatedRisk !== undefined ? aircrewMitigatedRisk : '',
             airAssault: airAssault !== undefined ? airAssault : '',
             AH64AttackReconSecurity: AH64AttackReconSecurity !== undefined ? AH64AttackReconSecurity : '',
-            medevacCasevac: medevacCasevac !== undefined ? medevacCasevac : '',
+            MEDEVAC: MEDEVAC !== undefined ? MEDEVAC : '',
+            CASEVAC: CASEVAC !== undefined ? CASEVAC : '',
+            FARP: FARP !== undefined ? FARP : '',
+            crossCountryBorder: crossCountryBorder !== undefined ? crossCountryBorder : '',
             multiship: multiship !== undefined ? multiship : '',
             mixedMultiShip: mixedMultiShip !== undefined ? mixedMultiShip : '',
             MTFGeneralTraining: MTFGeneralTraining !== undefined ? MTFGeneralTraining : '',
@@ -128,6 +132,7 @@ export default function ModalTabs({ flightData, formMode }) {
             IGEwithin10: IGEwithin10 !== undefined ? IGEwithin10 : '',
             OGEwithin5: OGEwithin5 !== undefined ? OGEwithin5 : '',
             IGEwithin5: IGEwithin5 !== undefined ? IGEwithin5 : '',
+            Cruisewithin10: Cruisewithin10 !== undefined ? Cruisewithin10 : '',
             progessionEvaluationEPs: progessionEvaluationEPs !== undefined ? progessionEvaluationEPs : '',
             IFRSimulatedIMC: IFRSimulatedIMC !== undefined ? IFRSimulatedIMC : '',
             CBRNE: CBRNE !== undefined ? CBRNE : '',
@@ -137,6 +142,13 @@ export default function ModalTabs({ flightData, formMode }) {
             gunneryLiveFire: gunneryLiveFire !== undefined ? gunneryLiveFire : '',
             CALFEX: CALFEX !== undefined ? CALFEX : '',
             AMS: AMS !== undefined ? AMS : '',
+            blackoutCurtain: blackoutCurtain !== undefined ? blackoutCurtain : '',
+            OWUntrained: OWUntrained !== undefined ? OWUntrained : '',
+            famFlight: famFlight !== undefined ? famFlight : '',
+            hoverWXRlt500: hoverWXRlt500 !== undefined ? hoverWXRlt500 : '',
+            UH60DoorsOff: UH60DoorsOff !== undefined ? UH60DoorsOff : '',
+            OWSea4to5: OWSea4to5 !== undefined ? OWSea4to5 : '',
+            OWSeaGt6: OWSeaGt6 !== undefined ? OWSeaGt6 : '',
             pcGt90: pcGt90 !== undefined ? pcGt90 : '',
             pcGt60: pcGt60 !== undefined ? pcGt60 : '',
             pcGt30: pcGt30 !== undefined ? pcGt30 : '',
@@ -254,7 +266,11 @@ export default function ModalTabs({ flightData, formMode }) {
 
 
     return (
-        <form style={{ height: '100%', display: 'flex', flexDirection: 'column', marginBottom: '15px' }}
+        <form style={{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column'
+        }}
             onSubmit={handleSubmit(onSubmit)}
         >
             {/* Tabs */}
@@ -272,32 +288,37 @@ export default function ModalTabs({ flightData, formMode }) {
                 </Tabs>
             </Box>
 
-            {/* Tab Panels */}
-            <CustomTabPanel value={tabValue} index={0}>
-                <Aircrew control={control} watch={watch} setValue={setValue} />
-            </CustomTabPanel>
-            <CustomTabPanel value={tabValue} index={1}>
-                <Mission control={control} watch={watch} setValue={setValue} />
-            </CustomTabPanel>
-            <CustomTabPanel value={tabValue} index={2}>
-                <Weather control={control} watch={watch} setValue={setValue} />
-            </CustomTabPanel>
-            <CustomTabPanel value={tabValue} index={3}>
-                <FinalRisk control={control} watch={watch} setValue={setValue} />
-            </CustomTabPanel>
-            <CustomTabPanel value={tabValue} index={4}>
-                <MBO control={control} watch={watch} />
-            </CustomTabPanel>
-            <CustomTabPanel value={tabValue} index={5}>
-                <FMAA control={control} watch={watch} />
-            </CustomTabPanel>
+            <Box
+                style={{
+                    flexGrow: 1, // Allow this div to grow and take up available space
+                    overflowY: 'auto', // Enable vertical scrolling if needed
+                }}
+            >
+                {/* Tab Panels */}
+                <CustomTabPanel value={tabValue} index={0}>
+                    <Aircrew control={control} watch={watch} setValue={setValue} />
+                </CustomTabPanel>
+                <CustomTabPanel value={tabValue} index={1}>
+                    <Mission control={control} watch={watch} setValue={setValue} />
+                </CustomTabPanel>
+                <CustomTabPanel value={tabValue} index={2}>
+                    <Weather control={control} watch={watch} setValue={setValue} />
+                </CustomTabPanel>
+                <CustomTabPanel value={tabValue} index={3}>
+                    <FinalRisk control={control} watch={watch} setValue={setValue} />
+                </CustomTabPanel>
+                <CustomTabPanel value={tabValue} index={4}>
+                    <MBO control={control} watch={watch} />
+                </CustomTabPanel>
+                <CustomTabPanel value={tabValue} index={5}>
+                    <FMAA control={control} watch={watch} />
+                </CustomTabPanel>
+            </Box>
 
             {/* Submit Button */}
-            <Button variant="contained" type="submit" fullWidth sx={{ marginTop: 'auto', marginBottom: '15px' }}>
+            <Button variant="contained" type="submit" fullWidth sx={{ marginTop: 'auto', marginBottom: '8px' }}>
                 {formMode} RCOP
             </Button>
-        </form>
-
-
+        </form >
     );
 }

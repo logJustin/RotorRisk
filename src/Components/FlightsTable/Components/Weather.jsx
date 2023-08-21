@@ -20,8 +20,8 @@ export default function Weather({ row }) {
                         sx={{ display: 'inline' }}
                     >
                         {weatherOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                        <Typography variant="h6" component="div" sx={{ display: 'inline' }}> Weather: {row.weatherMitigatedRisk}</Typography>
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ display: 'inline' }}>Weather: {row.weatherMitigatedRisk}</Typography>
                 </TableCell>
             </TableRow>
             <TableRow sx={{ padding: '0px' }}>

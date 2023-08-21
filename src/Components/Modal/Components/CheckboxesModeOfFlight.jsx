@@ -42,7 +42,7 @@ const CheckboxesModeOfFlight = ({ value, onChange, task }) => {
                             checked={value.includes('UN')}
                             onChange={() => handleCheckboxChange('UN')}
                             disabled={
-                                task === 'Blackout Operations' || task === 'Terrain Flight' || task === 'Combat Manuevering Flight' || task === 'CALFEX' || task === 'AMS Training'}
+                                task === 'Blackout Operations' || task === 'Terrain Flight' || task === 'Combat Manuevering Flight' || task === 'CALFEX' || task === 'AMS Training' || task === 'Waterbucket/Fire Fighting' || task === 'Gunnery/Live Fire'}
                         />
                     }
                     label="UN"
@@ -53,6 +53,9 @@ const CheckboxesModeOfFlight = ({ value, onChange, task }) => {
                         <Checkbox
                             checked={value.includes('NG')}
                             onChange={() => handleCheckboxChange('NG')}
+                            disabled={
+                                task === 'Waterbucket/Fire Fighting'
+                            }
                         />
                     }
                     label="NG"

@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { Controller } from "react-hook-form"
-import { InputLabel, MenuItem, FormControl, Select, TextField, FormLabel } from '@mui/material';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { InputLabel, MenuItem, FormControl, Select, TextField, FormLabel, IconButton } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
+import DeleteIcon from '@mui/icons-material/Delete';
 import CheckboxesFlightConditions from '../Components/CheckboxesFlightConditions'
 import aircrews from '../../../data/seederCrewData'
 import aircraftInfo from '../../../data/aircraftTailNumbers'
@@ -111,7 +112,10 @@ export default function Aircrew({ control, watch, setValue }) {
                                     {...field}
                                     fullWidth
                                     label="Aircraft"
-                                    onChange={() => { setValue('aircraftTail', '') }}
+                                    onChange={(selectedValue) => {
+                                        field.onChange(selectedValue); // Let the Controller handle value update
+                                        setValue('aircraftTail', ''); // Set aircraftTail to an empty string
+                                    }}
                                 >
                                     {Object.keys(aircraftInfo).map((helicopterType) => (
                                         <MenuItem key={helicopterType} value={helicopterType}>
@@ -271,7 +275,7 @@ export default function Aircrew({ control, watch, setValue }) {
                     </Controller>
                 </Grid>
                 {/* NRCM 1 */}
-                <Grid xs={4}>
+                <Grid xs={3}>
                     <Controller name="nrcm1" control={control} render={({ field }) => (
                         <FormControl fullWidth>
                             <InputLabel id="nrcm1Select">NRCM 1</InputLabel>
@@ -283,8 +287,13 @@ export default function Aircrew({ control, watch, setValue }) {
 
                     </Controller>
                 </Grid>
+                <Grid xs={1}>
+                    <IconButton aria-label="delete" size="large" onClick={() => { setValue('nrcm1', '') }}>
+                        <DeleteIcon fontSize="inherit" />
+                    </IconButton>
+                </Grid>
                 {/* NRCM 2 */}
-                <Grid xs={4}>
+                <Grid xs={3}>
                     <Controller name="nrcm2" control={control} render={({ field }) => (
                         <FormControl fullWidth>
                             <InputLabel id="nrcm2Select">NRCM 2</InputLabel>
@@ -296,8 +305,13 @@ export default function Aircrew({ control, watch, setValue }) {
 
                     </Controller>
                 </Grid>
+                <Grid xs={1}>
+                    <IconButton aria-label="delete" size="large" onClick={() => { setValue('nrcm2', '') }}>
+                        <DeleteIcon fontSize="inherit" />
+                    </IconButton>
+                </Grid>
                 {/* NRCM 3 */}
-                <Grid xs={4}>
+                <Grid xs={3}>
                     <Controller name="nrcm3" control={control} render={({ field }) => (
                         <FormControl fullWidth>
                             <InputLabel id="nrcm3Select">NRCM 3</InputLabel>
@@ -307,6 +321,11 @@ export default function Aircrew({ control, watch, setValue }) {
                         </FormControl>
                     )}>
                     </Controller>
+                </Grid>
+                <Grid xs={1}>
+                    <IconButton aria-label="delete" size="large" onClick={() => { setValue('nrcm3', '') }}>
+                        <DeleteIcon fontSize="inherit" />
+                    </IconButton>
                 </Grid>
             </Grid >
 

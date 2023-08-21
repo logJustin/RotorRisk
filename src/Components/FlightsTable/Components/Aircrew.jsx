@@ -20,8 +20,8 @@ export default function Aircrew({ row }) {
                         sx={{ display: 'inline' }}
                     >
                         {crewOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                        <Typography variant="h6" component="div" sx={{ display: 'inline' }}> Aircrew: {row.aircrewMitigatedRisk}</Typography>
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ display: 'inline' }}>Aircrew: {row.aircrewMitigatedRisk}</Typography>
                 </TableCell>
             </TableRow >
             <TableRow sx={{ padding: '0px' }}>

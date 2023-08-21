@@ -5,8 +5,8 @@
 //       Form Sections to reflect this:
 //         CrewMember Recency
 //         Specific Vague Planning
+//     Add Crews for other Airframes & logic for the correct aircrews to appear
 //     Form Validation
-//     Margin bottom on File RCOP Button
 //     Write functionality for Brief and Approve buttons in LeftNavigation
 //     Add Fighter Management
 //     Make backend :(
@@ -35,3 +35,7 @@
 //  ✓  Binary checkboxes don't allow unclick
 //  ✓  Adjust selected risks depending on the Initial Risk
 //  ✓  Reset TailNumber when AircraftType Changes
+//  ✓  Margin bottom on File RCOP Button
+//  ✓  Insert Delete icon to clear a NRCM field
+//  ✓  Validate risks with 12 CAB RCOP
+//  ✓  Update Crews and Tail Numbers

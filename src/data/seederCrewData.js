@@ -1,69 +1,192 @@
 const aircrews = {
     'CPT Reynolds': {
         position: 'pilot',
-        aircraft: 502,
-        NG: 115,
-        atleast25InAO: true
+        airframe: 'HH60M',
+        aircraft: 510.8,
+        NG: 124.5,
+        atleast25InAO: true,
     },
-    'CPT Smith': {
+    'CPT Thomas': {
         position: 'pilot',
-        aircraft: 310,
-        NG: 115,
-        atleast25InAO: false
+        airframe: 'HH60M',
+        aircraft: 492.4,
+        NG: 124.5,
+        atleast25InAO: false,
     },
-    'SGT Daniels': {
-        position: 'nrcm',
-        aircraft: 1000,
-        NG: 60,
-        atleast25InAO: true
-    },
-    'CPT Johnson': {
+    'CPT Hunter': {
         position: 'pilot',
-        aircraft: 1520,
-        NG: 620,
-        atleast25InAO: true
+        airframe: 'HH60M',
+        aircraft: 248.0,
+        NG: 57.3,
+        atleast25InAO: true,
     },
-    'CPT Williams': {
+    'CW2 Smart': {
         position: 'pilot',
-        aircraft: 920,
-        NG: 260,
-        atleast25InAO: false
+        airframe: 'HH60M',
+        aircraft: 1138.8,
+        NG: 351.1,
+        atleast25InAO: true,
     },
-    '1LT Davis': {
+    'CW2 Montiel': {
         position: 'pilot',
-        aircraft: 1830,
-        NG: 470,
-        atleast25InAO: false
+        airframe: 'HH60M',
+        aircraft: 583.5,
+        NG: 155.3,
+        atleast25InAO: true,
     },
-    '1LT Anderson': {
+    'CW2 Brandes': {
         position: 'pilot',
-        aircraft: 1150,
-        NG: 540,
-        atleast25InAO: true
+        airframe: 'HH60M',
+        aircraft: 400.3,
+        NG: 103.3,
+        atleast25InAO: true,
     },
-    'SGT Martinez': {
-        position: 'nrcm',
-        aircraft: 630,
-        NG: 310,
-        atleast25InAO: false
+    'CW2 Gamboa': {
+        position: 'pilot',
+        airframe: 'HH60M',
+        aircraft: 340.6,
+        NG: 78.3,
+        atleast25InAO: true,
     },
-    'SGT Walker': {
-        position: 'nrcm',
-        aircraft: 1240,
-        NG: 870,
-        atleast25InAO: true
+    'CW3 Jenkins': {
+        position: 'pilot',
+        airframe: 'HH60M',
+        aircraft: 2090.8,
+        NG: 644.8,
+        atleast25InAO: true,
     },
-    'CPL Lopez': {
-        position: 'nrcm',
-        aircraft: 1480,
-        NG: 720,
-        atleast25InAO: false
+    'CW3 Becker': {
+        position: 'pilot',
+        airframe: 'HH60M',
+        aircraft: 1711.1,
+        NG: 348.0,
+        atleast25InAO: true,
     },
-    'CPL Scott': {
+    'CW3 Zapata': {
+        position: 'pilot',
+        airframe: 'HH60M',
+        aircraft: 1253.6,
+        NG: 367.7,
+        atleast25InAO: true,
+    },
+    'MAJ Thomas': {
+        position: 'pilot',
+        airframe: 'HH60M',
+        aircraft: 873.4,
+        NG: 230.7,
+        atleast25InAO: true,
+    },
+    'SFC Middleton': {
         position: 'nrcm',
-        aircraft: 149,
-        NG: 420,
-        atleast25InAO: true
-    }
+        airframe: 'HH60M',
+        aircraft: 1046.9,
+        NG: 340.8,
+        atleast25InAO: true,
+    },
+    'SGT Bailey': {
+        position: 'nrcm',
+        airframe: 'HH60M',
+        aircraft: 2250.5,
+        NG: 770.7,
+        atleast25InAO: true,
+    },
+    'SSG Stewart': {
+        position: 'nrcm',
+        airframe: 'HH60M',
+        aircraft: 1579.7,
+        NG: 480.4,
+        atleast25InAO: true,
+    },
+    'SGT Broady': {
+        position: 'nrcm',
+        airframe: 'HH60M',
+        aircraft: 1037.1,
+        NG: 273.1,
+        atleast25InAO: true,
+    },
+    'SGT Morell': {
+        position: 'nrcm',
+        airframe: 'HH60M',
+        aircraft: 451.4,
+        NG: 113.3,
+        atleast25InAO: true,
+    },
+    'SPC Ballard': {
+        position: 'nrcm',
+        airframe: 'HH60M',
+        aircraft: 553.6,
+        NG: 152.7,
+        atleast25InAO: true,
+    },
+    'SPC Yenter': {
+        position: 'nrcm',
+        airframe: 'HH60M',
+        aircraft: 408.0,
+        NG: 117.7,
+        atleast25InAO: true,
+    },
+    'SGT Hideroa': {
+        position: 'nrcm',
+        airframe: 'HH60M',
+        aircraft: 278.0,
+        NG: 81.9,
+        atleast25InAO: true,
+    },
+    'SPC Boyer': {
+        position: 'nrcm',
+        airframe: 'HH60M',
+        aircraft: 241.5,
+        NG: 71.7,
+        atleast25InAO: true,
+    },
+    'SPC Dilick': {
+        position: 'nrcm',
+        airframe: 'HH60M',
+        aircraft: 176.6,
+        NG: 69.3,
+        atleast25InAO: true,
+    },
+    'SSG Ford': {
+        position: 'nrcm',
+        airframe: 'HH60M',
+        aircraft: 420.1,
+        NG: 110.1,
+        atleast25InAO: true,
+    },
+    'SSG Fonseca': {
+        position: 'nrcm',
+        airframe: 'HH60M',
+        aircraft: 393.0,
+        NG: 108.5,
+        atleast25InAO: true,
+    },
+    'CW2 Rappisi': {
+        position: 'pilot',
+        airframe: 'HH60M',
+        aircraft: 273.1,
+        NG: 64.5,
+        atleast25InAO: true,
+    },
+    'WO1 Baswell': {
+        position: 'pilot',
+        airframe: 'HH60M',
+        aircraft: 181.7,
+        NG: 47.2,
+        atleast25InAO: true,
+    },
+    'WO1 Hoose': {
+        position: 'pilot',
+        airframe: 'HH60M',
+        aircraft: 172.9,
+        NG: 37.8,
+        atleast25InAO: true,
+    },
+    'WO1 Halmi': {
+        position: 'pilot',
+        airframe: 'HH60M',
+        aircraft: 133.2,
+        NG: 37.8,
+        atleast25InAO: false,
+    },
 };
 export default aircrews
