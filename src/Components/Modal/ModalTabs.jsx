@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -14,7 +14,7 @@ import FinalRisk from './Tabs/FinalRisk'
 import MBO from './Tabs/MBO'
 import FMAA from './Tabs/FMAA'
 import flights from '../../data/seederFlightData'
-import aircrews from '../../data/seederCrewData';
+// import aircrews from '../../data/seederCrewData';
 
 
 function CustomTabPanel(props) {
@@ -52,8 +52,25 @@ function a11yProps(index) {
 }
 
 export default function ModalTabs({ flightData, formMode }) {
-
     const [tabValue, setTabValue] = React.useState(0);
+    const [aircrews, setAircrews] = React.useState([]);
+
+    useEffect(() => {
+        // Fetch data when the component mounts
+        fetchAircrewsData();
+    }, []); // The empty dependency array ensures this runs once on mount
+
+    const fetchAircrewsData = async () => {
+        try {
+            const response = await fetch('http://localhost:3001/api/data');
+            const jsonData = await response.json();
+            setAircrews(jsonData);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+
     const handleChange = (event, newValue) => {
         setTabValue(newValue);
     };
@@ -217,11 +234,11 @@ export default function ModalTabs({ flightData, formMode }) {
     };
 
     const crewmemberUpdate = (crewmember, hoursProperties) => {
-        const selectedCrewmember = aircrews[crewmember];
+        const selectedCrewmember = aircrews.find(member => member.name === crewmember);
         if (selectedCrewmember) {
             hoursProperties.aircraft = selectedCrewmember.aircraft;
-            hoursProperties.NG = selectedCrewmember.NG;
-            hoursProperties.atleast25InAO = selectedCrewmember.atleast25InAO;
+            hoursProperties.NG = selectedCrewmember.ng;
+            hoursProperties.atleast25InAO = selectedCrewmember.atleast25inao;
         }
     };
 
@@ -296,7 +313,7 @@ export default function ModalTabs({ flightData, formMode }) {
             >
                 {/* Tab Panels */}
                 <CustomTabPanel value={tabValue} index={0}>
-                    <Aircrew control={control} watch={watch} setValue={setValue} />
+                    <Aircrew control={control} watch={watch} setValue={setValue} aircrews={aircrews} />
                 </CustomTabPanel>
                 <CustomTabPanel value={tabValue} index={1}>
                     <Mission control={control} watch={watch} setValue={setValue} />

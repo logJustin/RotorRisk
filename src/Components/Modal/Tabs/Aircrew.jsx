@@ -8,23 +8,24 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckboxesFlightConditions from '../Components/CheckboxesFlightConditions'
-import aircrews from '../../../data/seederCrewData'
 import aircraftInfo from '../../../data/aircraftTailNumbers'
 import AircrewRiskLookupValue from '../../../utils/AircrewRiskLookupValue';
 import AircrewRiskLookupValueNG from '../../../utils/AircrewRiskLookupValueNG';
 import CalculateHighestRisk from '../../../utils/CalculateHighestRisk';
 
-export default function Aircrew({ control, watch, setValue }) {
+export default function Aircrew({ control, watch, setValue, aircrews }) {
+
 
     const crewSelect = (position) => (
-        Object.entries(aircrews)
-            .filter(([crewmember, info]) => info.position === position)
-            .map(([crewmember, info]) => (
-                <MenuItem key={crewmember} value={crewmember}>
-                    {crewmember}
+        Object.values(aircrews)
+            .filter(crewmember => crewmember.position === position)
+            .map(crewmember => (
+                <MenuItem key={crewmember.name} value={crewmember.name}>
+                    {crewmember.name}
                 </MenuItem>
             ))
-    )
+    );
+
 
     const firstRender = useRef(true)
     const aircraftType = watch("aircraftType")
@@ -42,16 +43,23 @@ export default function Aircrew({ control, watch, setValue }) {
 
     useEffect(() => {
         if (!firstRender.current) {
-            const newRiskPC = AircrewRiskLookupValue(aircrews[pc]?.aircraft, true, aircrews[pc]?.atleast25InAO)
-            const newRiskPI = AircrewRiskLookupValue(aircrews[pi]?.aircraft, true, aircrews[pi]?.atleast25InAO)
-            const newRiskNRCM1 = AircrewRiskLookupValue(aircrews[nrcm1]?.aircraft, false, aircrews[nrcm1]?.atleast25InAO)
-            const newRiskNRCM2 = AircrewRiskLookupValue(aircrews[nrcm2]?.aircraft, false, aircrews[nrcm2]?.atleast25InAO)
-            const newRiskNRCM3 = AircrewRiskLookupValue(aircrews[nrcm3]?.aircraft, false, aircrews[nrcm3]?.atleast25InAO)
-            const newRiskPCNG = AircrewRiskLookupValueNG(aircrews[pc]?.NG, aircrews[pc]?.atleast25InAO)
-            const newRiskPING = AircrewRiskLookupValueNG(aircrews[pi]?.NG, aircrews[pi]?.atleast25InAO)
-            const newRiskNRCM1NG = AircrewRiskLookupValueNG(aircrews[nrcm1]?.NG, aircrews[nrcm1]?.atleast25InAO)
-            const newRiskNRCM2NG = AircrewRiskLookupValueNG(aircrews[nrcm2]?.NG, aircrews[nrcm2]?.atleast25InAO)
-            const newRiskNRCM3NG = AircrewRiskLookupValueNG(aircrews[nrcm3]?.NG, aircrews[nrcm3]?.atleast25InAO)
+            const selectedpc = aircrews.find(member => member.name === pc)
+            const selectedpi = aircrews.find(member => member.name === pi)
+            const selectednrcm1 = aircrews.find(member => member.name === nrcm1)
+            const selectednrcm2 = aircrews.find(member => member.name === nrcm2)
+            const selectednrcm3 = aircrews.find(member => member.name === nrcm3)
+
+            const newRiskPC = AircrewRiskLookupValue(selectedpc?.aircraft, true, selectedpc?.atleast25InAO)
+            const newRiskPI = AircrewRiskLookupValue(selectedpi?.aircraft, true, selectedpi?.atleast25InAO)
+            const newRiskNRCM1 = AircrewRiskLookupValue(selectednrcm1?.aircraft, false, selectednrcm1?.atleast25InAO)
+            const newRiskNRCM2 = AircrewRiskLookupValue(selectednrcm2?.aircraft, false, selectednrcm2?.atleast25InAO)
+            const newRiskNRCM3 = AircrewRiskLookupValue(selectednrcm3?.aircraft, false, selectednrcm3?.atleast25InAO)
+
+            const newRiskPCNG = AircrewRiskLookupValueNG(selectedpc?.NG, selectedpc?.atleast25InAO)
+            const newRiskPING = AircrewRiskLookupValueNG(selectedpi?.NG, selectedpi?.atleast25InAO)
+            const newRiskNRCM1NG = AircrewRiskLookupValueNG(selectednrcm1?.NG, selectednrcm1?.atleast25InAO)
+            const newRiskNRCM2NG = AircrewRiskLookupValueNG(selectednrcm2?.NG, selectednrcm2?.atleast25InAO)
+            const newRiskNRCM3NG = AircrewRiskLookupValueNG(selectednrcm3?.NG, selectednrcm3?.atleast25InAO)
 
             function compareRiskLevels(risk1, risk2) {
                 const hierarchy = ["L", "M"];

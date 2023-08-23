@@ -1,192 +1,247 @@
-const aircrews = {
-    'CPT Reynolds': {
+const aircrews = [
+    {
+        uuid: '9631b196-8687-40c6-a77c-4a0463302b2c',
+        name: 'CPT Reynolds',
         position: 'pilot',
         airframe: 'HH60M',
         aircraft: 510.8,
         NG: 124.5,
         atleast25InAO: true,
     },
-    'CPT Thomas': {
+    {
+        uuid: '700e3e1d-3272-4038-9e65-5cddc576a358',
+        name: 'CPT Thomas',
         position: 'pilot',
         airframe: 'HH60M',
         aircraft: 492.4,
         NG: 124.5,
         atleast25InAO: false,
     },
-    'CPT Hunter': {
+    {
+        uuid: 'b3988e3f-600a-4349-9193-27a1fed4a024',
+        name: 'CPT Hunter',
         position: 'pilot',
         airframe: 'HH60M',
-        aircraft: 248.0,
+        aircraft: 248,
         NG: 57.3,
         atleast25InAO: true,
     },
-    'CW2 Smart': {
+    {
+        uuid: 'd8a7f270-58b4-473c-87f9-6eabe9a6ed21',
+        name: 'CW2 Smart',
         position: 'pilot',
         airframe: 'HH60M',
         aircraft: 1138.8,
         NG: 351.1,
         atleast25InAO: true,
     },
-    'CW2 Montiel': {
+    {
+        uuid: '1222b667-7beb-4aa2-9cd3-90b4b0fa332b',
+        name: 'CW2 Montiel',
         position: 'pilot',
         airframe: 'HH60M',
         aircraft: 583.5,
         NG: 155.3,
         atleast25InAO: true,
     },
-    'CW2 Brandes': {
+    {
+        uuid: '9600e995-2166-48c2-bae3-f8ee7123e03f',
+        name: 'CW2 Brandes',
         position: 'pilot',
         airframe: 'HH60M',
         aircraft: 400.3,
         NG: 103.3,
         atleast25InAO: true,
     },
-    'CW2 Gamboa': {
+    {
+        uuid: '0d88958e-ea91-4daf-8117-2083bf2611de',
+        name: 'CW2 Gamboa',
         position: 'pilot',
         airframe: 'HH60M',
         aircraft: 340.6,
         NG: 78.3,
         atleast25InAO: true,
     },
-    'CW3 Jenkins': {
+    {
+        uuid: '35b7517a-a34c-4e1d-800d-11c1d7c86c45',
+        name: 'CW3 Jenkins',
         position: 'pilot',
         airframe: 'HH60M',
         aircraft: 2090.8,
         NG: 644.8,
         atleast25InAO: true,
     },
-    'CW3 Becker': {
+    {
+        uuid: 'b5c447f3-10ca-4c05-8705-bba0559a8204',
+        name: 'CW3 Becker',
         position: 'pilot',
         airframe: 'HH60M',
         aircraft: 1711.1,
-        NG: 348.0,
+        NG: 348,
         atleast25InAO: true,
     },
-    'CW3 Zapata': {
+    {
+        uuid: '07484147-23d1-4e97-98f6-0ecdafdc1546',
+        name: 'CW3 Zapata',
         position: 'pilot',
         airframe: 'HH60M',
         aircraft: 1253.6,
         NG: 367.7,
         atleast25InAO: true,
     },
-    'MAJ Thomas': {
+    {
+        uuid: 'ebcf7fbe-9bed-4fc5-b506-fd27c1dd86c1',
+        name: 'MAJ Thomas',
         position: 'pilot',
         airframe: 'HH60M',
         aircraft: 873.4,
         NG: 230.7,
         atleast25InAO: true,
     },
-    'SFC Middleton': {
+    {
+        uuid: 'd6828bd6-09e3-455c-97e4-ee245278cac5',
+        name: 'SFC Middleton',
         position: 'nrcm',
         airframe: 'HH60M',
         aircraft: 1046.9,
         NG: 340.8,
         atleast25InAO: true,
     },
-    'SGT Bailey': {
+    {
+        uuid: '7b2e2c6c-5db0-4ff9-87f2-d3702fc81ec8',
+        name: 'SGT Bailey',
         position: 'nrcm',
         airframe: 'HH60M',
         aircraft: 2250.5,
         NG: 770.7,
         atleast25InAO: true,
     },
-    'SSG Stewart': {
+    {
+        uuid: '83a453d8-a1c0-41b8-ba85-af8b1785bdaa',
+        name: 'SSG Stewart',
         position: 'nrcm',
         airframe: 'HH60M',
         aircraft: 1579.7,
         NG: 480.4,
         atleast25InAO: true,
     },
-    'SGT Broady': {
+    {
+        uuid: 'd11ebbb6-ec89-4db5-bc08-613458dd34d5',
+        name: 'SGT Broady',
         position: 'nrcm',
         airframe: 'HH60M',
         aircraft: 1037.1,
         NG: 273.1,
         atleast25InAO: true,
     },
-    'SGT Morell': {
+    {
+        uuid: '89bbc448-0b72-4ee6-8b6c-694276bccd20',
+        name: 'SGT Morell',
         position: 'nrcm',
         airframe: 'HH60M',
         aircraft: 451.4,
         NG: 113.3,
         atleast25InAO: true,
     },
-    'SPC Ballard': {
+    {
+        uuid: 'f0a8c63a-e558-48ea-8dff-0014e4c3b253',
+        name: 'SPC Ballard',
         position: 'nrcm',
         airframe: 'HH60M',
         aircraft: 553.6,
         NG: 152.7,
         atleast25InAO: true,
     },
-    'SPC Yenter': {
+    {
+        uuid: '10ab6ec4-d1aa-497c-a31e-c5d0182b48d5',
+        name: 'SPC Yenter',
         position: 'nrcm',
         airframe: 'HH60M',
-        aircraft: 408.0,
+        aircraft: 408,
         NG: 117.7,
         atleast25InAO: true,
     },
-    'SGT Hideroa': {
+    {
+        uuid: 'e4cc2df0-3b14-4564-9d78-233662c0822f',
+        name: 'SGT Hideroa',
         position: 'nrcm',
         airframe: 'HH60M',
-        aircraft: 278.0,
+        aircraft: 278,
         NG: 81.9,
         atleast25InAO: true,
     },
-    'SPC Boyer': {
+    {
+        uuid: 'e3e57cfe-7a88-49cf-908b-267fcac14427',
+        name: 'SPC Boyer',
         position: 'nrcm',
         airframe: 'HH60M',
         aircraft: 241.5,
         NG: 71.7,
         atleast25InAO: true,
     },
-    'SPC Dilick': {
+    {
+        uuid: '13170563-f9bf-4a32-8fe5-704e8507f34b',
+        name: 'SPC Dilick',
         position: 'nrcm',
         airframe: 'HH60M',
         aircraft: 176.6,
         NG: 69.3,
         atleast25InAO: true,
     },
-    'SSG Ford': {
+    {
+        uuid: '6d7380d4-5b91-4939-8e6a-57532b3cb15e',
+        name: 'SSG Ford',
         position: 'nrcm',
         airframe: 'HH60M',
         aircraft: 420.1,
         NG: 110.1,
         atleast25InAO: true,
     },
-    'SSG Fonseca': {
+    {
+        uuid: '5b9011e2-7129-452b-a9fd-157add91bd47',
+        name: 'SSG Fonseca',
         position: 'nrcm',
         airframe: 'HH60M',
-        aircraft: 393.0,
+        aircraft: 393,
         NG: 108.5,
         atleast25InAO: true,
     },
-    'CW2 Rappisi': {
+    {
+        uuid: 'fa52b7a1-711c-4bf3-9051-5231ac3318e2',
+        name: 'CW2 Rappisi',
         position: 'pilot',
         airframe: 'HH60M',
         aircraft: 273.1,
         NG: 64.5,
         atleast25InAO: true,
     },
-    'WO1 Baswell': {
+    {
+        uuid: 'edab0372-be10-4e00-99bd-3ce00f81bc06',
+        name: 'WO1 Baswell',
         position: 'pilot',
         airframe: 'HH60M',
         aircraft: 181.7,
         NG: 47.2,
         atleast25InAO: true,
     },
-    'WO1 Hoose': {
+    {
+        uuid: 'bb12206f-0bdc-417c-a174-1037e7f9905f',
+        name: 'WO1 Hoose',
         position: 'pilot',
         airframe: 'HH60M',
         aircraft: 172.9,
         NG: 37.8,
         atleast25InAO: true,
     },
-    'WO1 Halmi': {
+    {
+        uuid: '77a0b58e-5487-4ee6-a535-77e5050395be',
+        name: 'WO1 Halmi',
         position: 'pilot',
         airframe: 'HH60M',
         aircraft: 133.2,
         NG: 37.8,
         atleast25InAO: false,
-    },
-};
+    }
+]
+
 export default aircrews

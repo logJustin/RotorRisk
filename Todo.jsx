@@ -9,6 +9,7 @@
 //     Form Validation
 //     Write functionality for Brief and Approve buttons in LeftNavigation
 //     Add Fighter Management
+//     Get flights into DB
 //     Make backend :(
 
 
@@ -39,3 +40,5 @@
 //  ✓  Insert Delete icon to clear a NRCM field
 //  ✓  Validate risks with 12 CAB RCOP
 //  ✓  Update Crews and Tail Numbers
+//  ✓  Add UUID to crewmembers
+//  ✓  Create aircrews database & implement it
