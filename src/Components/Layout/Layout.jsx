@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Header from './Header'
 import LeftNavigation from './LeftNavigation'
@@ -34,6 +35,23 @@ function Layout(props, lightMode, handleLightModeToggle) {
     const handleClose = () => setOpen(false);
 
 
+    const [flights, setFlights] = React.useState([])
+    useEffect(() => {
+        // Fetch data when the component mounts
+        fetchFlightsData();
+    }, []); // The empty dependency array ensures this runs once on mount
+
+    const fetchFlightsData = async () => {
+        try {
+            const response = await fetch('http://localhost:3001/api/flights');
+            const jsonData = await response.json();
+            setFlights(jsonData);
+            console.log(jsonData)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
     return (
         <Box sx={{ display: 'flex' }}>
             <Header drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle} />
@@ -49,7 +67,7 @@ function Layout(props, lightMode, handleLightModeToggle) {
                 flightData={flightData}
                 formMode={formMode}
             />
-            <FlightsList drawerWidth={drawerWidth} open={open} handleClose={handleClose} handleOpen={handleOpen} />
+            <FlightsList drawerWidth={drawerWidth} open={open} handleClose={handleClose} handleOpen={handleOpen} flights={flights} />
         </Box>
     );
 }

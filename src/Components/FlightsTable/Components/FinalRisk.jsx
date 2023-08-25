@@ -21,7 +21,7 @@ export default function FinalRisk({ row }) {
                         sx={{ display: 'inline' }}
                     >
                         {finalRiskOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                        <Typography variant="h6" component="div" sx={{ display: 'inline' }}> Final: {row.finalMitigatedRisk}</Typography>
+                        <Typography variant="h6" component="div" sx={{ display: 'inline' }}> Final: {row.finalmitigatedrisk}</Typography>
                     </IconButton>
                 </TableCell>
             </TableRow>
@@ -36,10 +36,10 @@ export default function FinalRisk({ row }) {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow key='greatestRisk'>
-                                    <TableCell colSpan={5} component="th" scope="row">Greatest Risk: {row.greatestRisk}</TableCell>
+                                    <TableCell colSpan={5} component="th" scope="row">Greatest Risk: {row.greatestrisk}</TableCell>
                                 </TableRow>
                                 <TableRow key='MissionRiskMitigation'>
-                                    <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.finalRiskMitigation}</TableCell>
+                                    <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.finalriskmitigation}</TableCell>
                                 </TableRow>
                                 <TableRow key='brieferHeader'>
                                     <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
@@ -48,10 +48,10 @@ export default function FinalRisk({ row }) {
                                 </TableRow>
                                 <TableRow key='Briefer'>
                                     <TableCell component="th" scope="row">Briefer: {row.briefer}</TableCell>
-                                    <TableCell>Comment Date: {row.brieferCommentDate}</TableCell>
+                                    <TableCell>Comment Date: {row.briefercommentdate}</TableCell>
                                 </TableRow>
                                 <TableRow key='BrieferComment'>
-                                    <TableCell colSpan={3} component="th" scope="row">Briefer Comments: {row.brieferComment}</TableCell>
+                                    <TableCell colSpan={3} component="th" scope="row">Briefer Comments: {row.briefercomment}</TableCell>
                                 </TableRow>
                                 <TableRow key='approverHeader'>
                                     <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
@@ -60,10 +60,10 @@ export default function FinalRisk({ row }) {
                                 </TableRow>
                                 <TableRow key='Approver'>
                                     <TableCell component="th" scope="row">Approver: {row.approver}</TableCell>
-                                    <TableCell>Comment Date: {row.approverCommentDate}</TableCell>
+                                    <TableCell>Comment Date: {row.approvercommentdate}</TableCell>
                                 </TableRow>
                                 <TableRow key='ApproverComment'>
-                                    <TableCell colSpan={4} component="th" scope="row">Approver Comments: {row.approverComment}</TableCell>
+                                    <TableCell colSpan={4} component="th" scope="row">Approver Comments: {row.approvercomment}</TableCell>
                                 </TableRow>
                             </TableHead>
                         </Table>

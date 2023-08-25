@@ -20,7 +20,7 @@ export default function Weather({ row }) {
                         sx={{ display: 'inline' }}
                     >
                         {weatherOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                        <Typography variant="h6" component="div" sx={{ display: 'inline' }}> Weather: {row.weatherMitigatedRisk}</Typography>
+                        <Typography variant="h6" component="div" sx={{ display: 'inline' }}> Weather: {row.weathermitigatedrisk}</Typography>
                     </IconButton>
                 </TableCell>
             </TableRow>
@@ -47,9 +47,9 @@ export default function Weather({ row }) {
                                     <TableCell sx={{ background: determineHighestRisk('lt1', row.lt1), width: '25%', color: 'black', borderBottom: 'none' }} align='center'>Less than 1 SM <br></br>{row.lt1 && `(${row.lt1})`}</TableCell>
                                 </TableRow>
                                 <TableRow key='LunarData' style={{ width: '100%' }}>
-                                    {row.gt25IllumAndgt30degrees && <TableCell colSpan={4} sx={{ background: lowRisk, color: 'black', borderBottom: 'none' }} align='center'>Lunar Data: {'>'} 25% and 30°</TableCell>}
-                                    {row.lt25IllumAndlt30degrees && <TableCell colSpan={4} sx={{ background: moderateRisk, color: 'black', borderBottom: 'none' }} align='center'>Lunar Data: {'<'} 25% and 30°</TableCell>}
-                                    {row.gt25IllumAndgt30degreesLimitedLighting && <TableCell colSpan={4} sx={{ background: moderateRisk, color: 'black', borderBottom: 'none' }} align='center'>Lunar Data: {'<'} 25% and 30° (Limited Lighting)</TableCell>}
+                                    {row.gt25illumandgt30degrees && <TableCell colSpan={4} sx={{ background: lowRisk, color: 'black', borderBottom: 'none' }} align='center'>Lunar Data: {'>'} 25% and 30°</TableCell>}
+                                    {row.lt25illumandlt30degrees && <TableCell colSpan={4} sx={{ background: moderateRisk, color: 'black', borderBottom: 'none' }} align='center'>Lunar Data: {'<'} 25% and 30°</TableCell>}
+                                    {row.gt25illumandgt30degreeslimitedlighting && <TableCell colSpan={4} sx={{ background: moderateRisk, color: 'black', borderBottom: 'none' }} align='center'>Lunar Data: {'<'} 25% and 30° (Limited Lighting)</TableCell>}
                                 </TableRow>
                                 <TableRow key='hazardsHeader'>
                                     <TableCell colSpan={10} sx={{ borderBottom: 'none' }}>
@@ -57,14 +57,14 @@ export default function Weather({ row }) {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow key='firstHazardRow'>
-                                    <TableCell sx={{ background: determineHighestRisk('windGt30', row.windGt30), color: 'black', borderBottom: 'none' }} align='center'>Wind {'>'} 30 Knots<br></br>{row.windGt30 && `(${row.windGt30})`}</TableCell>
-                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('windGt30Hoist', row.windGt30Hoist), color: 'black', borderBottom: 'none' }} align='center'>Wind {'>'} 30 Knots {'(Sling/Hoist)'}<br></br>{row.windGt30Hoist && `(${row.windGt30Hoist})`}</TableCell>
-                                    <TableCell sx={{ background: determineHighestRisk('gustSpreadGt20', row.gustSpreadGt20), color: 'black', borderBottom: 'none' }} align='center'>Gusts {'>'} 20 Knots <br></br>{row.gustSpreadGt20 && `(${row.gustSpreadGt20})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('windGt30', row.windgt30), color: 'black', borderBottom: 'none' }} align='center'>Wind {'>'} 30 Knots<br></br>{row.windgt30 && `(${row.windgt30})`}</TableCell>
+                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('windGt30Hoist', row.windgt30hoist), color: 'black', borderBottom: 'none' }} align='center'>Wind {'>'} 30 Knots {'(Sling/Hoist)'}<br></br>{row.windgt30hoist && `(${row.windgt30hoist})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('gustSpreadGt20', row.gustspreadgt20), color: 'black', borderBottom: 'none' }} align='center'>Gusts {'>'} 20 Knots <br></br>{row.gustspreadgt20 && `(${row.gustspreadgt20})`}</TableCell>
                                 </TableRow>
                                 <TableRow colSpan={100} key='secondHazardRow'>
-                                    <TableCell sx={{ background: determineHighestRisk('forecastThunderstorms', row.forecastThunderstorms), color: 'black', borderBottom: 'none' }} align='center'>Forecast Thunderstorms<br></br>{row.forecastThunderstorms && `(${row.forecastThunderstorms})`}</TableCell>
-                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('modTurbulenceIcing', row.modTurbulenceIcing), color: 'black', borderBottom: 'none' }} align='center'>Forecast Moderate Turbulence or Icing <br></br>{row.modTurbulenceIcing && `(${row.modTurbulenceIcing})`}</TableCell>
-                                    <TableCell sx={{ background: determineHighestRisk('oatNegative10Positive30', row.oatNegative10Positive30), color: 'black', borderBottom: 'none' }} align='center'>OAT {'<'}-10°C or {'>'}35°C <br></br>{row.oatNegative10Positive30 && `(${row.oatNegative10Positive30})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('forecastThunderstorms', row.forecastthunderstorms), color: 'black', borderBottom: 'none' }} align='center'>Forecast Thunderstorms<br></br>{row.forecastthunderstorms && `(${row.forecastthunderstorms})`}</TableCell>
+                                    <TableCell colSpan={2} sx={{ background: determineHighestRisk('modTurbulenceIcing', row.modturbulenceicing), color: 'black', borderBottom: 'none' }} align='center'>Forecast Moderate Turbulence or Icing <br></br>{row.modturbulenceicing && `(${row.modturbulenceicing})`}</TableCell>
+                                    <TableCell sx={{ background: determineHighestRisk('oatNegative10Positive30', row.oatnegative10positive30), color: 'black', borderBottom: 'none' }} align='center'>OAT {'<'}-10°C or {'>'}35°C <br></br>{row.oatnegative10positive30 && `(${row.oatnegative10positive30})`}</TableCell>
                                 </TableRow>
 
                                 {row.altRequired &&
@@ -78,11 +78,11 @@ export default function Weather({ row }) {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow key='WeatherRiskMitigation'>
-                                    <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.weatherRiskMitigation}</TableCell>
+                                    <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.weatherriskmitigation}</TableCell>
                                 </TableRow>
                                 <TableRow key='WeatherRisk'>
-                                    <TableCell colSpan={2} align="left">Initial Risk: {row.weatherInitialRisk}</TableCell>
-                                    <TableCell colSpan={2} align="left">Mitigated Risk: {row.weatherMitigatedRisk}</TableCell>
+                                    <TableCell colSpan={2} align="left">Initial Risk: {row.weatherinitialrisk}</TableCell>
+                                    <TableCell colSpan={2} align="left">Mitigated Risk: {row.weathermitigatedrisk}</TableCell>
                                 </TableRow>
                             </TableHead>
                         </Table>

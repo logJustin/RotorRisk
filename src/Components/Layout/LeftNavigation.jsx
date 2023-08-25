@@ -14,10 +14,7 @@ import FormModal from '../Modal/FormModal';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-
-
 export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, mobileOpen, lightMode, handleLightModeToggle, open, handleClose, handleOpen, flightData, formMode }) {
-
 
     const { window } = props;
     const container = window !== undefined ? () => window().document.body : undefined;

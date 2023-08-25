@@ -9,6 +9,7 @@
 //     Form Validation
 //     Write functionality for Brief and Approve buttons in LeftNavigation
 //     Add Fighter Management
+//     Fetch flights on app load
 //     Get flights into DB
 //     Make backend :(
 

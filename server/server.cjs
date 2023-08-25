@@ -4,12 +4,17 @@ const cors = require('cors');
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
 
-dotenv.config({ path: '../.env' });
+// dotenv.config({ path: '../.env' });
+try {
+    dotenv.config();
+} catch (error) {
+    console.error('Error loading .env file:', error);
+}
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 const DATABASE_URL = process.env.VITE_PGConnection;
-
 // Middleware
 app.use(express.json());
 app.use(cors());
@@ -31,9 +36,18 @@ const pool = new Pool({
     }
 })();
 
-app.get('/api/data', async (req, res) => {
+app.get('/api/aircrews', async (req, res) => {
     try {
         const { rows } = await pool.query('SELECT * FROM aircrews');
+        res.json(rows);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        res.status(500).json({ error: 'An error occurred while fetching data.' });
+    }
+});
+app.get('/api/flights', async (req, res) => {
+    try {
+        const { rows } = await pool.query('SELECT * FROM flights');
         res.json(rows);
     } catch (error) {
         console.error('Error fetching data:', error);

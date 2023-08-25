@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Button, Toolbar, Box, Collapse, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import flights from '../../data/seederFlightData';
+// import flights from '../../data/seederFlightData';
 import Aircrew from './Components/Aircrew'
 import Mission from './Components/Mission'
 import Weather from './Components/Weather'
@@ -11,7 +11,7 @@ import FinalRisk from './Components/FinalRisk'
 import './FlightsList.css';
 
 
-export default function Body({ drawerWidth, open, handleClose, handleOpen }) {
+export default function Body({ drawerWidth, open, handleClose, handleOpen, flights }) {
 
 
 
@@ -39,7 +39,7 @@ export default function Body({ drawerWidth, open, handleClose, handleOpen }) {
                     </TableCell>
                     <TableCell sx={{ padding: '0' }} component="th" scope="row" align="left">{row.date}</TableCell>
                     <TableCell sx={{ padding: '0' }} align="left">{row.mission}</TableCell>
-                    <TableCell sx={{ padding: '0' }} align="left">{row.finalMitigatedRisk}</TableCell>
+                    <TableCell sx={{ padding: '0' }} align="left">{row.finalmitigatedrisk}</TableCell>
                     <TableCell sx={{ padding: '0' }} align="left">{row.pc}</TableCell>
                     <TableCell sx={{ padding: '0' }} align="left">{row.briefer}</TableCell>
                     <TableCell sx={{ padding: '0' }} align="left">{row.approver}</TableCell>

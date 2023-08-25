@@ -20,7 +20,7 @@ export default function Aircrew({ row }) {
                         sx={{ display: 'inline' }}
                     >
                         {crewOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                        <Typography variant="h6" component="div" sx={{ display: 'inline' }}> Aircrew: {row.aircrewMitigatedRisk}</Typography>
+                        <Typography variant="h6" component="div" sx={{ display: 'inline' }}> Aircrew: {row.aircrewmitigatedrisk}</Typography>
                     </IconButton>
                 </TableCell>
             </TableRow >
@@ -33,15 +33,15 @@ export default function Aircrew({ row }) {
                                     <TableCell sx={{ borderBottom: 'none' }} component="th" scope="row" align="center">PC: {row.pc}</TableCell>
                                     <TableCell sx={{ borderBottom: 'none' }} align="center">PI: {row.pi}</TableCell>
                                     <TableCell sx={{ borderBottom: 'none' }} align="center">NRCM: {row.nrcm1}</TableCell>
-                                    <TableCell sx={{ borderBottom: 'none' }} align="center">NRCM: {row.nrcm2}</TableCell>
+                                    {row.nrcm2 && <TableCell sx={{ borderBottom: 'none' }} align="center">NRCM: {row.nrcm2}</TableCell>}
                                     {row.nrcm3 && <TableCell sx={{ borderBottom: 'none' }} align="center">NRCM: {row.nrcm3}</TableCell>}
                                 </TableRow>
                                 <TableRow key='AircrewHours'>
-                                    <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.pcRisk) }} component="th" scope="row" align="center">({row.pcHoursTotal} All / {row.pcHoursNG} NG)</TableCell>
-                                    <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.piRisk) }} align="center">({row.piHoursTotal} All / {row.piHoursNG} NG)</TableCell>
-                                    <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.nrcm1Risk) }} align="center">({row.nrcm1HoursTotal} All / {row.nrcm1HoursNG} NG)</TableCell>
-                                    <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.nrcm2Risk) }} align="center">({row.nrcm2HoursTotal} All / {row.nrcm2HoursNG} NG)</TableCell>
-                                    {row.nrcm3 && <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.nrcm3Risk) }} align="center">({row.nrcm3HoursTotal} All / {row.nrcm3HoursNG} NG)</TableCell>}
+                                    <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.pcrisk) }} component="th" scope="row" align="center">({row.pchourstotal} All / {row.pchoursng} NG)</TableCell>
+                                    <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.pirisk) }} align="center">({row.pihourstotal} All / {row.pihoursng} NG)</TableCell>
+                                    <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.nrcm1risk) }} align="center">({row.nrcm1hourstotal} All / {row.nrcm1hoursng} NG)</TableCell>
+                                    {row.nrcm2 && <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.nrcm2risk) }} align="center">({row.nrcm2hourstotal} All / {row.nrcm2hoursng} NG)</TableCell>}
+                                    {row.nrcm3 && <TableCell sx={{ borderBottom: 'none', color: 'black', bgcolor: aircrewMemberRiskColor(row.nrcm3risk) }} align="center">({row.nrcm3hourstotal} All / {row.nrcm3hoursng} NG)</TableCell>}
                                 </TableRow>
 
                                 <TableRow key='aircrewRiskHeader'>
@@ -50,11 +50,11 @@ export default function Aircrew({ row }) {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow key='RiskMitigation'>
-                                    <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.aircrewRiskMitigation}</TableCell>
+                                    <TableCell colSpan={5} component="th" scope="row">Risk Mitigation: {row.aircrewriskmitigation}</TableCell>
                                 </TableRow>
                                 <TableRow sx={{ borderBottom: 'none' }} key='FlightRisks'>
-                                    <TableCell sx={{ borderBottom: 'none' }} colSpan={2} component="th" scope="row">Initial Risk: {row.aircrewInitialRisk}</TableCell>
-                                    <TableCell sx={{ borderBottom: 'none' }} colSpan={2} align="left">Mitigated Risk: {row.aircrewMitigatedRisk}</TableCell>
+                                    <TableCell sx={{ borderBottom: 'none' }} colSpan={2} component="th" scope="row">Initial Risk: {row.aircrewinitialrisk}</TableCell>
+                                    <TableCell sx={{ borderBottom: 'none' }} colSpan={2} align="left">Mitigated Risk: {row.aircrewmitigatedrisk}</TableCell>
                                 </TableRow>
                             </TableHead>
                         </Table>

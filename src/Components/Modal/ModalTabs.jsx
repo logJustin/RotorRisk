@@ -62,7 +62,7 @@ export default function ModalTabs({ flightData, formMode }) {
 
     const fetchAircrewsData = async () => {
         try {
-            const response = await fetch('http://localhost:3001/api/data');
+            const response = await fetch('http://localhost:3001/api/aircrews');
             const jsonData = await response.json();
             setAircrews(jsonData);
         } catch (error) {
