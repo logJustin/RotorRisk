@@ -3,7 +3,7 @@ import { Box, Modal } from '@mui/material';
 import ModalTabs from './ModalTabs'
 
 
-export default function FormModal({ open, handleClose, flightData, formMode }) {
+export default function FormModal({ open, handleClose, flightData, formMode, fetchFlightsData }) {
     const style = {
         position: 'absolute',
         top: '50%',
@@ -26,7 +26,12 @@ export default function FormModal({ open, handleClose, flightData, formMode }) {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <ModalTabs flightData={flightData} formMode={formMode} />
+                <ModalTabs
+                    flightData={flightData}
+                    formMode={formMode}
+                    handleClose={handleClose}
+                    fetchFlightsData={fetchFlightsData}
+                />
             </Box>
         </Modal >
     );

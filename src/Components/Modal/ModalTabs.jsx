@@ -7,13 +7,14 @@ import { Box, Button } from '@mui/material';
 import { useForm } from "react-hook-form"
 import dayjs from 'dayjs';
 import { v4 as uuid } from 'uuid';
+import axios from 'axios';
 import Aircrew from './Tabs/Aircrew'
 import Mission from './Tabs/Mission'
 import Weather from './Tabs/Weather'
 import FinalRisk from './Tabs/FinalRisk'
 import MBO from './Tabs/MBO'
 import FMAA from './Tabs/FMAA'
-import flights from '../../data/seederFlightData'
+// import flights from '../../data/seederFlightData'
 // import aircrews from '../../data/seederCrewData';
 
 
@@ -51,7 +52,7 @@ function a11yProps(index) {
     };
 }
 
-export default function ModalTabs({ flightData, formMode }) {
+export default function ModalTabs({ flightData, formMode, handleClose, fetchFlightsData }) {
     const [tabValue, setTabValue] = React.useState(0);
     const [aircrews, setAircrews] = React.useState([]);
 
@@ -269,15 +270,18 @@ export default function ModalTabs({ flightData, formMode }) {
 
         console.log(data);
         // Check if flight ID already exists
-        const existingFlightIndex = flights.findIndex(flight => flight.flightID === data.flightID);
 
-        if (existingFlightIndex !== -1) {
-            // If flight ID exists, replace the existing entry
-            flights[existingFlightIndex] = data;
-        } else {
-            // If flight ID doesn't exist, add it as a new entry
-            flights.push(data);
-        }
+        const addFlight = async (flightObject) => {
+            console.log('Adding flight')
+            try {
+                await axios.post('http://localhost:3001/api/add-flight', flightObject);
+                await handleClose();
+                fetchFlightsData();
+            } catch (error) {
+                console.error('Error adding flight:', error);
+            }
+        };
+        addFlight(data);
     };
 
 

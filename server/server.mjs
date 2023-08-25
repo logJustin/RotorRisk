@@ -1,12 +1,19 @@
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
-const { Pool } = require('pg');
-const dotenv = require('dotenv');
+import express from 'express';
+import path from 'path';
+import cors from 'cors';
+import pkg from 'pg';
+const { Pool } = pkg;
+import dotenv from 'dotenv';
+import addFlight from './backendFunctions/addFlight.js';
 
-// dotenv.config({ path: '../.env' });
+// Use the import.meta.url to get the current file's URL
+const currentModuleUrl = new URL(import.meta.url);
+// Get the directory path from the URL
+const currentDir = path.dirname(currentModuleUrl.pathname);
+
 try {
     dotenv.config();
+    // dotenv.config({ path: '../.env' });
 } catch (error) {
     console.error('Error loading .env file:', error);
 }
@@ -55,12 +62,28 @@ app.get('/api/flights', async (req, res) => {
     }
 });
 
+// Add this route to your Express server
+app.post('/api/add-flight', async (req, res) => {
+    try {
+        // Assuming req.body contains the flight data
+        const flightData = req.body;
+
+        // Call the existing addFlight function to insert the flight
+        await addFlight(flightData);
+
+        res.status(200).json({ message: 'Flight added successfully' });
+    } catch (error) {
+        console.error('Error adding flight:', error);
+        res.status(500).json({ error: 'An error occurred while adding the flight' });
+    }
+});
+
 // Serve the static assets of the React app
-app.use(express.static(path.join(__dirname, '..', 'src'))); // Adjust to the correct folder path
+app.use(express.static(path.join(currentDir, '..', 'src')));
 
 // Catch-all route to serve the React app's index.html
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'index.html'))
+    res.sendFile(path.join(currentDir, '..', 'index.html'))
 });
 
 // Start the server

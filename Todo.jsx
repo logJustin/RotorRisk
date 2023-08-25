@@ -1,16 +1,15 @@
 
 // DO
+//     Put request edit flights
+//     Add Crews for other Airframes & logic for the correct aircrews to appear
 //     Change the select one sections to a different format
 //       (requires a change to each state, consider how riskLookup works, how they're rendered on FlightsList)
 //       Form Sections to reflect this:
 //         CrewMember Recency
 //         Specific Vague Planning
-//     Add Crews for other Airframes & logic for the correct aircrews to appear
 //     Form Validation
 //     Write functionality for Brief and Approve buttons in LeftNavigation
 //     Add Fighter Management
-//     Fetch flights on app load
-//     Get flights into DB
 //     Make backend :(
 
 
@@ -43,3 +42,5 @@
 //  ✓  Update Crews and Tail Numbers
 //  ✓  Add UUID to crewmembers
 //  ✓  Create aircrews database & implement it
+//  ✓  Fetch flights on app load
+//  ✓  Get flights into DB

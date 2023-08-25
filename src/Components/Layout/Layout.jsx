@@ -66,6 +66,7 @@ function Layout(props, lightMode, handleLightModeToggle) {
                 handleOpen={handleOpen}
                 flightData={flightData}
                 formMode={formMode}
+                fetchFlightsData={fetchFlightsData}
             />
             <FlightsList drawerWidth={drawerWidth} open={open} handleClose={handleClose} handleOpen={handleOpen} flights={flights} />
         </Box>

@@ -85,7 +85,7 @@ export default function Body({ drawerWidth, open, handleClose, handleOpen, fligh
                     </TableHead>
                     <TableBody>
                         {flights.map((flight) => (
-                            <Row key={`${flight.flightID}`} row={flight} />
+                            <Row key={`${flight.flightid}`} row={flight} />
                         ))}
                     </TableBody>
                 </Table>
