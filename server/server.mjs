@@ -5,6 +5,7 @@ import pkg from 'pg';
 const { Pool } = pkg;
 import dotenv from 'dotenv';
 import addFlight from './backendFunctions/addFlight.js';
+import updateFlight from './backendFunctions/updateFlight.js';
 
 // Use the import.meta.url to get the current file's URL
 const currentModuleUrl = new URL(import.meta.url);
@@ -52,6 +53,7 @@ app.get('/api/aircrews', async (req, res) => {
         res.status(500).json({ error: 'An error occurred while fetching data.' });
     }
 });
+
 app.get('/api/flights', async (req, res) => {
     try {
         const { rows } = await pool.query('SELECT * FROM flights');
@@ -65,13 +67,20 @@ app.get('/api/flights', async (req, res) => {
 // Add this route to your Express server
 app.post('/api/add-flight', async (req, res) => {
     try {
-        // Assuming req.body contains the flight data
         const flightData = req.body;
-
-        // Call the existing addFlight function to insert the flight
         await addFlight(flightData);
-
         res.status(200).json({ message: 'Flight added successfully' });
+    } catch (error) {
+        console.error('Error adding flight:', error);
+        res.status(500).json({ error: 'An error occurred while adding the flight' });
+    }
+});
+// Add this route to your Express server
+app.put('/api/update-flight', async (req, res) => {
+    try {
+        const flightData = req.body;
+        await updateFlight(flightData);
+        res.status(200).json({ message: 'Flight updated successfully' });
     } catch (error) {
         console.error('Error adding flight:', error);
         res.status(500).json({ error: 'An error occurred while adding the flight' });

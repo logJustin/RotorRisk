@@ -1,7 +1,9 @@
 
 // DO
-//     Put request edit flights
+//     Form to add a new cremember
 //     Add Crews for other Airframes & logic for the correct aircrews to appear
+//     update get/post/put routes to simplify endpoints
+//     determine if I need to make a pool.connect on each backendFunction
 //     Change the select one sections to a different format
 //       (requires a change to each state, consider how riskLookup works, how they're rendered on FlightsList)
 //       Form Sections to reflect this:
@@ -44,3 +46,4 @@
 //  ✓  Create aircrews database & implement it
 //  ✓  Fetch flights on app load
 //  ✓  Get flights into DB
+//  ✓  Put request edit flights

@@ -14,7 +14,7 @@ import FormModal from '../Modal/FormModal';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, mobileOpen, lightMode, handleLightModeToggle, open, handleClose, handleOpen, flightData, formMode, fetchFlightsData }) {
+export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, mobileOpen, lightMode, handleLightModeToggle, open, handleClose, handleOpen, flightData, formMode, fetchFlightsData, aircrews }) {
 
     const { window } = props;
     const container = window !== undefined ? () => window().document.body : undefined;
@@ -89,7 +89,15 @@ export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, 
             sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
             aria-label="mailbox folders"
         >
-            <FormModal open={open} handleClose={handleClose} lightMode={props.lightMode} flightData={flightData} formMode={formMode} fetchFlightsData={fetchFlightsData} />
+            <FormModal
+                open={open}
+                handleClose={handleClose}
+                lightMode={props.lightMode}
+                flightData={flightData}
+                formMode={formMode}
+                fetchFlightsData={fetchFlightsData}
+                aircrews={aircrews}
+            />
 
             {/* Tablet & Mobile Drawer */}
             <Drawer

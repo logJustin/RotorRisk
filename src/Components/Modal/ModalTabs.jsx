@@ -52,148 +52,131 @@ function a11yProps(index) {
     };
 }
 
-export default function ModalTabs({ flightData, formMode, handleClose, fetchFlightsData }) {
+export default function ModalTabs({ flightData, formMode, handleClose, fetchFlightsData, aircrews }) {
     const [tabValue, setTabValue] = React.useState(0);
-    const [aircrews, setAircrews] = React.useState([]);
-
-    useEffect(() => {
-        // Fetch data when the component mounts
-        fetchAircrewsData();
-    }, []); // The empty dependency array ensures this runs once on mount
-
-    const fetchAircrewsData = async () => {
-        try {
-            const response = await fetch('http://localhost:3001/api/aircrews');
-            const jsonData = await response.json();
-            setAircrews(jsonData);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
-
 
     const handleChange = (event, newValue) => {
         setTabValue(newValue);
     };
     const {
-        flightID, date, aircraftType, aircraftTail, mission, missionStatement, route, etd, ete, flightConditions, pc, pcRisk, pcSeat, pi, piRisk, piSeat, nrcm1, nrcm1Risk, nrcm2, nrcm2Risk, nrcm3, nrcm3Risk, pcHoursTotal, pcHoursNG, pc25HoursInAO, piHoursTotal, piHoursNG, pi25HoursInAO, nrcm1HoursTotal, nrcm1HoursNG, nrcm125HoursInAO, nrcm2HoursTotal, nrcm2HoursNG, nrcm225HoursInAO, nrcm3HoursTotal, nrcm3HoursNG, nrcm325HoursInAO, aircrewRiskMitigation, aircrewInitialRisk, aircrewMitigatedRisk, airAssault, AH64AttackReconSecurity, MEDEVAC, CASEVAC, FARP, crossCountryBorder, multiship, mixedMultiShip, MTFGeneralTraining, dartOneTimeFlight, blackout, waterBucket, paradrops, rappelSpiesFries, externalLoads, airmovementVIP, continuation, CEFS, fatCow, terrainFlight, mountainOperations, overwaterOperations, pinnacleOperations, urbanOperations, confinedOperations, OGEwithin10, IGEwithin10, OGEwithin5, IGEwithin5, Cruisewithin10, progessionEvaluationEPs, IFRSimulatedIMC, CBRNE, nonLiveHoist, liveHoist, combatManueveringFlight, gunneryLiveFire, CALFEX, AMS, blackoutCurtain, OWUntrained, famFlight, hoverWXRlt500, UH60DoorsOff, OWSea4to5, OWSeaGt6, pcGt90, pcGt60, pcGt30, piGt90, piGt60, piGt30, nrcm1Gt90, nrcm1Gt60, nrcm1Gt30, nrcm2Gt90, nrcm2Gt60, nrcm2Gt30, nrcm3Gt90, nrcm3Gt60, nrcm3Gt30, hoistGt90, hoistGt60, hoistGt30, specificGt12, specific2to12, specificLt2, vagueGt12, vague2to12, vagueLt2, missionRiskMitigation, missionInitialRisk, missionMitigatedRisk, gt1000, lt1000, lt700, lt500, gt3, gt2, gt1, lt1, altRequired, gt25IllumAndgt30degrees, lt25IllumAndlt30degrees, gt25IllumAndgt30degreesLimitedLighting, windGt30, windGt30Hoist, gustSpreadGt20, forecastThunderstorms, modTurbulenceIcing, oatNegative10Positive30, weatherRiskMitigation, weatherInitialRisk, weatherMitigatedRisk, finalRiskMitigation, finalMitigatedRisk, briefer, brieferComment, brieferCommentDate, approver, approverComment, approverCommentDate, finalInitialRisk
+        flightid, date, aircrafttype, aircrafttail, mission, missionstatement, route, etd, ete, flightconditions, pc, pcrisk, pcseat, pi, pirisk, piseat, nrcm1, nrcm1risk, nrcm2, nrcm2risk, nrcm3, nrcm3risk, pchourstotal, pchoursng, pc25hoursinao, pihourstotal, pihoursnhg, pi25hoursinao, nrcm1hourstotal, nrcm1hoursng, nrcm125hoursinao, nrcm2hourstotal, nrcm2hoursng, nrcm225hoursinao, nrcm3hourstotal, nrcm3hoursng, nrcm325hoursinao, aircrewriskmitigation, aircrewinitialrisk, aircrewmitigatedrisk, airassault, AH64attackreconsecurity, medevac, casevac, farp, crosscountryborder, multiship, mixedmultiship, mtfgeneraltraining, dartonetimeflight, blackout, waterbucket, paradrops, rappelspiesfries, externalloads, airmovementvip, continuation, cefs, fatcow, terrainflight, mountainoperations, overwateroperations, pinnacleoperations, urbanoperations, confinedoperations, ogewithin10, igewithin10, ogewithin5, igewithin5, cruisewithin10, progessionevaluationeps, ifrsimulatedimc, cbrne, nonlivehoist, livehoist, combatmanueveringflight, gunnerylivefire, calfex, ams, blackoutcurtain, owuntrained, famflight, hoverwxrlt500, uh60doorsOff, owsea4to5, owseagt6, pcgt90, pcgt60, pcgt30, pigt90, pigt60, pigt30, nrcm1gt90, nrcm1gt60, nrcm1gt30, nrcm2gt90, nrcm2gt60, nrcm2gt30, nrcm3gt90, nrcm3gt60, nrcm3gt30, hoistgt90, hoistgt60, hoistgt30, specificgt12, specific2to12, specificlt2, vaguegt12, vague2to12, vaguelt2, missionriskmitigation, missioninitialrisk, missionmitigatedrisk, gt1000, lt1000, lt700, lt500, gt3, gt2, gt1, lt1, altrequired, gt25illumandgt30degrees, lt25illumandlt30degrees, gt25illumandgt30degreeslimitedlighting, windgt30, windgt30hoist, gustspreadgt20, forecastthunderstorms, modturbulenceicing, oatnegative10positive30, weatherriskmitigation, weatherinitialrisk, weathermitigatedrisk, finalriskmitigation, finalmitigatedrisk, briefer, briefercomment, briefercommentdate, approver, approvercomment, approvercommentdate, finalinitialrisk, greatestrisk
     } = flightData
 
     const { control, handleSubmit, watch, setValue } = useForm({
         defaultValues: {
-            flightID: flightID !== undefined ? flightID : uuid(),
+            flightID: flightid !== undefined ? flightid : uuid(),
             date: date !== undefined ? dayjs(date) : dayjs(new Date()),
-            aircraftType: aircraftType !== undefined ? aircraftType : 'HH60M',
-            aircraftTail: aircraftTail !== undefined ? aircraftTail : '',
+            aircraftType: aircrafttype !== undefined ? aircrafttype : 'HH60M',
+            aircraftTail: aircrafttail !== undefined ? aircrafttail : '',
             mission: mission !== undefined ? mission : '',
-            missionStatement: missionStatement !== undefined ? missionStatement : '',
+            missionStatement: missionstatement !== undefined ? missionstatement : '',
             route: route !== undefined ? route : '',
             etd: etd !== undefined ? dayjs(etd, "HH:mm") : dayjs(new Date()),
             ete: ete !== undefined ? ete : '',
-            flightConditions: flightConditions !== undefined ? flightConditions : '',
+            flightConditions: flightconditions !== undefined ? flightconditions : '',
             pc: pc !== undefined ? pc : '',
-            pcRisk: pcRisk !== undefined ? pcRisk : '',
-            pcSeat: pcSeat !== undefined ? pcSeat : 'Left',
+            pcRisk: pcrisk !== undefined ? pcrisk : '',
+            pcSeat: pcseat !== undefined ? pcseat : 'Left',
             pi: pi !== undefined ? pi : '',
-            piRisk: piRisk !== undefined ? piRisk : '',
-            piSeat: piSeat !== undefined ? piSeat : 'Right',
+            piRisk: pirisk !== undefined ? pirisk : '',
+            piSeat: piseat !== undefined ? piseat : 'Right',
             nrcm1: nrcm1 !== undefined ? nrcm1 : '',
-            nrcm1Risk: nrcm1Risk !== undefined ? nrcm1Risk : '',
+            nrcm1Risk: nrcm1risk !== undefined ? nrcm1risk : '',
             nrcm2: nrcm2 !== undefined ? nrcm2 : '',
-            nrcm2Risk: nrcm2Risk !== undefined ? nrcm2Risk : '',
+            nrcm2Risk: nrcm2risk !== undefined ? nrcm2risk : '',
             nrcm3: nrcm3 !== undefined ? nrcm3 : '',
-            nrcm3Risk: nrcm3Risk !== undefined ? nrcm3Risk : '',
-            pcHoursTotal: pcHoursTotal !== undefined ? pcHoursTotal : '',
-            pcHoursNG: pcHoursNG !== undefined ? pcHoursNG : '',
-            pc25HoursInAO: pc25HoursInAO !== undefined ? pc25HoursInAO : '',
-            piHoursTotal: piHoursTotal !== undefined ? piHoursTotal : '',
-            piHoursNG: piHoursNG !== undefined ? piHoursNG : '',
-            pi25HoursInAO: pi25HoursInAO !== undefined ? pi25HoursInAO : '',
-            nrcm1HoursTotal: nrcm1HoursTotal !== undefined ? nrcm1HoursTotal : '',
-            nrcm1HoursNG: nrcm1HoursNG !== undefined ? nrcm1HoursNG : '',
-            nrcm125HoursInAO: nrcm125HoursInAO !== undefined ? nrcm125HoursInAO : '',
-            nrcm2HoursTotal: nrcm2HoursTotal !== undefined ? nrcm2HoursTotal : '',
-            nrcm2HoursNG: nrcm2HoursNG !== undefined ? nrcm2HoursNG : '',
-            nrcm225HoursInAO: nrcm225HoursInAO !== undefined ? nrcm225HoursInAO : '',
-            nrcm3HoursTotal: nrcm3HoursTotal !== undefined ? nrcm3HoursTotal : '',
-            nrcm3HoursNG: nrcm3HoursNG !== undefined ? nrcm3HoursNG : '',
-            nrcm325HoursInAO: nrcm325HoursInAO !== undefined ? nrcm325HoursInAO : '',
-            aircrewRiskMitigation: aircrewRiskMitigation !== undefined ? aircrewRiskMitigation : '',
-            aircrewInitialRisk: aircrewInitialRisk !== undefined ? aircrewInitialRisk : 'L',
-            aircrewMitigatedRisk: aircrewMitigatedRisk !== undefined ? aircrewMitigatedRisk : '',
-            airAssault: airAssault !== undefined ? airAssault : '',
-            AH64AttackReconSecurity: AH64AttackReconSecurity !== undefined ? AH64AttackReconSecurity : '',
-            MEDEVAC: MEDEVAC !== undefined ? MEDEVAC : '',
-            CASEVAC: CASEVAC !== undefined ? CASEVAC : '',
-            FARP: FARP !== undefined ? FARP : '',
-            crossCountryBorder: crossCountryBorder !== undefined ? crossCountryBorder : '',
+            nrcm3Risk: nrcm3risk !== undefined ? nrcm3risk : '',
+            pcHoursTotal: pchourstotal !== undefined ? pchourstotal : '',
+            pcHoursNG: pchoursng !== undefined ? pchoursng : '',
+            pc25HoursInAO: pc25hoursinao !== undefined ? pc25hoursinao : '',
+            piHoursTotal: pihourstotal !== undefined ? pihourstotal : '',
+            piHoursNG: pihoursnhg !== undefined ? pihoursnhg : '',
+            pi25HoursInAO: pi25hoursinao !== undefined ? pi25hoursinao : '',
+            nrcm1HoursTotal: nrcm1hourstotal !== undefined ? nrcm1hourstotal : '',
+            nrcm1HoursNG: nrcm1hoursng !== undefined ? nrcm1hoursng : '',
+            nrcm125HoursInAO: nrcm125hoursinao !== undefined ? nrcm125hoursinao : '',
+            nrcm2HoursTotal: nrcm2hourstotal !== undefined ? nrcm2hourstotal : '',
+            nrcm2HoursNG: nrcm2hoursng !== undefined ? nrcm2hoursng : '',
+            nrcm225HoursInAO: nrcm225hoursinao !== undefined ? nrcm225hoursinao : '',
+            nrcm3HoursTotal: nrcm3hourstotal !== undefined ? nrcm3hourstotal : '',
+            nrcm3HoursNG: nrcm3hoursng !== undefined ? nrcm3hoursng : '',
+            nrcm325HoursInAO: nrcm325hoursinao !== undefined ? nrcm325hoursinao : '',
+            aircrewRiskMitigation: aircrewriskmitigation !== undefined ? aircrewriskmitigation : '',
+            aircrewInitialRisk: aircrewinitialrisk !== undefined ? aircrewinitialrisk : 'L',
+            aircrewMitigatedRisk: aircrewmitigatedrisk !== undefined ? aircrewmitigatedrisk : '',
+            airAssault: airassault !== undefined ? airassault : '',
+            AH64AttackReconSecurity: AH64attackreconsecurity !== undefined ? AH64attackreconsecurity : '',
+            MEDEVAC: medevac !== undefined ? medevac : '',
+            CASEVAC: casevac !== undefined ? casevac : '',
+            FARP: farp !== undefined ? farp : '',
+            crossCountryBorder: crosscountryborder !== undefined ? crosscountryborder : '',
             multiship: multiship !== undefined ? multiship : '',
-            mixedMultiShip: mixedMultiShip !== undefined ? mixedMultiShip : '',
-            MTFGeneralTraining: MTFGeneralTraining !== undefined ? MTFGeneralTraining : '',
-            dartOneTimeFlight: dartOneTimeFlight !== undefined ? dartOneTimeFlight : '',
+            mixedMultiShip: mixedmultiship !== undefined ? mixedmultiship : '',
+            MTFGeneralTraining: mtfgeneraltraining !== undefined ? mtfgeneraltraining : '',
+            dartOneTimeFlight: dartonetimeflight !== undefined ? dartonetimeflight : '',
             blackout: blackout !== undefined ? blackout : '',
-            waterBucket: waterBucket !== undefined ? waterBucket : '',
+            waterBucket: waterbucket !== undefined ? waterbucket : '',
             paradrops: paradrops !== undefined ? paradrops : '',
-            rappelSpiesFries: rappelSpiesFries !== undefined ? rappelSpiesFries : '',
-            externalLoads: externalLoads !== undefined ? externalLoads : '',
-            airmovementVIP: airmovementVIP !== undefined ? airmovementVIP : '',
+            rappelSpiesFries: rappelspiesfries !== undefined ? rappelspiesfries : '',
+            externalLoads: externalloads !== undefined ? externalloads : '',
+            airmovementVIP: airmovementvip !== undefined ? airmovementvip : '',
             continuation: continuation !== undefined ? continuation : '',
-            CEFS: CEFS !== undefined ? CEFS : '',
-            fatCow: fatCow !== undefined ? fatCow : '',
-            terrainFlight: terrainFlight !== undefined ? terrainFlight : '',
-            mountainOperations: mountainOperations !== undefined ? mountainOperations : '',
-            overwaterOperations: overwaterOperations !== undefined ? overwaterOperations : '',
-            pinnacleOperations: pinnacleOperations !== undefined ? pinnacleOperations : '',
-            urbanOperations: urbanOperations !== undefined ? urbanOperations : '',
-            confinedOperations: confinedOperations !== undefined ? confinedOperations : '',
-            OGEwithin10: OGEwithin10 !== undefined ? OGEwithin10 : '',
-            IGEwithin10: IGEwithin10 !== undefined ? IGEwithin10 : '',
-            OGEwithin5: OGEwithin5 !== undefined ? OGEwithin5 : '',
-            IGEwithin5: IGEwithin5 !== undefined ? IGEwithin5 : '',
-            Cruisewithin10: Cruisewithin10 !== undefined ? Cruisewithin10 : '',
-            progessionEvaluationEPs: progessionEvaluationEPs !== undefined ? progessionEvaluationEPs : '',
-            IFRSimulatedIMC: IFRSimulatedIMC !== undefined ? IFRSimulatedIMC : '',
-            CBRNE: CBRNE !== undefined ? CBRNE : '',
-            nonLiveHoist: nonLiveHoist !== undefined ? nonLiveHoist : '',
-            liveHoist: liveHoist !== undefined ? liveHoist : '',
-            combatManueveringFlight: combatManueveringFlight !== undefined ? combatManueveringFlight : '',
-            gunneryLiveFire: gunneryLiveFire !== undefined ? gunneryLiveFire : '',
-            CALFEX: CALFEX !== undefined ? CALFEX : '',
-            AMS: AMS !== undefined ? AMS : '',
-            blackoutCurtain: blackoutCurtain !== undefined ? blackoutCurtain : '',
-            OWUntrained: OWUntrained !== undefined ? OWUntrained : '',
-            famFlight: famFlight !== undefined ? famFlight : '',
-            hoverWXRlt500: hoverWXRlt500 !== undefined ? hoverWXRlt500 : '',
-            UH60DoorsOff: UH60DoorsOff !== undefined ? UH60DoorsOff : '',
-            OWSea4to5: OWSea4to5 !== undefined ? OWSea4to5 : '',
-            OWSeaGt6: OWSeaGt6 !== undefined ? OWSeaGt6 : '',
-            pcGt90: pcGt90 !== undefined ? pcGt90 : '',
-            pcGt60: pcGt60 !== undefined ? pcGt60 : '',
-            pcGt30: pcGt30 !== undefined ? pcGt30 : '',
-            piGt90: piGt90 !== undefined ? piGt90 : '',
-            piGt60: piGt60 !== undefined ? piGt60 : '',
-            piGt30: piGt30 !== undefined ? piGt30 : '',
-            nrcm1Gt90: nrcm1Gt90 !== undefined ? nrcm1Gt90 : '',
-            nrcm1Gt60: nrcm1Gt60 !== undefined ? nrcm1Gt60 : '',
-            nrcm1Gt30: nrcm1Gt30 !== undefined ? nrcm1Gt30 : '',
-            nrcm2Gt90: nrcm2Gt90 !== undefined ? nrcm2Gt90 : '',
-            nrcm2Gt60: nrcm2Gt60 !== undefined ? nrcm2Gt60 : '',
-            nrcm2Gt30: nrcm2Gt30 !== undefined ? nrcm2Gt30 : '',
-            nrcm3Gt90: nrcm3Gt90 !== undefined ? nrcm3Gt90 : '',
-            nrcm3Gt60: nrcm3Gt60 !== undefined ? nrcm3Gt60 : '',
-            nrcm3Gt30: nrcm3Gt30 !== undefined ? nrcm3Gt30 : '',
-            hoistGt90: hoistGt90 !== undefined ? hoistGt90 : '',
-            hoistGt60: hoistGt60 !== undefined ? hoistGt60 : '',
-            hoistGt30: hoistGt30 !== undefined ? hoistGt30 : '',
-            specificGt12: specificGt12 !== undefined ? specificGt12 : '',
+            CEFS: cefs !== undefined ? cefs : '',
+            fatCow: fatcow !== undefined ? fatcow : '',
+            terrainFlight: terrainflight !== undefined ? terrainflight : '',
+            mountainOperations: mountainoperations !== undefined ? mountainoperations : '',
+            overwaterOperations: overwateroperations !== undefined ? overwateroperations : '',
+            pinnacleOperations: pinnacleoperations !== undefined ? pinnacleoperations : '',
+            urbanOperations: urbanoperations !== undefined ? urbanoperations : '',
+            confinedOperations: confinedoperations !== undefined ? confinedoperations : '',
+            OGEwithin10: ogewithin10 !== undefined ? ogewithin10 : '',
+            IGEwithin10: igewithin10 !== undefined ? igewithin10 : '',
+            OGEwithin5: ogewithin5 !== undefined ? ogewithin5 : '',
+            IGEwithin5: igewithin5 !== undefined ? igewithin5 : '',
+            Cruisewithin10: cruisewithin10 !== undefined ? cruisewithin10 : '',
+            progessionEvaluationEPs: progessionevaluationeps !== undefined ? progessionevaluationeps : '',
+            IFRSimulatedIMC: ifrsimulatedimc !== undefined ? ifrsimulatedimc : '',
+            CBRNE: cbrne !== undefined ? cbrne : '',
+            nonLiveHoist: nonlivehoist !== undefined ? nonlivehoist : '',
+            liveHoist: livehoist !== undefined ? livehoist : '',
+            combatManueveringFlight: combatmanueveringflight !== undefined ? combatmanueveringflight : '',
+            gunneryLiveFire: gunnerylivefire !== undefined ? gunnerylivefire : '',
+            CALFEX: calfex !== undefined ? calfex : '',
+            AMS: ams !== undefined ? ams : '',
+            blackoutCurtain: blackoutcurtain !== undefined ? blackoutcurtain : '',
+            OWUntrained: owuntrained !== undefined ? owuntrained : '',
+            famFlight: famflight !== undefined ? famflight : '',
+            hoverWXRlt500: hoverwxrlt500 !== undefined ? hoverwxrlt500 : '',
+            UH60DoorsOff: uh60doorsOff !== undefined ? uh60doorsOff : '',
+            OWSea4to5: owsea4to5 !== undefined ? owsea4to5 : '',
+            OWSeaGt6: owseagt6 !== undefined ? owseagt6 : '',
+            pcGt90: pcgt90 !== undefined ? pcgt90 : '',
+            pcGt60: pcgt60 !== undefined ? pcgt60 : '',
+            pcGt30: pcgt30 !== undefined ? pcgt30 : '',
+            piGt90: pigt90 !== undefined ? pigt90 : '',
+            piGt60: pigt60 !== undefined ? pigt60 : '',
+            piGt30: pigt30 !== undefined ? pigt30 : '',
+            nrcm1Gt90: nrcm1gt90 !== undefined ? nrcm1gt90 : '',
+            nrcm1Gt60: nrcm1gt60 !== undefined ? nrcm1gt60 : '',
+            nrcm1Gt30: nrcm1gt30 !== undefined ? nrcm1gt30 : '',
+            nrcm2Gt90: nrcm2gt90 !== undefined ? nrcm2gt90 : '',
+            nrcm2Gt60: nrcm2gt60 !== undefined ? nrcm2gt60 : '',
+            nrcm2Gt30: nrcm2gt30 !== undefined ? nrcm2gt30 : '',
+            nrcm3Gt90: nrcm3gt90 !== undefined ? nrcm3gt90 : '',
+            nrcm3Gt60: nrcm3gt60 !== undefined ? nrcm3gt60 : '',
+            nrcm3Gt30: nrcm3gt30 !== undefined ? nrcm3gt30 : '',
+            hoistGt90: hoistgt90 !== undefined ? hoistgt90 : '',
+            hoistGt60: hoistgt60 !== undefined ? hoistgt60 : '',
+            hoistGt30: hoistgt30 !== undefined ? hoistgt30 : '',
+            specificGt12: specificgt12 !== undefined ? specificgt12 : '',
             specific2to12: specific2to12 !== undefined ? specific2to12 : '',
-            specificLt2: specificLt2 !== undefined ? specificLt2 : '',
-            vagueGt12: vagueGt12 !== undefined ? vagueGt12 : '',
+            specificLt2: specificlt2 !== undefined ? specificlt2 : '',
+            vagueGt12: vaguegt12 !== undefined ? vaguegt12 : '',
             vague2to12: vague2to12 !== undefined ? vague2to12 : '',
-            vagueLt2: vagueLt2 !== undefined ? vagueLt2 : '',
-            missionRiskMitigation: missionRiskMitigation !== undefined ? missionRiskMitigation : '',
-            missionInitialRisk: missionInitialRisk !== undefined ? missionInitialRisk : 'L',
-            missionMitigatedRisk: missionMitigatedRisk !== undefined ? missionMitigatedRisk : '',
+            vagueLt2: vaguelt2 !== undefined ? vaguelt2 : '',
+            missionRiskMitigation: missionriskmitigation !== undefined ? missionriskmitigation : '',
+            missionInitialRisk: missioninitialrisk !== undefined ? missioninitialrisk : 'L',
+            missionMitigatedRisk: missionmitigatedrisk !== undefined ? missionmitigatedrisk : '',
             gt1000: gt1000 !== undefined ? gt1000 : '',
             lt1000: lt1000 !== undefined ? lt1000 : '',
             lt700: lt700 !== undefined ? lt700 : '',
@@ -202,28 +185,29 @@ export default function ModalTabs({ flightData, formMode, handleClose, fetchFlig
             gt2: gt2 !== undefined ? gt2 : '',
             gt1: gt1 !== undefined ? gt1 : '',
             lt1: lt1 !== undefined ? lt1 : '',
-            altRequired: altRequired !== undefined ? altRequired : '',
-            gt25IllumAndgt30degrees: gt25IllumAndgt30degrees !== undefined ? gt25IllumAndgt30degrees : '',
-            lt25IllumAndlt30degrees: lt25IllumAndlt30degrees !== undefined ? lt25IllumAndlt30degrees : '',
-            gt25IllumAndgt30degreesLimitedLighting: gt25IllumAndgt30degreesLimitedLighting !== undefined ? gt25IllumAndgt30degreesLimitedLighting : '',
-            windGt30: windGt30 !== undefined ? windGt30 : '',
-            windGt30Hoist: windGt30Hoist !== undefined ? windGt30Hoist : '',
-            gustSpreadGt20: gustSpreadGt20 !== undefined ? gustSpreadGt20 : '',
-            forecastThunderstorms: forecastThunderstorms !== undefined ? forecastThunderstorms : '',
-            modTurbulenceIcing: modTurbulenceIcing !== undefined ? modTurbulenceIcing : '',
-            oatNegative10Positive30: oatNegative10Positive30 !== undefined ? oatNegative10Positive30 : '',
-            weatherRiskMitigation: weatherRiskMitigation !== undefined ? weatherRiskMitigation : '',
-            weatherInitialRisk: weatherInitialRisk !== undefined ? weatherInitialRisk : 'L',
-            weatherMitigatedRisk: weatherMitigatedRisk !== undefined ? weatherMitigatedRisk : '',
-            finalInitialRisk: finalInitialRisk !== undefined ? finalInitialRisk : '',
-            finalRiskMitigation: finalRiskMitigation !== undefined ? finalRiskMitigation : '',
-            finalMitigatedRisk: finalMitigatedRisk !== undefined ? finalMitigatedRisk : '',
+            altRequired: altrequired !== undefined ? altrequired : '',
+            gt25IllumAndgt30degrees: gt25illumandgt30degrees !== undefined ? gt25illumandgt30degrees : '',
+            lt25IllumAndlt30degrees: lt25illumandlt30degrees !== undefined ? lt25illumandlt30degrees : '',
+            gt25IllumAndgt30degreesLimitedLighting: gt25illumandgt30degreeslimitedlighting !== undefined ? gt25illumandgt30degreeslimitedlighting : '',
+            windGt30: windgt30 !== undefined ? windgt30 : '',
+            windGt30Hoist: windgt30hoist !== undefined ? windgt30hoist : '',
+            gustSpreadGt20: gustspreadgt20 !== undefined ? gustspreadgt20 : '',
+            forecastThunderstorms: forecastthunderstorms !== undefined ? forecastthunderstorms : '',
+            modTurbulenceIcing: modturbulenceicing !== undefined ? modturbulenceicing : '',
+            oatNegative10Positive30: oatnegative10positive30 !== undefined ? oatnegative10positive30 : '',
+            weatherRiskMitigation: weatherriskmitigation !== undefined ? weatherriskmitigation : '',
+            weatherInitialRisk: weatherinitialrisk !== undefined ? weatherinitialrisk : 'L',
+            weatherMitigatedRisk: weathermitigatedrisk !== undefined ? weathermitigatedrisk : '',
+            finalInitialRisk: finalinitialrisk !== undefined ? finalinitialrisk : '',
+            finalRiskMitigation: finalriskmitigation !== undefined ? finalriskmitigation : '',
+            finalMitigatedRisk: finalmitigatedrisk !== undefined ? finalmitigatedrisk : '',
             briefer: briefer !== undefined ? briefer : '',
-            brieferComment: brieferComment !== undefined ? brieferComment : '',
-            brieferCommentDate: brieferCommentDate !== undefined ? brieferCommentDate : '',
+            brieferComment: briefercomment !== undefined ? briefercomment : '',
+            brieferCommentDate: briefercommentdate !== undefined ? briefercommentdate : '',
             approver: approver !== undefined ? approver : '',
-            approverComment: approverComment !== undefined ? approverComment : '',
-            approverCommentDate: approverCommentDate !== undefined ? approverCommentDate : '',
+            approverComment: approvercomment !== undefined ? approvercomment : '',
+            approverCommentDate: approvercommentdate !== undefined ? approvercommentdate : '',
+            greatestRisk: greatestrisk !== undefined ? greatestrisk : '',
         },
     });
     const formatDate = (dateObject) => {
@@ -268,20 +252,27 @@ export default function ModalTabs({ flightData, formMode, handleClose, fetchFlig
             data[`${crewmember}25HoursInAO`] = hoursProperties.atleast25InAO;
         }
 
-        console.log(data);
-        // Check if flight ID already exists
 
-        const addFlight = async (flightObject) => {
-            console.log('Adding flight')
-            try {
-                await axios.post('http://localhost:3001/api/add-flight', flightObject);
-                await handleClose();
-                fetchFlightsData();
-            } catch (error) {
-                console.error('Error adding flight:', error);
+        const handleFlight = async (flightObject) => {
+            if (formMode === "File") {
+                try {
+                    await axios.post('http://localhost:3001/api/add-flight', flightObject);
+                    await handleClose();
+                    fetchFlightsData();
+                } catch (error) {
+                    console.error('Error adding flight:', error);
+                }
+            } else if (formMode === "Update") {
+                try {
+                    await axios.put('http://localhost:3001/api/update-flight', flightObject);
+                    await handleClose();
+                    fetchFlightsData();
+                } catch (error) {
+                    console.error('Error adding flight:', error);
+                }
             }
         };
-        addFlight(data);
+        handleFlight(data);
     };
 
 

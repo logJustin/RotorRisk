@@ -27,26 +27,38 @@ function Layout(props, lightMode, handleLightModeToggle) {
 
     // State for Modal
     const [open, setOpen] = React.useState(false);
-    const handleOpen = (flight, mode) => {
+    const handleOpen = async (flight, mode) => {
+        const aircrews = await fetchAircrewsData();
+        setFlightData(flight)
         setOpen(true)
-        setFlightData(flight);
         setFormMode(mode)
     };
     const handleClose = () => setOpen(false);
 
 
     const [flights, setFlights] = React.useState([])
+    const [aircrews, setAircrews] = React.useState([]);
     useEffect(() => {
         // Fetch data when the component mounts
         fetchFlightsData();
+        fetchAircrewsData();
     }, []); // The empty dependency array ensures this runs once on mount
+
+    const fetchAircrewsData = async () => {
+        try {
+            const response = await fetch('http://localhost:3001/api/aircrews');
+            const jsonData = await response.json();
+            setAircrews(jsonData);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
     const fetchFlightsData = async () => {
         try {
             const response = await fetch('http://localhost:3001/api/flights');
             const jsonData = await response.json();
             setFlights(jsonData);
-            console.log(jsonData)
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -54,7 +66,10 @@ function Layout(props, lightMode, handleLightModeToggle) {
 
     return (
         <Box sx={{ display: 'flex' }}>
-            <Header drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle} />
+            <Header
+                drawerWidth={drawerWidth}
+                handleDrawerToggle={handleDrawerToggle}
+            />
             <LeftNavigation
                 drawerWidth={drawerWidth}
                 props={props} mobileOpen={mobileOpen}
@@ -67,8 +82,14 @@ function Layout(props, lightMode, handleLightModeToggle) {
                 flightData={flightData}
                 formMode={formMode}
                 fetchFlightsData={fetchFlightsData}
+                aircrews={aircrews}
             />
-            <FlightsList drawerWidth={drawerWidth} open={open} handleClose={handleClose} handleOpen={handleOpen} flights={flights} />
+            <FlightsList
+                drawerWidth={drawerWidth}
+                open={open}
+                handleClose={handleClose}
+                handleOpen={handleOpen}
+                flights={flights} />
         </Box>
     );
 }

@@ -43,7 +43,7 @@ export default function Body({ drawerWidth, open, handleClose, handleOpen, fligh
                     <TableCell sx={{ padding: '0' }} align="left">{row.pc}</TableCell>
                     <TableCell sx={{ padding: '0' }} align="left">{row.briefer}</TableCell>
                     <TableCell sx={{ padding: '0' }} align="left">{row.approver}</TableCell>
-                    <TableCell sx={{ padding: '0' }}> <Button sx={{ margin: '20px 0' }} variant="contained" color="inherit" onClick={() => { handleEditRCOP(row) }}>Edit RCOP</Button></TableCell>
+                    <TableCell sx={{ padding: '0' }}> <Button sx={{ margin: '10px 0' }} variant="contained" color="inherit" onClick={() => { handleEditRCOP(row) }}>Edit RCOP</Button></TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
