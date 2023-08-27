@@ -6,6 +6,7 @@ const { Pool } = pkg;
 import dotenv from 'dotenv';
 import addFlight from './backendFunctions/addFlight.js';
 import updateFlight from './backendFunctions/updateFlight.js';
+import deleteFlight from './backendFunctions/deleteFlight.js';
 
 // Use the import.meta.url to get the current file's URL
 const currentModuleUrl = new URL(import.meta.url);
@@ -20,12 +21,13 @@ try {
 }
 
 
-const app = express();
-const PORT = process.env.PORT || 3001;
-const DATABASE_URL = process.env.VITE_PGConnection;
 // Middleware
+const app = express();
 app.use(express.json());
 app.use(cors());
+const PORT = process.env.PORT || 3001;
+const DATABASE_URL = process.env.VITE_PGConnection;
+
 
 // Create a pool instance using the database connection URL
 const pool = new Pool({
@@ -68,22 +70,43 @@ app.get('/api/flights', async (req, res) => {
 app.post('/api/add-flight', async (req, res) => {
     try {
         const flightData = req.body;
-        await addFlight(flightData);
+        const client = await pool.connect(); // Acquire a client from the pool
+        await addFlight(client, flightData); // Pass the client to the addFlight function
+        client.release(); // Release the client back to the pool
         res.status(200).json({ message: 'Flight added successfully' });
     } catch (error) {
         console.error('Error adding flight:', error);
         res.status(500).json({ error: 'An error occurred while adding the flight' });
     }
 });
-// Add this route to your Express server
+
 app.put('/api/update-flight', async (req, res) => {
     try {
         const flightData = req.body;
-        await updateFlight(flightData);
+
+        const client = await pool.connect(); // Acquire a client from the pool
+        await updateFlight(client, flightData); // Pass the client to the updateFlight function
+        client.release(); // Release the client back to the pool
+
         res.status(200).json({ message: 'Flight updated successfully' });
     } catch (error) {
-        console.error('Error adding flight:', error);
-        res.status(500).json({ error: 'An error occurred while adding the flight' });
+        console.error('Error updating flight:', error);
+        res.status(500).json({ error: 'An error occurred while updating the flight' });
+    }
+});
+
+app.delete('/api/delete-flight', async (req, res) => {
+    try {
+        const flightData = req.body;
+
+        const client = await pool.connect(); // Acquire a client from the pool
+        await deleteFlight(client, flightData); // Pass the client to the deleteFlight function
+        client.release(); // Release the client back to the pool
+
+        res.status(200).json({ message: 'Flight deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting flight:', error);
+        res.status(500).json({ error: 'An error occurred while deleting the flight' });
     }
 });
 

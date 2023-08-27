@@ -121,8 +121,8 @@ export default function Aircrew({ control, watch, setValue, aircrews }) {
                                     fullWidth
                                     label="Aircraft"
                                     onChange={(selectedValue) => {
-                                        field.onChange(selectedValue); // Let the Controller handle value update
-                                        setValue('aircraftTail', ''); // Set aircraftTail to an empty string
+                                        field.onChange(selectedValue);
+                                        setValue('aircraftTail', '');
                                     }}
                                 >
                                     {Object.keys(aircraftInfo).map((helicopterType) => (
@@ -165,7 +165,7 @@ export default function Aircrew({ control, watch, setValue, aircrews }) {
                         name="mission"
                         control={control}
                         render={({ field }) => (
-                            <TextField fullWidth required {...field} label="Mission" variant="outlined" />
+                            <TextField fullWidth required {...field} label="Mission" variant="outlined" inputProps={{ maxLength: 20 }} />
                         )}>
                     </Controller>
                 </Grid>

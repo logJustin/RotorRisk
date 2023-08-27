@@ -1,9 +1,10 @@
 import React from 'react';
 import { Box, Modal } from '@mui/material';
-import ModalTabs from './ModalTabs'
+import FlightModal from './ModalTabs'
 
 
-export default function FormModal({ open, handleClose, flightData, formMode, fetchFlightsData, aircrews }) {
+export default function FormModal({ open, handleClose, flightData, formMode, fetchFlightsData, aircrews, handleFlashClick }) {
+
     const style = {
         position: 'absolute',
         top: '50%',
@@ -26,12 +27,14 @@ export default function FormModal({ open, handleClose, flightData, formMode, fet
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <ModalTabs
+                <FlightModal
+                    open={open}
+                    handleClose={handleClose}
                     flightData={flightData}
                     formMode={formMode}
-                    handleClose={handleClose}
                     fetchFlightsData={fetchFlightsData}
                     aircrews={aircrews}
+                    handleFlashClick={handleFlashClick}
                 />
             </Box>
         </Modal >

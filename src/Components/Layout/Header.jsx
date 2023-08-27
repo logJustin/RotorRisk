@@ -6,8 +6,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 
 export default function Header({ drawerWidth, handleDrawerToggle }) {
-
-
     return (
         <AppBar
             position="fixed"
@@ -35,7 +33,7 @@ export default function Header({ drawerWidth, handleDrawerToggle }) {
                     Rotor Risk
                 </Typography>
                 <Typography variant="h6" noWrap component="div" sx={{ mr: 2, display: { xs: 'none', md: 'block' } }}>
-                    : Flight Risk Management System
+                    : Managing Flight Risk Assessments
                 </Typography>
             </Toolbar>
         </AppBar >

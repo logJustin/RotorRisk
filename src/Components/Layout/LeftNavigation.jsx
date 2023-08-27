@@ -11,14 +11,15 @@ import CheckCircleOutlineSharpIcon from '@mui/icons-material/CheckCircleOutlineS
 import CheckCircleSharpIcon from '@mui/icons-material/CheckCircleSharp';
 import ListIcon from '@mui/icons-material/List';
 import FormModal from '../Modal/FormModal';
+import CrewmemberModal from './CrewmemberModal';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, mobileOpen, lightMode, handleLightModeToggle, open, handleClose, handleOpen, flightData, formMode, fetchFlightsData, aircrews }) {
+export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle, mobileOpen, lightMode, handleLightModeToggle, open, handleClose, handleOpen, flightData, formMode, fetchFlightsData, aircrews, setAircrews, fetchAircrewsData, handleFlashClick }) {
+
 
     const { window } = props;
     const container = window !== undefined ? () => window().document.body : undefined;
-
 
     const drawer = (
         <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', }}>
@@ -64,10 +65,16 @@ export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, 
 
 
 
+
                 </List >
             </Box >
             <Box sx={{ mt: 'auto' }}>
                 <List>
+                    <CrewmemberModal
+                        aircrews={aircrews}
+                        setAircrews={setAircrews}
+                        fetchAircrewsData={fetchAircrewsData}
+                    />
                     {/* Dark Mode toggler */}
                     <ListItem key='Toggler' disablePadding>
                         <ListItemButton onClick={handleLightModeToggle}>
@@ -97,6 +104,7 @@ export default function LeftNaviation({ drawerWidth, props, handleDrawerToggle, 
                 formMode={formMode}
                 fetchFlightsData={fetchFlightsData}
                 aircrews={aircrews}
+                handleFlashClick={handleFlashClick}
             />
 
             {/* Tablet & Mobile Drawer */}

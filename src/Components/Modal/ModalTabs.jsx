@@ -1,21 +1,16 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import { Box, Button } from '@mui/material';
-import { useForm } from "react-hook-form"
-import dayjs from 'dayjs';
-import { v4 as uuid } from 'uuid';
 import axios from 'axios';
+import { useForm } from "react-hook-form"
+import { Box, Button, Tabs, Tab, Typography, Modal } from '@mui/material';
+import dayjs from 'dayjs';
+import PropTypes from 'prop-types';
+import { v4 as uuid } from 'uuid';
 import Aircrew from './Tabs/Aircrew'
 import Mission from './Tabs/Mission'
 import Weather from './Tabs/Weather'
 import FinalRisk from './Tabs/FinalRisk'
 import MBO from './Tabs/MBO'
 import FMAA from './Tabs/FMAA'
-// import flights from '../../data/seederFlightData'
-// import aircrews from '../../data/seederCrewData';
 
 
 function CustomTabPanel(props) {
@@ -52,14 +47,14 @@ function a11yProps(index) {
     };
 }
 
-export default function ModalTabs({ flightData, formMode, handleClose, fetchFlightsData, aircrews }) {
+export default function FlightModal({ open, handleClose, flightData = {}, formMode, fetchFlightsData, aircrews, handleFlashClick }) {
+    // State for Tabs on Modal
     const [tabValue, setTabValue] = React.useState(0);
-
     const handleChange = (event, newValue) => {
         setTabValue(newValue);
     };
     const {
-        flightid, date, aircrafttype, aircrafttail, mission, missionstatement, route, etd, ete, flightconditions, pc, pcrisk, pcseat, pi, pirisk, piseat, nrcm1, nrcm1risk, nrcm2, nrcm2risk, nrcm3, nrcm3risk, pchourstotal, pchoursng, pc25hoursinao, pihourstotal, pihoursnhg, pi25hoursinao, nrcm1hourstotal, nrcm1hoursng, nrcm125hoursinao, nrcm2hourstotal, nrcm2hoursng, nrcm225hoursinao, nrcm3hourstotal, nrcm3hoursng, nrcm325hoursinao, aircrewriskmitigation, aircrewinitialrisk, aircrewmitigatedrisk, airassault, AH64attackreconsecurity, medevac, casevac, farp, crosscountryborder, multiship, mixedmultiship, mtfgeneraltraining, dartonetimeflight, blackout, waterbucket, paradrops, rappelspiesfries, externalloads, airmovementvip, continuation, cefs, fatcow, terrainflight, mountainoperations, overwateroperations, pinnacleoperations, urbanoperations, confinedoperations, ogewithin10, igewithin10, ogewithin5, igewithin5, cruisewithin10, progessionevaluationeps, ifrsimulatedimc, cbrne, nonlivehoist, livehoist, combatmanueveringflight, gunnerylivefire, calfex, ams, blackoutcurtain, owuntrained, famflight, hoverwxrlt500, uh60doorsOff, owsea4to5, owseagt6, pcgt90, pcgt60, pcgt30, pigt90, pigt60, pigt30, nrcm1gt90, nrcm1gt60, nrcm1gt30, nrcm2gt90, nrcm2gt60, nrcm2gt30, nrcm3gt90, nrcm3gt60, nrcm3gt30, hoistgt90, hoistgt60, hoistgt30, specificgt12, specific2to12, specificlt2, vaguegt12, vague2to12, vaguelt2, missionriskmitigation, missioninitialrisk, missionmitigatedrisk, gt1000, lt1000, lt700, lt500, gt3, gt2, gt1, lt1, altrequired, gt25illumandgt30degrees, lt25illumandlt30degrees, gt25illumandgt30degreeslimitedlighting, windgt30, windgt30hoist, gustspreadgt20, forecastthunderstorms, modturbulenceicing, oatnegative10positive30, weatherriskmitigation, weatherinitialrisk, weathermitigatedrisk, finalriskmitigation, finalmitigatedrisk, briefer, briefercomment, briefercommentdate, approver, approvercomment, approvercommentdate, finalinitialrisk, greatestrisk
+        flightid, date, aircrafttype, aircrafttail, mission, missionstatement, route, etd, ete, flightconditions, pc, pcrisk, pcseat, pi, pirisk, piseat, nrcm1, nrcm1risk, nrcm2, nrcm2risk, nrcm3, nrcm3risk, pchourstotal, pchoursng, pc25hoursinao, pihourstotal, pihoursng, pi25hoursinao, nrcm1hourstotal, nrcm1hoursng, nrcm125hoursinao, nrcm2hourstotal, nrcm2hoursng, nrcm225hoursinao, nrcm3hourstotal, nrcm3hoursng, nrcm325hoursinao, aircrewriskmitigation, aircrewinitialrisk, aircrewmitigatedrisk, airassault, AH64attackreconsecurity, medevac, casevac, farp, crosscountryborder, multiship, mixedmultiship, mtfgeneraltraining, dartonetimeflight, blackout, waterbucket, paradrops, rappelspiesfries, externalloads, airmovementvip, continuation, cefs, fatcow, terrainflight, mountainoperations, overwateroperations, pinnacleoperations, urbanoperations, confinedoperations, ogewithin10, igewithin10, ogewithin5, igewithin5, cruisewithin10, progessionevaluationeps, ifrsimulatedimc, cbrne, nonlivehoist, livehoist, combatmanueveringflight, gunnerylivefire, calfex, ams, blackoutcurtain, owuntrained, famflight, hoverwxrlt500, uh60doorsOff, owsea4to5, owseagt6, pcgt90, pcgt60, pcgt30, pigt90, pigt60, pigt30, nrcm1gt90, nrcm1gt60, nrcm1gt30, nrcm2gt90, nrcm2gt60, nrcm2gt30, nrcm3gt90, nrcm3gt60, nrcm3gt30, hoistgt90, hoistgt60, hoistgt30, specificgt12, specific2to12, specificlt2, vaguegt12, vague2to12, vaguelt2, missionriskmitigation, missioninitialrisk, missionmitigatedrisk, gt1000, lt1000, lt700, lt500, gt3, gt2, gt1, lt1, altrequired, gt25illumandgt30degrees, lt25illumandlt30degrees, gt25illumandgt30degreeslimitedlighting, windgt30, windgt30hoist, gustspreadgt20, forecastthunderstorms, modturbulenceicing, oatnegative10positive30, weatherriskmitigation, weatherinitialrisk, weathermitigatedrisk, finalriskmitigation, finalmitigatedrisk, briefer, briefercomment, briefercommentdate, approver, approvercomment, approvercommentdate, finalinitialrisk, greatestrisk
     } = flightData
 
     const { control, handleSubmit, watch, setValue } = useForm({
@@ -90,7 +85,7 @@ export default function ModalTabs({ flightData, formMode, handleClose, fetchFlig
             pcHoursNG: pchoursng !== undefined ? pchoursng : '',
             pc25HoursInAO: pc25hoursinao !== undefined ? pc25hoursinao : '',
             piHoursTotal: pihourstotal !== undefined ? pihourstotal : '',
-            piHoursNG: pihoursnhg !== undefined ? pihoursnhg : '',
+            piHoursNG: pihoursng !== undefined ? pihoursng : '',
             pi25HoursInAO: pi25hoursinao !== undefined ? pi25hoursinao : '',
             nrcm1HoursTotal: nrcm1hourstotal !== undefined ? nrcm1hourstotal : '',
             nrcm1HoursNG: nrcm1hoursng !== undefined ? nrcm1hoursng : '',
@@ -258,7 +253,8 @@ export default function ModalTabs({ flightData, formMode, handleClose, fetchFlig
                 try {
                     await axios.post('http://localhost:3001/api/add-flight', flightObject);
                     await handleClose();
-                    fetchFlightsData();
+                    await fetchFlightsData();
+                    handleFlashClick();
                 } catch (error) {
                     console.error('Error adding flight:', error);
                 }
@@ -266,7 +262,8 @@ export default function ModalTabs({ flightData, formMode, handleClose, fetchFlig
                 try {
                     await axios.put('http://localhost:3001/api/update-flight', flightObject);
                     await handleClose();
-                    fetchFlightsData();
+                    await fetchFlightsData();
+                    handleFlashClick();
                 } catch (error) {
                     console.error('Error adding flight:', error);
                 }
@@ -278,59 +275,61 @@ export default function ModalTabs({ flightData, formMode, handleClose, fetchFlig
 
 
     return (
-        <form style={{
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column'
-        }}
-            onSubmit={handleSubmit(onSubmit)}
-        >
-            {/* Tabs */}
-            <Box borderBottom={1} borderColor={'divider'}>
-                <Tabs value={tabValue} onChange={handleChange} variant="scrollable"
-                    scrollButtons
-                    allowScrollButtonsMobile
-                >
-                    <Tab label="Aircrew" {...a11yProps(0)} />
-                    <Tab label="Mission" {...a11yProps(1)} />
-                    <Tab label="Weather" {...a11yProps(2)} />
-                    <Tab label="Final Risk" {...a11yProps(3)} />
-                    <Tab label="MBO" {...a11yProps(4)} />
-                    <Tab label="FMAA" {...a11yProps(5)} />
-                </Tabs>
-            </Box>
-
-            <Box
-                style={{
-                    flexGrow: 1, // Allow this div to grow and take up available space
-                    overflowY: 'auto', // Enable vertical scrolling if needed
-                }}
+        <>
+            <form style={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column'
+            }}
+                onSubmit={handleSubmit(onSubmit)}
             >
-                {/* Tab Panels */}
-                <CustomTabPanel value={tabValue} index={0}>
-                    <Aircrew control={control} watch={watch} setValue={setValue} aircrews={aircrews} />
-                </CustomTabPanel>
-                <CustomTabPanel value={tabValue} index={1}>
-                    <Mission control={control} watch={watch} setValue={setValue} />
-                </CustomTabPanel>
-                <CustomTabPanel value={tabValue} index={2}>
-                    <Weather control={control} watch={watch} setValue={setValue} />
-                </CustomTabPanel>
-                <CustomTabPanel value={tabValue} index={3}>
-                    <FinalRisk control={control} watch={watch} setValue={setValue} />
-                </CustomTabPanel>
-                <CustomTabPanel value={tabValue} index={4}>
-                    <MBO control={control} watch={watch} />
-                </CustomTabPanel>
-                <CustomTabPanel value={tabValue} index={5}>
-                    <FMAA control={control} watch={watch} />
-                </CustomTabPanel>
-            </Box>
+                {/* Tabs */}
+                <Box borderBottom={1} borderColor={'divider'}>
+                    <Tabs value={tabValue} onChange={handleChange} variant="scrollable"
+                        scrollButtons
+                        allowScrollButtonsMobile
+                    >
+                        <Tab label="Aircrew" {...a11yProps(0)} />
+                        <Tab label="Mission" {...a11yProps(1)} />
+                        <Tab label="Weather" {...a11yProps(2)} />
+                        <Tab label="Final Risk" {...a11yProps(3)} />
+                        <Tab label="MBO" {...a11yProps(4)} />
+                        <Tab label="FMAA" {...a11yProps(5)} />
+                    </Tabs>
+                </Box>
 
-            {/* Submit Button */}
-            <Button variant="contained" type="submit" fullWidth sx={{ marginTop: 'auto', marginBottom: '8px' }}>
-                {formMode} RCOP
-            </Button>
-        </form >
+                <Box
+                    style={{
+                        flexGrow: 1, // Allow this div to grow and take up available space
+                        overflowY: 'auto', // Enable vertical scrolling if needed
+                    }}
+                >
+                    {/* Tab Panels */}
+                    <CustomTabPanel value={tabValue} index={0}>
+                        <Aircrew control={control} watch={watch} setValue={setValue} aircrews={aircrews} />
+                    </CustomTabPanel>
+                    <CustomTabPanel value={tabValue} index={1}>
+                        <Mission control={control} watch={watch} setValue={setValue} />
+                    </CustomTabPanel>
+                    <CustomTabPanel value={tabValue} index={2}>
+                        <Weather control={control} watch={watch} setValue={setValue} />
+                    </CustomTabPanel>
+                    <CustomTabPanel value={tabValue} index={3}>
+                        <FinalRisk control={control} watch={watch} setValue={setValue} />
+                    </CustomTabPanel>
+                    <CustomTabPanel value={tabValue} index={4}>
+                        <MBO control={control} watch={watch} />
+                    </CustomTabPanel>
+                    <CustomTabPanel value={tabValue} index={5}>
+                        <FMAA control={control} watch={watch} />
+                    </CustomTabPanel>
+                </Box>
+
+                {/* Submit Button */}
+                <Button variant="contained" type="submit" fullWidth sx={{ marginTop: 'auto', marginBottom: '8px' }}>
+                    {formMode} RCOP
+                </Button>
+            </form >
+        </>
     );
 }

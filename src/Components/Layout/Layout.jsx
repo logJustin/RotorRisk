@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { useEffect } from 'react';
-import Box from '@mui/material/Box';
+import { useEffect, useState, forwardRef } from 'react';
+import { Box, Snackbar } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 import Header from './Header'
 import LeftNavigation from './LeftNavigation'
 import FlightsList from '../FlightsTable/FlightsList'
@@ -16,28 +17,28 @@ function Layout(props, lightMode, handleLightModeToggle) {
 
     // Left Nav because that is the physical components
     // Header because that's where the hamburger toggler is
-    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
     // used for Editing an RCOP, then passing it into FormModal
-    const [flightData, setFlightData] = React.useState(null);
-    const [formMode, setFormMode] = React.useState('File')
+    const [flightData, setFlightData] = useState(null);
+    const [formMode, setFormMode] = useState('File')
 
     // State for Modal
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = async (flight, mode) => {
-        const aircrews = await fetchAircrewsData();
-        setFlightData(flight)
+        const aircrews = await fetchAircrewsData()
+        await setFlightData(flight);
+        setFormMode(mode);
         setOpen(true)
-        setFormMode(mode)
     };
     const handleClose = () => setOpen(false);
 
-
-    const [flights, setFlights] = React.useState([])
-    const [aircrews, setAircrews] = React.useState([]);
+    // State for flights and aircrews
+    const [flights, setFlights] = useState([])
+    const [aircrews, setAircrews] = useState([]);
     useEffect(() => {
         // Fetch data when the component mounts
         fetchFlightsData();
@@ -58,10 +59,30 @@ function Layout(props, lightMode, handleLightModeToggle) {
         try {
             const response = await fetch('http://localhost:3001/api/flights');
             const jsonData = await response.json();
+            jsonData.sort((a, b) => {
+                const dateA = new Date(a.date.replace(/(\d{2})([A-Za-z]{3})(\d{2})/, "$2 $1, $3"));
+                const dateB = new Date(b.date.replace(/(\d{2})([A-Za-z]{3})(\d{2})/, "$2 $1, $3"));
+                return dateA - dateB;
+            });
             setFlights(jsonData);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
+    };
+
+    // State for Flash messages
+    const [openFlash, setFlashOpen] = useState(false);
+    const Alert = forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+    const handleFlashClick = () => {
+        setFlashOpen(true);
+    };
+    const handleFlashClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setFlashOpen(false);
     };
 
     return (
@@ -72,7 +93,8 @@ function Layout(props, lightMode, handleLightModeToggle) {
             />
             <LeftNavigation
                 drawerWidth={drawerWidth}
-                props={props} mobileOpen={mobileOpen}
+                props={props}
+                mobileOpen={mobileOpen}
                 handleDrawerToggle={handleDrawerToggle}
                 lightMode={props.lightMode}
                 handleLightModeToggle={props.handleLightModeToggle}
@@ -83,13 +105,32 @@ function Layout(props, lightMode, handleLightModeToggle) {
                 formMode={formMode}
                 fetchFlightsData={fetchFlightsData}
                 aircrews={aircrews}
+                setAircrews={setAircrews}
+                fetchAircrewsData={fetchAircrewsData}
+                handleFlashClick={handleFlashClick}
             />
             <FlightsList
                 drawerWidth={drawerWidth}
-                open={open}
-                handleClose={handleClose}
                 handleOpen={handleOpen}
-                flights={flights} />
+                flights={flights}
+                fetchFlightsData={fetchFlightsData}
+                handleFlashClick={handleFlashClick}
+            />
+            <Snackbar
+                open={openFlash}
+                autoHideDuration={3000}
+                onClose={handleFlashClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                sx={{ width: '50%' }}
+            >
+                <Alert
+                    onClose={handleFlashClose}
+                    severity={formMode === 'File' ? 'success' : 'info'}
+                    sx={{ width: '100%' }}
+                >
+                    {formMode === 'File' ? 'Flight Filed Successfully' : 'Flight Updated Successfully'}
+                </Alert>
+            </Snackbar>
         </Box>
     );
 }

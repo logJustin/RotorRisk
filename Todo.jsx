@@ -1,9 +1,9 @@
 
 // DO
-//     Form to add a new cremember
+//     Write logic that narrows down available crewmembers on edit form based on aircraft, position, then name
+//     Disable other fields until an aircraft, then position, then name is selected
+//     Add floating action button for user suggestions
 //     Add Crews for other Airframes & logic for the correct aircrews to appear
-//     update get/post/put routes to simplify endpoints
-//     determine if I need to make a pool.connect on each backendFunction
 //     Change the select one sections to a different format
 //       (requires a change to each state, consider how riskLookup works, how they're rendered on FlightsList)
 //       Form Sections to reflect this:
@@ -47,3 +47,11 @@
 //  ✓  Fetch flights on app load
 //  ✓  Get flights into DB
 //  ✓  Put request edit flights
+//  ✓  Sort flights by flight date upon fetch
+//  ✓  Change edit to icon
+//  ✓  Add delete column & write functionality
+//  ✓  Implement pool.connect on server instead of backendFunctions
+//  ✓  Add react-snackbar for flight add, edit, and delete (probably from layout for Modal Tabs & FlightsList)
+//  ✓  Figure out why snackbar for delete closes after a couple seconds, maybe move the state??
+//  ✓  Form to add a new cremember
+//  ✓  Implement add or edit toggle in crewmember form
