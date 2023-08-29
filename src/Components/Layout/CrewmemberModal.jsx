@@ -15,15 +15,15 @@ import { useForm, Controller } from 'react-hook-form';
 const positions = ["Pilot", "NRCM"];
 const nrcmRanks = ["PVT", "PV2", "PFC", "SPC", "CPL", "SGT", "SSG", "SFC", "MSG", "CSM"];
 const pilotRanks = ["WO1", "CW2", "CW3", "CW4", "CW5", "2LT", "1LT", "CPT", "MAJ", "LTC", "COL"];
-const airframes = ["AH64E", "CH47F", "HH60M", "UH60V"];
+const airframes = ["AH64D", "CH47F", "HH60M", "UH60V"];
 
 export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircrews }) {
 
 
     const { control, handleSubmit, watch, setValue } = useForm({
         defaultValues: {
-            uuid: uuid(),
-            position: 'Pilot',
+            uuid: '',
+            position: '',
             rank: 'CW2',
             last_name: '',
             airframe: 'HH60M',
@@ -46,23 +46,49 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
     const [mode, setMode] = useState('Add');
     const handleChange = (event, newMode) => { setMode(newMode); };
 
+
+    // State for Person to be edited
+    const [selectedHelicopter, setSelectedHelicopter] = useState('HH60M')
+    // State for Person to be edited
+    const [selectedPosition, setSelectedPosition] = useState('')
+    // const [selectedPosition, setSelectedPosition] = useState('Pilot')
+
     // State of Names avialable in Edit drop down
     const [names, setNames] = useState(aircrews.map((person) => {
         return person.name
     }))
 
+    useEffect(() => {
+        if (mode === 'Edit' && selectedHelicopter === 'AH64D') {
+            setValue('position', 'Pilot')
+            setSelectedPosition('Pilot')
+        }
+        if (mode === 'Edit' && selectedHelicopter) {
+            const filteredNames = aircrews
+                .filter(person => person.airframe === selectedHelicopter)
+                .filter(person => person.position === selectedPosition.toLowerCase())
+                .map(person => person.name);
+            setNames(filteredNames);
+        }
+    }, [mode, selectedHelicopter, selectedPosition]);
+
+
+    // Handle selection of a person's name in Edit mode
+    const handleHelicopterSelection = (helicopter) => {
+        setSelectedHelicopter(helicopter);
+    };
     // State for Person to be edited
     const [selectedPerson, setSelectedPerson] = useState(null)
     // Update the form default values based on selected person when in Edit mode
     useEffect(() => {
         if (mode === 'Edit' && selectedPerson) {
-            console.log(selectedPerson)
             setValue('name', selectedPerson.name);
             setValue('position', selectedPerson.position === 'pilot' ? 'Pilot' : 'NRCM');
             setValue('airframe', selectedPerson.airframe);
             setValue('aircraft', selectedPerson.aircraft);
             setValue('ng', selectedPerson.ng);
             setValue('atleast25inao', selectedPerson.atleast25inao === true ? 'True' : 'False');
+            setValue('uuid', selectedPerson.uuid);
         }
     }, [mode, selectedPerson]);
     // Handle selection of a person's name in Edit mode
@@ -74,6 +100,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
     // update aircrews when Edit mode is clicked
     useEffect(() => {
         if (mode === 'Edit') {
+            console.log('another edit render')
             fetchAircrewsData()
             setNames(aircrews.map((person) => {
                 return person.name
@@ -81,26 +108,19 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
         }
     }, [mode])
 
-    const lastName = watch('last_name')
-    // update the form default values if a person is selected
-    useEffect((name) => {
-        if (mode === 'Edit') {
-            console.log(name)
-        }
-    }, [lastName])
 
     // Submit Logic
     const onSubmit = (data) => {
 
         if (mode === 'Add') {
             const revisedData = {
-                uuid: data.uuid,
+                uuid: uuid(),
                 name: `${data.rank} ${data.last_name}`,
                 position: data.position,
                 airframe: data.airframe,
                 aircraft: data.aircraft,
                 ng: data.ng,
-                atleast25inao: data.atleast25inao,
+                atleast25inao: data.atleast25inao.toLowerCase(),
             };
             try {
                 // Input logic for a post request
@@ -116,7 +136,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
                 airframe: data.airframe,
                 aircraft: data.aircraft,
                 ng: data.ng,
-                atleast25inao: data.atleast25inao,
+                atleast25inao: data.atleast25inao.toLowerCase(),
             };
             try {
                 // Input logic for a put request
@@ -343,9 +363,25 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
                                 </Grid>
                             </Grid>
                         )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         {/* Container for Edit */}
 
-                        {/* Insert a simple textfield to mimic the above container */}
                         {mode === 'Edit' && (
                             <Grid container justifyContent="space-evenly" spacing={2} sx={{
                                 padding: '5px',
@@ -365,6 +401,11 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
                                                     fullWidth
                                                     required
                                                     label="Airframe"
+                                                    onChange={(selectedValue) => {
+                                                        field.onChange(selectedValue);
+                                                        handleHelicopterSelection(selectedValue.target.value)
+                                                        setValue('name', '')
+                                                    }}
                                                 >
                                                     {airframes.map((aircraft) => (
                                                         <MenuItem key={aircraft} value={aircraft}>
@@ -389,10 +430,14 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
                                                     {...field}
                                                     fullWidth
                                                     label="Position"
+                                                    disabled={selectedHelicopter === 'AH64D'}
                                                     onChange={(selectedValue) => {
                                                         field.onChange(selectedValue);
                                                         setValue('rank', '');
                                                         selectedValue.target.value === 'NRCM' ? setRanks(nrcmRanks) : setRanks(pilotRanks);
+                                                        setSelectedPosition(selectedValue.target.value)
+                                                        setSelectedPerson('')
+                                                        setValue('name', '')
                                                     }}
                                                 >
                                                     {positions.map((position) => (
@@ -419,6 +464,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
                                                     fullWidth
                                                     required
                                                     label="Name"
+                                                    disabled={selectedPosition === ''}
                                                     onChange={e => {
                                                         field.onChange(e);
                                                         handleNameSelection(e.target.value);
@@ -441,7 +487,9 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
                                         name="aircraft"
                                         control={control}
                                         render={({ field }) => (
-                                            <TextField fullWidth required {...field} label="Total Aircraft Hours" placeholder='420.0' type='number' />
+                                            <TextField fullWidth
+                                                disabled={selectedPerson === null}
+                                                required {...field} label="Total Aircraft Hours" placeholder='420.0' type='number' />
                                         )}
                                     />
                                 </Grid>
@@ -452,7 +500,9 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
                                         name="ng"
                                         control={control}
                                         render={({ field }) => (
-                                            <TextField fullWidth required {...field} label="NG Flight Hours" placeholder='100.1' type='number' />
+                                            <TextField fullWidth
+                                                disabled={selectedPerson === null}
+                                                required {...field} label="NG Flight Hours" placeholder='100.1' type='number' />
                                         )}
                                     />
                                 </Grid>
@@ -470,6 +520,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
                                                     {...field}
                                                     fullWidth
                                                     required
+                                                    disabled={selectedPerson === null}
                                                     label="Greater than 25 Hours in AO"
                                                 >
                                                     {['True', 'False'].map((boolean) => (

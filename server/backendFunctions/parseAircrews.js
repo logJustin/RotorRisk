@@ -1,8 +1,9 @@
-import aircrews from '../src/data/seederCrewData.js';
+import aircrews from '../../src/data/seederCrewData.js';
 import pg from 'pg';
 import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config(({ path: '../../.env' }))
+// dotenv.config()
 
 async function insertAircrewsToDatabase() {
   const startTime = new Date()

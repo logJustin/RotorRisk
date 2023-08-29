@@ -241,7 +241,52 @@ const aircrews = [
         aircraft: 133.2,
         NG: 37.8,
         atleast25InAO: false,
-    }
+    },
+    {
+        uuid: '7f6dbbd5-7a8b-4b31-88f7-6d7b3a90a20a',
+        name: 'CW2 Adawag',
+        position: 'pilot',
+        airframe: 'UH60V',
+        aircraft: 480.7,
+        NG: 112.8,
+        atleast25InAO: true,
+    },
+    {
+        uuid: 'b22ef458-8f5d-4a11-9c0a-6a9dc8d9f0e3',
+        name: 'CSM Clutter',
+        position: 'nrcm',
+        airframe: 'UH60V',
+        aircraft: 3034.2,
+        NG: 815.8,
+        atleast25InAO: false,
+    },
+    {
+        uuid: 'f72432a9-5d92-468a-baad-1b07c8e3e83b',
+        name: 'CW2 Reidy',
+        position: 'pilot',
+        airframe: 'CH47F',
+        aircraft: 986.2,
+        NG: 190.2,
+        atleast25InAO: true,
+    },
+    {
+        uuid: 'c158a889-1e12-48a2-8d1c-9d1f3cbbd6f6',
+        name: 'SFC Jones',
+        position: 'nrcm',
+        airframe: 'CH47F',
+        aircraft: 53.9,
+        NG: 2.0,
+        atleast25InAO: true,
+    },
+    {
+        uuid: '1e4bf79f-99ab-4ef2-bd7f-6b468e13dd9a',
+        name: 'CW4 Boozer',
+        position: 'pilot',
+        airframe: 'AH64D',
+        aircraft: 1814.6,
+        NG: 139.5,
+        atleast25InAO: true,
+    },
 ]
 
 export default aircrews

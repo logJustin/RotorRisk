@@ -1,7 +1,6 @@
 
 // DO
-//     Write logic that narrows down available crewmembers on edit form based on aircraft, position, then name
-//     Disable other fields until an aircraft, then position, then name is selected
+//     don't let somebody input a Apache NRCM
 //     Add floating action button for user suggestions
 //     Add Crews for other Airframes & logic for the correct aircrews to appear
 //     Change the select one sections to a different format
@@ -55,3 +54,5 @@
 //  ✓  Figure out why snackbar for delete closes after a couple seconds, maybe move the state??
 //  ✓  Form to add a new cremember
 //  ✓  Implement add or edit toggle in crewmember form
+//  ✓  Write logic that narrows down available crewmembers on edit form based on aircraft, position, then name
+//  ✓  Disable other fields until an aircraft, then position, then name is selected
