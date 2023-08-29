@@ -1,8 +1,11 @@
 
 // DO
-//     don't let somebody input a Apache NRCM
 //     Add floating action button for user suggestions
-//     Add Crews for other Airframes & logic for the correct aircrews to appear
+//     Crewmember Form: Add Snackbar for add and edit crewmembers
+//     Crewmember Form: Close Manage crewmembers
+//     Crewmember Form: Allow name to be edited
+//     Crewmember Form: Edit names is list of everybody after adding somebody, when switching to edit mode, reset names
+//     RCOP Form: Add Crews for other Airframes & logic for the correct aircrews to appear
 //     Change the select one sections to a different format
 //       (requires a change to each state, consider how riskLookup works, how they're rendered on FlightsList)
 //       Form Sections to reflect this:
@@ -52,7 +55,9 @@
 //  ✓  Implement pool.connect on server instead of backendFunctions
 //  ✓  Add react-snackbar for flight add, edit, and delete (probably from layout for Modal Tabs & FlightsList)
 //  ✓  Figure out why snackbar for delete closes after a couple seconds, maybe move the state??
-//  ✓  Form to add a new cremember
-//  ✓  Implement add or edit toggle in crewmember form
-//  ✓  Write logic that narrows down available crewmembers on edit form based on aircraft, position, then name
-//  ✓  Disable other fields until an aircraft, then position, then name is selected
+//  ✓  Crewmember Form: Form to add a new cremember
+//  ✓  Crewmember Form: Implement add or edit toggle in crewmember form
+//  ✓  Crewmember Form: Write logic that narrows down available crewmembers on edit form based on aircraft, position, then name
+//  ✓  Crewmember Form: Disable other fields until an aircraft, then position, then name is selected
+//  ✓  Crewmember Form: don't let somebody input a Apache NRCM
+//  ✓  Crewmember Form: PUT & POST request

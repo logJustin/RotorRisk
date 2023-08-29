@@ -100,7 +100,6 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
     // update aircrews when Edit mode is clicked
     useEffect(() => {
         if (mode === 'Edit') {
-            console.log('another edit render')
             fetchAircrewsData()
             setNames(aircrews.map((person) => {
                 return person.name
@@ -110,21 +109,22 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
 
 
     // Submit Logic
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
 
         if (mode === 'Add') {
             const revisedData = {
                 uuid: uuid(),
                 name: `${data.rank} ${data.last_name}`,
-                position: data.position,
+                position: data.position.toLowerCase(),
                 airframe: data.airframe,
                 aircraft: data.aircraft,
                 ng: data.ng,
                 atleast25inao: data.atleast25inao.toLowerCase(),
             };
             try {
-                // Input logic for a post request
-                console.log('Add', revisedData)
+                await axios.post('http://localhost:3001/api/add-crewmember', revisedData);
+                await fetchAircrewsData();
+                handleClose();
             } catch (error) {
                 console.error('Error adding crewmember:', error);
             }
@@ -132,15 +132,16 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
             const revisedData = {
                 uuid: data.uuid,
                 name: data.name,
-                position: data.position,
+                position: data.position.toLowerCase(),
                 airframe: data.airframe,
                 aircraft: data.aircraft,
                 ng: data.ng,
                 atleast25inao: data.atleast25inao.toLowerCase(),
             };
             try {
-                // Input logic for a put request
-                console.log('Edit', revisedData)
+                await axios.put('http://localhost:3001/api/update-crewmember', revisedData);
+                await fetchAircrewsData();
+                handleClose();
             } catch (error) {
                 console.error('Error editing crewmember:', error);
             }
@@ -170,6 +171,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     width: '85%',
+                    maxWidth: '900px',
                     bgcolor: 'background.paper',
                     boxshadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
                     padding: '32px',
@@ -236,6 +238,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
                                                     {...field}
                                                     fullWidth
                                                     label="Position"
+                                                    disabled={selectedHelicopter === 'AH64D'}
                                                     onChange={(selectedValue) => {
                                                         field.onChange(selectedValue);
                                                         setValue('rank', '');
@@ -302,6 +305,15 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
                                                     fullWidth
                                                     required
                                                     label="Airframe"
+                                                    onChange={(selectedValue) => {
+                                                        field.onChange(selectedValue)
+                                                        setSelectedHelicopter(selectedValue.target.value)
+                                                        if (selectedValue.target.value === 'AH64D') {
+                                                            setValue('position', 'Pilot')
+                                                            setValue('rank', '')
+                                                            setRanks(pilotRanks)
+                                                        }
+                                                    }}
                                                 >
                                                     {airframes.map((aircraft) => (
                                                         <MenuItem key={aircraft} value={aircraft}>

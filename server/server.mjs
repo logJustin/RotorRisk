@@ -7,6 +7,8 @@ import dotenv from 'dotenv';
 import addFlight from './backendFunctions/addFlight.js';
 import updateFlight from './backendFunctions/updateFlight.js';
 import deleteFlight from './backendFunctions/deleteFlight.js';
+import addAircrew from './backendFunctions/addAircrew.js';
+import updateAircrew from './backendFunctions/updateAircrew.js';
 
 // Use the import.meta.url to get the current file's URL
 const currentModuleUrl = new URL(import.meta.url);
@@ -107,6 +109,35 @@ app.delete('/api/delete-flight', async (req, res) => {
     } catch (error) {
         console.error('Error deleting flight:', error);
         res.status(500).json({ error: 'An error occurred while deleting the flight' });
+    }
+});
+
+// Add this route to your Express server
+app.post('/api/add-crewmember', async (req, res) => {
+    try {
+        const crewData = req.body;
+        console.log('post from the server', crewData.name)
+
+        const client = await pool.connect();
+        await addAircrew(client, crewData);
+        client.release();
+        res.status(200).json({ message: 'Crewmember added successfully' });
+    } catch (error) {
+        console.error('Error adding crewmemmber:', error);
+        res.status(500).json({ error: 'An error occurred while adding the crewmemmber' });
+    }
+});
+
+app.put('/api/update-crewmember', async (req, res) => {
+    try {
+        const crewData = req.body;
+        const client = await pool.connect(); // Acquire a client from the pool
+        await updateAircrew(client, crewData); // Pass the client to the updateFlight function
+        client.release(); // Release the client back to the pool
+        res.status(200).json({ message: 'Crewmember updated successfully' });
+    } catch (error) {
+        console.error('Error updating crewmember:', error);
+        res.status(500).json({ error: 'An error occurred while updating the crewmember' });
     }
 });
 

@@ -1,5 +1,3 @@
-import pg from 'pg';
-
 export default async function addFlight(client, flight) {
     const startTime = new Date();
 
