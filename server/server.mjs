@@ -50,7 +50,7 @@ const pool = new Pool({
 
 app.get('/api/aircrews', async (req, res) => {
     try {
-        const { rows } = await pool.query('SELECT * FROM aircrews');
+        const { rows } = await pool.query('SELECT * FROM aircrews ORDER BY name ASC;');
         res.json(rows);
     } catch (error) {
         console.error('Error fetching data:', error);

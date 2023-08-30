@@ -11,11 +11,11 @@ import CheckCircleOutlineSharpIcon from '@mui/icons-material/CheckCircleOutlineS
 import CheckCircleSharpIcon from '@mui/icons-material/CheckCircleSharp';
 import ListIcon from '@mui/icons-material/List';
 import FormModal from '../Modal/FormModal';
-import CrewmemberModal from './CrewmemberModal';
+import CrewmemberModal from '../CrewmemberModal/CrewmemberModal';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle, mobileOpen, lightMode, handleLightModeToggle, open, handleClose, handleOpen, flightData, formMode, fetchFlightsData, aircrews, setAircrews, fetchAircrewsData, handleFlashClick }) {
+export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle, mobileOpen, lightMode, handleLightModeToggle, open, handleClose, handleOpen, flightData, formMode, fetchFlightsData, aircrews, fetchAircrewsData, handleFlashClick, setFlashOrigin }) {
 
 
     const { window } = props;
@@ -72,8 +72,9 @@ export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle,
                 <List>
                     <CrewmemberModal
                         aircrews={aircrews}
-                        setAircrews={setAircrews}
                         fetchAircrewsData={fetchAircrewsData}
+                        setFlashOrigin={setFlashOrigin}
+                        handleFlashClick={handleFlashClick}
                     />
                     {/* Dark Mode toggler */}
                     <ListItem key='Toggler' disablePadding>
@@ -105,6 +106,7 @@ export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle,
                 fetchFlightsData={fetchFlightsData}
                 aircrews={aircrews}
                 handleFlashClick={handleFlashClick}
+                setFlashOrigin={setFlashOrigin}
             />
 
             {/* Tablet & Mobile Drawer */}

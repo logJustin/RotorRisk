@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useForm } from "react-hook-form"
-import { Box, Button, Tabs, Tab, Typography, Modal } from '@mui/material';
+import { Box, Button, Tabs, Tab, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { v4 as uuid } from 'uuid';
@@ -47,12 +47,13 @@ function a11yProps(index) {
     };
 }
 
-export default function FlightModal({ open, handleClose, flightData = {}, formMode, fetchFlightsData, aircrews, handleFlashClick }) {
+export default function FlightModal({ open, handleClose, flightData = {}, formMode, fetchFlightsData, aircrews, handleFlashClick, setFlashOrigin, handleLoadingChange }) {
     // State for Tabs on Modal
     const [tabValue, setTabValue] = React.useState(0);
     const handleChange = (event, newValue) => {
         setTabValue(newValue);
     };
+
     const {
         flightid, date, aircrafttype, aircrafttail, mission, missionstatement, route, etd, ete, flightconditions, pc, pcrisk, pcseat, pi, pirisk, piseat, nrcm1, nrcm1risk, nrcm2, nrcm2risk, nrcm3, nrcm3risk, pchourstotal, pchoursng, pc25hoursinao, pihourstotal, pihoursng, pi25hoursinao, nrcm1hourstotal, nrcm1hoursng, nrcm125hoursinao, nrcm2hourstotal, nrcm2hoursng, nrcm225hoursinao, nrcm3hourstotal, nrcm3hoursng, nrcm325hoursinao, aircrewriskmitigation, aircrewinitialrisk, aircrewmitigatedrisk, airassault, AH64attackreconsecurity, medevac, casevac, farp, crosscountryborder, multiship, mixedmultiship, mtfgeneraltraining, dartonetimeflight, blackout, waterbucket, paradrops, rappelspiesfries, externalloads, airmovementvip, continuation, cefs, fatcow, terrainflight, mountainoperations, overwateroperations, pinnacleoperations, urbanoperations, confinedoperations, ogewithin10, igewithin10, ogewithin5, igewithin5, cruisewithin10, progessionevaluationeps, ifrsimulatedimc, cbrne, nonlivehoist, livehoist, combatmanueveringflight, gunnerylivefire, calfex, ams, blackoutcurtain, owuntrained, famflight, hoverwxrlt500, uh60doorsOff, owsea4to5, owseagt6, pcgt90, pcgt60, pcgt30, pigt90, pigt60, pigt30, nrcm1gt90, nrcm1gt60, nrcm1gt30, nrcm2gt90, nrcm2gt60, nrcm2gt30, nrcm3gt90, nrcm3gt60, nrcm3gt30, hoistgt90, hoistgt60, hoistgt30, specificgt12, specific2to12, specificlt2, vaguegt12, vague2to12, vaguelt2, missionriskmitigation, missioninitialrisk, missionmitigatedrisk, gt1000, lt1000, lt700, lt500, gt3, gt2, gt1, lt1, altrequired, gt25illumandgt30degrees, lt25illumandlt30degrees, gt25illumandgt30degreeslimitedlighting, windgt30, windgt30hoist, gustspreadgt20, forecastthunderstorms, modturbulenceicing, oatnegative10positive30, weatherriskmitigation, weatherinitialrisk, weathermitigatedrisk, finalriskmitigation, finalmitigatedrisk, briefer, briefercomment, briefercommentdate, approver, approvercomment, approvercommentdate, finalinitialrisk, greatestrisk
     } = flightData
@@ -224,6 +225,8 @@ export default function FlightModal({ open, handleClose, flightData = {}, formMo
 
     const crewMembers = ['pc', 'pi', 'nrcm1', 'nrcm2', 'nrcm3'];
     const onSubmit = (data) => {
+        handleLoadingChange(true)
+
         // Flight Date
         data.date = formatDate(data.date);
 
@@ -250,19 +253,23 @@ export default function FlightModal({ open, handleClose, flightData = {}, formMo
 
         const handleFlight = async (flightObject) => {
             if (formMode === "File") {
+                setFlashOrigin('Flight added successfully')
                 try {
                     await axios.post('http://localhost:3001/api/add-flight', flightObject);
-                    await handleClose();
                     await fetchFlightsData();
+                    await handleLoadingChange(false)
+                    await handleClose();
                     handleFlashClick();
                 } catch (error) {
                     console.error('Error adding flight:', error);
                 }
             } else if (formMode === "Update") {
+                setFlashOrigin('Flight updated successfully')
                 try {
                     await axios.put('http://localhost:3001/api/update-flight', flightObject);
-                    await handleClose();
                     await fetchFlightsData();
+                    await handleLoadingChange(false)
+                    await handleClose();
                     handleFlashClick();
                 } catch (error) {
                     console.error('Error adding flight:', error);

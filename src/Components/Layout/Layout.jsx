@@ -71,6 +71,8 @@ function Layout(props, lightMode, handleLightModeToggle) {
     };
 
     // State for Flash messages
+    // flash origin says where it came from: the RCOP or Crewmember form
+    const [flashOrigin, setFlashOrigin] = useState()
     const [openFlash, setFlashOpen] = useState(false);
     const Alert = forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -84,6 +86,17 @@ function Layout(props, lightMode, handleLightModeToggle) {
         }
         setFlashOpen(false);
     };
+    const getSeverity = () => {
+        if (flashOrigin === 'Flight added successfully' || flashOrigin === 'Crewmember added successfully') {
+            return 'success';
+        } else if (flashOrigin === 'Flight updated successfully' || flashOrigin === 'Crewmember updated successfully') {
+            return 'info';
+        } else if (flashOrigin === 'Flight Deleted Successfully') {
+            return 'warning';
+        } else {
+            return 'info'; // Default value
+        }
+    }
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -101,13 +114,13 @@ function Layout(props, lightMode, handleLightModeToggle) {
                 open={open}
                 handleClose={handleClose}
                 handleOpen={handleOpen}
-                flightData={flightData}
                 formMode={formMode}
+                flightData={flightData}
                 fetchFlightsData={fetchFlightsData}
                 aircrews={aircrews}
-                setAircrews={setAircrews}
                 fetchAircrewsData={fetchAircrewsData}
                 handleFlashClick={handleFlashClick}
+                setFlashOrigin={setFlashOrigin}
             />
             <FlightsList
                 drawerWidth={drawerWidth}
@@ -115,6 +128,7 @@ function Layout(props, lightMode, handleLightModeToggle) {
                 flights={flights}
                 fetchFlightsData={fetchFlightsData}
                 handleFlashClick={handleFlashClick}
+                setFlashOrigin={setFlashOrigin}
             />
             <Snackbar
                 open={openFlash}
@@ -125,10 +139,11 @@ function Layout(props, lightMode, handleLightModeToggle) {
             >
                 <Alert
                     onClose={handleFlashClose}
-                    severity={formMode === 'File' ? 'success' : 'info'}
+                    severity={getSeverity()}
                     sx={{ width: '100%' }}
+                // setFlashOrigin={console.log(flashOrigin)}
                 >
-                    {formMode === 'File' ? 'Flight Filed Successfully' : 'Flight Updated Successfully'}
+                    {flashOrigin}
                 </Alert>
             </Snackbar>
         </Box>

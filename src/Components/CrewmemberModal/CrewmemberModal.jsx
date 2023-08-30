@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { v4 as uuid } from 'uuid';
 import {
-    Box, IconButton, Snackbar, Button, Select, MenuItem, Modal, FormControl, InputLabel, TextField, Typography
+    Box, IconButton, Snackbar, Button, Select, MenuItem, Modal, FormControl, InputLabel, TextField, Typography, CircularProgress
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { ListItem, ListItemButton, ListItemIcon, ListItemText, ToggleButtonGroup, ToggleButton } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import CloseIcon from '@mui/icons-material/Close';
-
 import { useForm, Controller } from 'react-hook-form';
 
 const positions = ["Pilot", "NRCM"];
@@ -17,10 +16,10 @@ const nrcmRanks = ["PVT", "PV2", "PFC", "SPC", "CPL", "SGT", "SSG", "SFC", "MSG"
 const pilotRanks = ["WO1", "CW2", "CW3", "CW4", "CW5", "2LT", "1LT", "CPT", "MAJ", "LTC", "COL"];
 const airframes = ["AH64D", "CH47F", "HH60M", "UH60V"];
 
-export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircrews }) {
+export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashOrigin, handleFlashClick }) {
 
 
-    const { control, handleSubmit, watch, setValue } = useForm({
+    const { control, handleSubmit, setValue } = useForm({
         defaultValues: {
             uuid: '',
             position: '',
@@ -57,6 +56,9 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
     const [names, setNames] = useState(aircrews.map((person) => {
         return person.name
     }))
+
+    // state for loading indicator
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (mode === 'Edit' && selectedHelicopter === 'AH64D') {
@@ -110,8 +112,9 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
 
     // Submit Logic
     const onSubmit = async (data) => {
-
+        setLoading(true)
         if (mode === 'Add') {
+            setFlashOrigin('Crewmember added successfully')
             const revisedData = {
                 uuid: uuid(),
                 name: `${data.rank} ${data.last_name}`,
@@ -124,11 +127,13 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
             try {
                 await axios.post('http://localhost:3001/api/add-crewmember', revisedData);
                 await fetchAircrewsData();
-                handleClose();
+                await handleClose();
+                handleFlashClick()
             } catch (error) {
                 console.error('Error adding crewmember:', error);
             }
         } else if (mode === 'Edit') {
+            setFlashOrigin('Crewmember updated successfully')
             const revisedData = {
                 uuid: data.uuid,
                 name: data.name,
@@ -141,11 +146,13 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
             try {
                 await axios.put('http://localhost:3001/api/update-crewmember', revisedData);
                 await fetchAircrewsData();
-                handleClose();
+                await handleClose();
+                handleFlashClick()
             } catch (error) {
                 console.error('Error editing crewmember:', error);
             }
         }
+        setLoading(false)
     }
 
 
@@ -177,9 +184,10 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
                     padding: '32px',
                     marginbottom: '16px',
                     overflow: 'auto',
-                    // height: '85%',
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    filter: loading ? 'blur(0.3px)' : 'none',
+                    transition: 'filter 0.3s ease',
                 }}>
                     <IconButton
                         aria-label="close"
@@ -192,6 +200,14 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setAircre
                     >
                         <CloseIcon />
                     </IconButton>
+                    {loading && <CircularProgress color='inherit'
+                        sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                        }}
+                    />}
                     <form style={{
                         height: '100%',
                         display: 'flex',

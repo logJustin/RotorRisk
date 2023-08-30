@@ -11,7 +11,7 @@ import DeleteConfirmationModal from './Components/DeleteConfirmationModal'
 import './FlightsList.css';
 
 
-export default function Body({ drawerWidth, handleOpen, flights, fetchFlightsData }) {
+export default function Body({ drawerWidth, handleOpen, flights, fetchFlightsData, setFlashOrigin, }) {
 
 
     // Flash State, State can be stored in DeleteConfirmationModal
@@ -53,6 +53,7 @@ export default function Body({ drawerWidth, handleOpen, flights, fetchFlightsDat
                             fetchFlightsData={fetchFlightsData}
                             openFlash={openFlash}
                             setFlashOpen={setFlashOpen}
+                            setFlashOrigin={setFlashOrigin}
                         />
                     </TableCell>
                 </TableRow>

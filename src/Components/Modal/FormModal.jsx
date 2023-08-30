@@ -1,9 +1,15 @@
-import React from 'react';
-import { Box, Modal } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Modal, CircularProgress } from '@mui/material';
 import FlightModal from './ModalTabs'
 
 
-export default function FormModal({ open, handleClose, flightData, formMode, fetchFlightsData, aircrews, handleFlashClick }) {
+export default function FormModal({ open, handleClose, flightData, formMode, fetchFlightsData, aircrews, handleFlashClick, setFlashOrigin }) {
+
+    // state for loading indicator
+    const [loading, setLoading] = useState(false);
+    const handleLoadingChange = (boolean) => {
+        setLoading(boolean);
+    };
 
     const style = {
         position: 'absolute',
@@ -17,8 +23,11 @@ export default function FormModal({ open, handleClose, flightData, formMode, fet
         marginbottom: '16px',
         overflow: 'auto',
         height: '85%',
-        // flexGrow: 1
+        filter: loading ? 'blur(0.3px)' : 'none',
+        transition: 'filter 0.3s ease',
     };
+
+
     return (
         <Modal
             open={open}
@@ -35,7 +44,17 @@ export default function FormModal({ open, handleClose, flightData, formMode, fet
                     fetchFlightsData={fetchFlightsData}
                     aircrews={aircrews}
                     handleFlashClick={handleFlashClick}
+                    setFlashOrigin={setFlashOrigin}
+                    handleLoadingChange={handleLoadingChange}
                 />
+                {loading && <CircularProgress color='inherit'
+                    sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                    }}
+                />}
             </Box>
         </Modal >
     );

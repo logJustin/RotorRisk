@@ -91,6 +91,7 @@ export default function Aircrew({ control, watch, setValue, aircrews }) {
         <>
             <Grid container justifyContent="space-evenly" spacing={2} sx={{
                 boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                // backgroundColor: '#272727',
                 padding: '5px'
             }}>
                 <Grid xs={12}>
