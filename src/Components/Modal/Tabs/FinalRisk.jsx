@@ -44,7 +44,7 @@ export default function FinalRisk({ control, watch, setValue }) {
                     <FormLabel component="legend">Initial Risk: {aircrewInitialRisk}</FormLabel>
                     <FormLabel component="legend">Risk Mitigation: {aircrewRiskMitigation}</FormLabel>
                 </Grid>
-                <Grid xs={12}>
+                <Grid xs={12} md={10}>
                     <Controller name="aircrewMitigatedRisk" control={control} render={({ field }) => (
                         <CheckboxesRiskLevel title="Residual Risk" value={field.value} onChange={field.onChange} initialRisk={aircrewInitialRisk} />)}
                     />
@@ -61,7 +61,7 @@ export default function FinalRisk({ control, watch, setValue }) {
                     <FormLabel component="legend">Initial Risk: {missionInitialRisk}</FormLabel>
                     <FormLabel component="legend">Risk Mitigation: {missionRiskMitigation}</FormLabel>
                 </Grid>
-                <Grid xs={12}>
+                <Grid xs={12} md={10}>
                     <Controller name="missionMitigatedRisk" control={control} render={({ field }) => (
                         <CheckboxesRiskLevel title="Residual Risk" value={field.value} onChange={field.onChange} initialRisk={missionInitialRisk} />)}
                     />
@@ -78,7 +78,7 @@ export default function FinalRisk({ control, watch, setValue }) {
                     <FormLabel component="legend">Initial Risk: {weatherInitialRisk}</FormLabel>
                     <FormLabel component="legend">Risk Mitigation: {weatherRiskMitigation}</FormLabel>
                 </Grid>
-                <Grid xs={12}>
+                <Grid xs={12} md={10}>
                     <Controller name="weatherMitigatedRisk" control={control} render={({ field }) => (
                         <CheckboxesRiskLevel title="Residual Risk" value={field.value} onChange={field.onChange} initialRisk={weatherInitialRisk} />)}
                     />
@@ -106,7 +106,7 @@ export default function FinalRisk({ control, watch, setValue }) {
                     )}>
                     </Controller>
                 </Grid>
-                <Grid xs={12}>
+                <Grid xs={12} md={10}>
                     <Controller name="finalMitigatedRisk" control={control} render={({ field }) => (
                         <CheckboxesRiskLevel title="Residual Risk" value={field.value} onChange={field.onChange} initialRisk={finalInitialRisk} />)}
                     />

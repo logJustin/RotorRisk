@@ -4,6 +4,7 @@ import { Box, Button, Dialog, IconButton, Table, TableHead, TableRow, TableCell,
 import MuiAlert from '@mui/material/Alert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
+import Grid from '@mui/material/Unstable_Grid2';
 
 export default function DeleteConfirmationModal({ flight, fetchFlightsData, openFlash, setFlashOpen, setFlashOrigin }) {
     // Flash State & Functions
@@ -70,7 +71,7 @@ export default function DeleteConfirmationModal({ flight, fetchFlightsData, open
                 />}
                 <Typography
                     sx={{
-                        p: 3,
+                        p: 2,
                         filter: loading ? 'blur(1px)' : 'none',
                         transition: 'filter 0.3s ease',
                     }}
@@ -78,35 +79,39 @@ export default function DeleteConfirmationModal({ flight, fetchFlightsData, open
                     textAlign={'center'}>
                     Delete this flight?
                 </Typography>
-                <Table size="small" sx={{
-                    filter: loading ? 'blur(1px)' : 'none',
-                    transition: 'filter 0.3s ease',
-                }}>
-                    <TableHead>
-                        <TableRow key='firstRow'>
-                            <TableCell>Date: {flight.date}</TableCell>
-                            <TableCell>PC: {flight.pc}</TableCell>
-                            <TableCell>Risk: {flight.finalmitigatedrisk}</TableCell>
-                            <TableCell>ETD: {flight.etd}</TableCell>
-                        </TableRow>
-                        <TableRow key='secondRow'>
-                            <TableCell colSpan={1}>Mission: {flight.mission}</TableCell>
-                            <TableCell colSpan={3}>Mission Statement: {flight.missionstatement}</TableCell>
-                        </TableRow>
-                        <TableRow key='lastRow'>
-                            <TableCell sx={{ borderBottom: 'none' }}>Aircrew Risk: {flight.aircrewmitigatedrisk}</TableCell>
-                            <TableCell sx={{ borderBottom: 'none' }}>Mission Risk: {flight.missionmitigatedrisk}</TableCell>
-                            <TableCell sx={{ borderBottom: 'none' }}>Weather Risk: {flight.weathermitigatedrisk}</TableCell>
-                            <TableCell sx={{ borderBottom: 'none' }}>Final Risk: {flight.finalmitigatedrisk}</TableCell>
-                        </TableRow>
-                    </TableHead>
-                </Table>
+                <Grid container
+                    // justifyContent="center"
+                    alignItems="center"
+                    sx={{
+                        p: 2,
+                        filter: loading ? 'blur(1px)' : 'none',
+                        transition: 'filter 0.3s ease',
+                        borderBottom: '1px grey solid',
+                        borderTop: '1px grey solid'
+                    }}>
+                    <Grid marginBottom={'12px'} xs={3} md={3}>Date: {flight.date}</Grid>
+                    <Grid marginBottom={'12px'} xs={3} md={3}>PC: {flight.pc}</Grid>
+                    <Grid marginBottom={'12px'} xs={3} md={3}>Residual Risk: {flight.finalmitigatedrisk}</Grid>
+                    <Grid marginBottom={'12px'} xs={3} md={3}>ETD: {flight.etd}</Grid>
+                    <Grid marginBottom={'12px'} xs={12} md={3}>Mission: {flight.mission}</Grid>
+                    <Grid marginBottom={'12px'} xs={12} md={9}>Mission Statement: {flight.missionstatement}</Grid>
+                    <Grid marginBottom={'12px'} xs={3} md={3}>Aircrew Risk: {flight.aircrewmitigatedrisk}</Grid>
+                    <Grid marginBottom={'12px'} xs={3} md={3}>Mission Risk: {flight.missionmitigatedrisk}</Grid>
+                    <Grid marginBottom={'12px'} xs={3} md={3}>Weather Risk: {flight.weathermitigatedrisk}</Grid>
+                    <Grid marginBottom={'12px'} xs={3} md={3}>Final Risk: {flight.finalmitigatedrisk}</Grid>
+
+                </Grid>
                 <Box sx={{
-                    display: 'flex', justifyContent: 'flex-end', p: 2,
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    p: 2,
                     filter: loading ? 'blur(1px)' : 'none',
                     transition: 'filter 0.3s ease',
                 }}>
-                    <Button variant="text" onClick={handleClose}>Cancel</Button>
+                    <Button variant="text"
+                        onClick={handleClose}
+                        sx={{ marginRight: '12px' }}
+                    >Cancel</Button>
                     <Button
                         variant="contained"
                         onClick={async () => {

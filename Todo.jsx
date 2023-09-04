@@ -2,15 +2,10 @@
 // DO
 //     Multi-section: Add floating action button for user suggestions
 //     FlightsList: Add skeleton until load
-//     Crewmember Form: Allow name to be edited
-//     Crewmember Form: Edit names is list of everybody after adding somebody, when switching to edit mode, reset names
 //     Delete Flight Modal: Change alert snackbar to be the component from Layouts
 //     Delete Flight Modal: Make it a Modal actual
-//     Delete Flight Modal: Change Table to Grid v2 for more responsivity
 //     Delete Flight Modal: Add the inherit styling to the modal
-//     RCOP Form: Filter crewmembers by airframe
 //     RCOP Form: Add spinner until post/put complete
-//     RCOP Form: Add Crews for other Airframes & logic for the correct aircrews to appear
 //     RCOP Form: Form Validation
 //     RCOP Form: Add Fighter Management
 //     RCOP Form: Change the select one sections to a different format
@@ -70,4 +65,9 @@
 //  ✓  Crewmember Form: Add Snackbar for add and edit crewmembers
 //  ✓  Crewmember Form: Close Manage crewmembers
 //  ✓  Crewmember Form: Add spinner until post/put complete
-//  ✓  Multi-section: Sort aircrews fetch by name 
+//  ✓  Multi-section: Sort aircrews fetch by name
+//  ✓  RCOP Form: Filter crewmembers by airframe
+//  ✓  RCOP Form: Add Crews for other Airframes & logic for the correct aircrews to appear
+//  ✓  Delete Flight Modal: Change Table to Grid v2 for more responsivity
+//  ✓  Crewmember Form: Allow name to be edited, change to an Autocomplete component
+//  ✓  Crewmember Form: Reset fields on switching modes & submitting form

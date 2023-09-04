@@ -16,8 +16,9 @@ import CalculateHighestRisk from '../../../utils/CalculateHighestRisk';
 export default function Aircrew({ control, watch, setValue, aircrews }) {
 
 
-    const crewSelect = (position) => (
+    const crewSelect = (position, airframe) => (
         Object.values(aircrews)
+            .filter(crewmember => crewmember.airframe === airframe)
             .filter(crewmember => crewmember.position === position)
             .map(crewmember => (
                 <MenuItem key={crewmember.name} value={crewmember.name}>
@@ -98,7 +99,7 @@ export default function Aircrew({ control, watch, setValue, aircrews }) {
                     <FormLabel sx={{ textAlign: 'center' }} component="legend">DA-5484</FormLabel>
                 </Grid>
                 {/* Flight Date */}
-                <Grid xs={4}>
+                <Grid xs={6} md={4}>
                     <Controller
                         name="date"
                         control={control}
@@ -110,7 +111,7 @@ export default function Aircrew({ control, watch, setValue, aircrews }) {
                     />
                 </Grid>
                 {/* Aircraft */}
-                <Grid xs={4}>
+                <Grid xs={6} md={4}>
                     <FormControl fullWidth component="fieldset">
                         <InputLabel>Aircraft</InputLabel>
                         <Controller
@@ -124,6 +125,11 @@ export default function Aircrew({ control, watch, setValue, aircrews }) {
                                     onChange={(selectedValue) => {
                                         field.onChange(selectedValue);
                                         setValue('aircraftTail', '');
+                                        setValue('pc', '');
+                                        setValue('pi', '');
+                                        setValue('nrcm1', '');
+                                        setValue('nrcm2', '');
+                                        setValue('nrcm3', '');
                                     }}
                                 >
                                     {Object.keys(aircraftInfo).map((helicopterType) => (
@@ -137,7 +143,7 @@ export default function Aircrew({ control, watch, setValue, aircrews }) {
                     </FormControl>
                 </Grid>
                 {/* Tail Number */}
-                <Grid xs={4}>
+                <Grid xs={6} md={4}>
                     <FormControl fullWidth component="fieldset">
                         <InputLabel>Tail Number</InputLabel>
                         <Controller
@@ -161,7 +167,7 @@ export default function Aircrew({ control, watch, setValue, aircrews }) {
                     </FormControl>
                 </Grid>
                 {/* Mission */}
-                <Grid xs={3}>
+                <Grid xs={6} md={4}>
                     <Controller
                         name="mission"
                         control={control}
@@ -171,7 +177,7 @@ export default function Aircrew({ control, watch, setValue, aircrews }) {
                     </Controller>
                 </Grid>
                 {/* Mission Statement */}
-                <Grid xs={9}>
+                <Grid xs={12} md={8}>
                     <Controller
                         name="missionStatement"
                         control={control}
@@ -228,18 +234,18 @@ export default function Aircrew({ control, watch, setValue, aircrews }) {
                     <FormLabel sx={{ textAlign: 'center' }} component="legend">Aircrew</FormLabel>
                 </Grid>
                 {/* PC */}
-                <Grid xs={4}>
+                <Grid xs={8} md={4}>
                     <Controller name="pc" control={control} render={({ field }) => (
                         <FormControl required fullWidth>
                             <InputLabel id="pcSelect">Pilot in Command</InputLabel>
                             <Select label="Pilot in Command" {...field}>
-                                {crewSelect('pilot')}
+                                {crewSelect('pilot', aircraftType)}
                             </Select>
                         </FormControl>
                     )}
                     />
                 </Grid>
-                <Grid xs={2}>
+                <Grid xs={4} md={2}>
                     <Controller name="pcSeat" control={control} render={({ field }) => (
                         <FormControl fullWidth>
                             <InputLabel id="pcSeatSelect">PC Seat</InputLabel>
@@ -256,18 +262,18 @@ export default function Aircrew({ control, watch, setValue, aircrews }) {
                     </Controller>
                 </Grid>
                 {/* PI */}
-                <Grid xs={4}>
+                <Grid xs={8} md={4}>
                     <Controller name="pi" control={control} render={({ field }) => (
                         <FormControl required fullWidth>
                             <InputLabel id="piSelect">Pilot</InputLabel>
                             <Select label="Pilot" {...field}>
-                                {crewSelect('pilot')}
+                                {crewSelect('pilot', aircraftType)}
                             </Select>
                         </FormControl>
                     )}
                     />
                 </Grid>
-                <Grid xs={2}>
+                <Grid xs={4} md={2}>
                     <Controller name="piSeat" control={control} render={({ field }) => (
                         <FormControl fullWidth>
                             <InputLabel id="piSeatSelect">PI Seat</InputLabel>
@@ -284,55 +290,55 @@ export default function Aircrew({ control, watch, setValue, aircrews }) {
                     </Controller>
                 </Grid>
                 {/* NRCM 1 */}
-                <Grid xs={3}>
+                <Grid xs={10} sm={3}>
                     <Controller name="nrcm1" control={control} render={({ field }) => (
                         <FormControl fullWidth>
                             <InputLabel id="nrcm1Select">NRCM 1</InputLabel>
                             <Select label="NRCM 1" {...field}>
-                                {crewSelect('nrcm')}
+                                {crewSelect('nrcm', aircraftType)}
                             </Select>
                         </FormControl>
                     )}>
 
                     </Controller>
                 </Grid>
-                <Grid xs={1}>
-                    <IconButton aria-label="delete" size="large" onClick={() => { setValue('nrcm1', '') }}>
+                <Grid xs={2} sm={1} >
+                    <IconButton aria-label="delete" size="large" sx={{ width: '100%' }} onClick={() => { setValue('nrcm1', '') }}>
                         <DeleteIcon fontSize="inherit" />
                     </IconButton>
                 </Grid>
                 {/* NRCM 2 */}
-                <Grid xs={3}>
+                <Grid xs={10} sm={3}>
                     <Controller name="nrcm2" control={control} render={({ field }) => (
                         <FormControl fullWidth>
                             <InputLabel id="nrcm2Select">NRCM 2</InputLabel>
                             <Select label="NRCM 2" {...field}>
-                                {crewSelect('nrcm')}
+                                {crewSelect('nrcm', aircraftType)}
                             </Select>
                         </FormControl>
                     )}>
 
                     </Controller>
                 </Grid>
-                <Grid xs={1}>
-                    <IconButton aria-label="delete" size="large" onClick={() => { setValue('nrcm2', '') }}>
+                <Grid xs={2} sm={1} >
+                    <IconButton aria-label="delete" size="large" sx={{ width: '100%' }} onClick={() => { setValue('nrcm2', '') }}>
                         <DeleteIcon fontSize="inherit" />
                     </IconButton>
                 </Grid>
                 {/* NRCM 3 */}
-                <Grid xs={3}>
+                <Grid xs={10} sm={3}>
                     <Controller name="nrcm3" control={control} render={({ field }) => (
                         <FormControl fullWidth>
                             <InputLabel id="nrcm3Select">NRCM 3</InputLabel>
                             <Select label="NRCM 3" {...field}>
-                                {crewSelect('nrcm')}
+                                {crewSelect('nrcm', aircraftType)}
                             </Select>
                         </FormControl>
                     )}>
                     </Controller>
                 </Grid>
-                <Grid xs={1}>
-                    <IconButton aria-label="delete" size="large" onClick={() => { setValue('nrcm3', '') }}>
+                <Grid xs={2} sm={1}>
+                    <IconButton aria-label="delete" size="large" sx={{ width: '100%' }} onClick={() => { setValue('nrcm3', '') }}>
                         <DeleteIcon fontSize="inherit" />
                     </IconButton>
                 </Grid>

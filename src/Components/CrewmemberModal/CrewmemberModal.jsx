@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { v4 as uuid } from 'uuid';
 import {
-    Box, IconButton, Snackbar, Button, Select, MenuItem, Modal, FormControl, InputLabel, TextField, Typography, CircularProgress
+    Box, IconButton, Snackbar, Button, Select, MenuItem, Modal, FormControl, InputLabel, TextField, Typography, CircularProgress, Autocomplete
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { ListItem, ListItemButton, ListItemIcon, ListItemText, ToggleButtonGroup, ToggleButton } from '@mui/material';
@@ -22,7 +22,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
     const { control, handleSubmit, setValue } = useForm({
         defaultValues: {
             uuid: '',
-            position: '',
+            position: 'Pilot',
             rank: 'CW2',
             last_name: '',
             airframe: 'HH60M',
@@ -32,6 +32,19 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
             name: ''
         },
     });
+
+    const resetForm = () => {
+        setValue('name', '');
+        setName('')
+        setValue('last_name', '');
+        setValue('rank', '');
+        setValue('position', '');
+        setValue('airframe', '');
+        setValue('aircraft', '');
+        setValue('ng', '');
+        setValue('atleast25inao', '');
+        setValue('uuid', '');
+    }
 
     // State for rank array
     const [ranks, setRanks] = useState(pilotRanks)
@@ -43,14 +56,16 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
 
     // State for Add/Edit Toggle
     const [mode, setMode] = useState('Add');
-    const handleChange = (event, newMode) => { setMode(newMode); };
+    const handleChange = (event, newMode) => {
+        setMode(newMode);
+        resetForm();
+    };
 
 
     // State for Person to be edited
     const [selectedHelicopter, setSelectedHelicopter] = useState('HH60M')
     // State for Person to be edited
     const [selectedPosition, setSelectedPosition] = useState('')
-    // const [selectedPosition, setSelectedPosition] = useState('Pilot')
 
     // State of Names avialable in Edit drop down
     const [names, setNames] = useState(aircrews.map((person) => {
@@ -93,10 +108,20 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
             setValue('uuid', selectedPerson.uuid);
         }
     }, [mode, selectedPerson]);
+
+    // State for name, so it can updated in Autocomplete in edit
+    const [name, setName] = useState('')
+
     // Handle selection of a person's name in Edit mode
     const handleNameSelection = (selectedName) => {
         const person = aircrews.find(person => person.name === selectedName);
         setSelectedPerson(person);
+        setName(selectedName)
+    };
+
+    const handleNameInputChange = (event) => {
+        const newValue = event.target.value;
+        setName(newValue); // Update the selected name when the user types into the TextField
     };
 
     // update aircrews when Edit mode is clicked
@@ -106,9 +131,9 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
             setNames(aircrews.map((person) => {
                 return person.name
             }))
+            resetForm()
         }
     }, [mode])
-
 
     // Submit Logic
     const onSubmit = async (data) => {
@@ -128,6 +153,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
                 await axios.post('http://localhost:3001/api/add-crewmember', revisedData);
                 await fetchAircrewsData();
                 await handleClose();
+                await resetForm();
                 handleFlashClick()
             } catch (error) {
                 console.error('Error adding crewmember:', error);
@@ -136,7 +162,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
             setFlashOrigin('Crewmember updated successfully')
             const revisedData = {
                 uuid: data.uuid,
-                name: data.name,
+                name: name,
                 position: data.position.toLowerCase(),
                 airframe: data.airframe,
                 aircraft: data.aircraft,
@@ -147,6 +173,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
                 await axios.put('http://localhost:3001/api/update-crewmember', revisedData);
                 await fetchAircrewsData();
                 await handleClose();
+                await resetForm();
                 handleFlashClick()
             } catch (error) {
                 console.error('Error editing crewmember:', error);
@@ -179,6 +206,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
                     transform: 'translate(-50%, -50%)',
                     width: '85%',
                     maxWidth: '900px',
+                    maxHeight: '85%',
                     bgcolor: 'background.paper',
                     boxshadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
                     padding: '32px',
@@ -482,28 +510,29 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
                                 {/* Name */}
                                 <Grid xs={12} sm={6} md={4}>
                                     <FormControl fullWidth component="fieldset">
-                                        <InputLabel>Name</InputLabel>
                                         <Controller
                                             name="name"
                                             control={control}
+                                            defaultValue=""
                                             render={({ field }) => (
-                                                <Select
+                                                <Autocomplete
                                                     {...field}
+                                                    freeSolo
                                                     fullWidth
                                                     required
-                                                    label="Name"
-                                                    disabled={selectedPosition === ''}
-                                                    onChange={e => {
-                                                        field.onChange(e);
-                                                        handleNameSelection(e.target.value);
+                                                    options={names}
+                                                    onChange={(event, newValue) => {
+                                                        field.onChange(newValue);
+                                                        handleNameSelection(newValue);
                                                     }}
-                                                >
-                                                    {names.map((name) => (
-                                                        <MenuItem key={name} value={name}>
-                                                            {name}
-                                                        </MenuItem>
-                                                    ))}
-                                                </Select>
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
+                                                            label="Name"
+                                                            onChange={handleNameInputChange}
+                                                        />
+                                                    )}
+                                                />
                                             )}
                                         />
                                     </FormControl>
@@ -564,7 +593,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
                             </Grid>
                         )}
                         <Button color="inherit" variant="contained" type="submit" fullWidth sx={{ marginTop: '24px', marginBottom: '8px' }}>
-                            {mode} Crewmember
+                            {mode === 'Add' ? 'Add' : 'Update'} Crewmember
                         </Button>
 
                     </form >
