@@ -1,7 +1,6 @@
 
 // DO
 //     Multi-section: Add floating action button for user suggestions
-//     RCOP Form: Change button to redirect to next tab
 //     RCOP Form: Form Validation
 //     RCOP Form: Add Fighter Management
 //     RCOP Form: Change the select one sections to a different format
@@ -75,3 +74,5 @@
 //  ✓  FlightsList: Add skeleton until load
 //  ✓  FlightsList: Reduce size of 4 Category Headers
 //  ✓  RCOP Form: Change button to disabled unless scrolled at bottom
+//  ✓  RCOP Form: Change button to redirect to next tab
+//  ✓  RCOP Form: Auto-scroll up
