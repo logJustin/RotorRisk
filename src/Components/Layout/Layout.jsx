@@ -141,7 +141,6 @@ function Layout(props, lightMode, handleLightModeToggle) {
                     onClose={handleFlashClose}
                     severity={getSeverity()}
                     sx={{ width: '100%' }}
-                // setFlashOrigin={console.log(flashOrigin)}
                 >
                     {flashOrigin}
                 </Alert>

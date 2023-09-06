@@ -11,16 +11,25 @@ export default function Mission({ row }) {
 
     return (
         <>
-            <TableRow sx={{ padding: '0px' }}>
-                <TableCell sx={{ borderBottom: 'none', padding: '0px' }}>
+            <TableRow>
+                <TableCell sx={{
+                    borderBottom: 'none',
+                    padding: '5px 0px 0px 0px',
+                    display: 'flex',
+                    alignItems: 'center',
+                }}>
                     <IconButton
                         aria-label="expand row"
                         size="small"
                         onClick={() => setMissionOpen(!missionOpen)}
-                        sx={{ display: 'inline' }}
+                        sx={{ height: '100%' }}
                     >
                         {missionOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                        <Typography variant="h6" component="div" sx={{ display: 'inline' }}> Mission: {row.missionmitigatedrisk}</Typography>
+                        <Typography
+                            variant="subtitle1"
+                            component="div"
+                            sx={{ marginLeft: '8px' }} // Add some margin for spacing
+                        > Mission: {row.missionmitigatedrisk}</Typography>
                     </IconButton>
                 </TableCell>
             </TableRow>

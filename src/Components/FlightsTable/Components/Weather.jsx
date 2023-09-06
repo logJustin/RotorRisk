@@ -11,16 +11,29 @@ export default function Weather({ row }) {
 
     return (
         <>
-            <TableRow sx={{ padding: '0px' }}>
-                <TableCell sx={{ borderBottom: 'none', padding: '0px' }}>
+            <TableRow>
+                <TableCell
+                    sx={{
+                        borderBottom: 'none',
+                        padding: '5px 0px 0px 0px',
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                >
                     <IconButton
                         aria-label="expand row"
                         size="small"
                         onClick={() => setWeatherOpen(!weatherOpen)}
-                        sx={{ display: 'inline' }}
+                        sx={{ height: '100%' }}
                     >
                         {weatherOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                        <Typography variant="h6" component="div" sx={{ display: 'inline' }}> Weather: {row.weathermitigatedrisk}</Typography>
+                        <Typography
+                            variant="subtitle1"
+                            component="div"
+                            sx={{ marginLeft: '8px' }}
+                        >
+                            Weather: {row.weathermitigatedrisk}
+                        </Typography>
                     </IconButton>
                 </TableCell>
             </TableRow>

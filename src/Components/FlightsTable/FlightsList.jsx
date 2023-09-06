@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Toolbar, Box, Collapse, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import {
+    Toolbar, Box, Collapse, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
+} from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import EditIcon from '@mui/icons-material/Edit';
+import FlightSkeleton from './Components/FlightSkeleton'
 import Aircrew from './Components/Aircrew'
 import Mission from './Components/Mission'
 import Weather from './Components/Weather'
@@ -11,14 +14,13 @@ import DeleteConfirmationModal from './Components/DeleteConfirmationModal'
 import './FlightsList.css';
 
 
-export default function Body({ drawerWidth, handleOpen, flights, fetchFlightsData, setFlashOrigin, }) {
+export default function Body({ drawerWidth, handleOpen, flights, fetchFlightsData, handleFlashClick, setFlashOrigin }) {
 
 
     // Flash State, State can be stored in DeleteConfirmationModal
     // But state changes will cause the Flash Message to only appear 
     // for half a second instead of remaining for a few seconds
     const [openFlash, setFlashOpen] = useState(false);
-
 
     function Row(props) {
         const { row } = props;
@@ -53,6 +55,7 @@ export default function Body({ drawerWidth, handleOpen, flights, fetchFlightsDat
                             fetchFlightsData={fetchFlightsData}
                             openFlash={openFlash}
                             setFlashOpen={setFlashOpen}
+                            handleFlashClick={handleFlashClick}
                             setFlashOrigin={setFlashOrigin}
                         />
                     </TableCell>
@@ -100,6 +103,8 @@ export default function Body({ drawerWidth, handleOpen, flights, fetchFlightsDat
                         </TableRow>
                     </TableHead>
                     <TableBody>
+                        {/* Render skeleton if flights hasn't fetched yet */}
+                        {flights.length == 0 ? <FlightSkeleton /> : null}
                         {flights.map((flight) => (
                             <Row key={`${flight.flightid}`} row={flight} />
                         ))}

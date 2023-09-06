@@ -12,18 +12,32 @@ export default function Aircrew({ row }) {
     return (
         <>
             <TableRow>
-                <TableCell sx={{ borderBottom: 'none', padding: '5px 0px 0px 0px' }}>
+                <TableCell
+                    sx={{
+                        borderBottom: 'none',
+                        padding: '5px 0px 0px 0px',
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                >
                     <IconButton
                         aria-label="expand row"
                         size="small"
                         onClick={() => setCrewOpen(!crewOpen)}
-                        sx={{ display: 'inline' }}
+                        sx={{ height: '100%' }}
                     >
                         {crewOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                        <Typography variant="h6" component="div" sx={{ display: 'inline' }}> Aircrew: {row.aircrewmitigatedrisk}</Typography>
+                        <Typography
+                            variant="subtitle1"
+                            component="div"
+                            sx={{ marginLeft: '8px' }}
+                        >
+                            Aircrew: {row.aircrewmitigatedrisk}
+                        </Typography>
                     </IconButton>
                 </TableCell>
-            </TableRow >
+            </TableRow>
+
             <TableRow sx={{ padding: '0px' }}>
                 <TableCell sx={{ borderBottom: 'none', padding: '0px' }}>
                     <Collapse in={crewOpen} timeout="auto" unmountOnExit>

@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { useForm } from "react-hook-form"
-import { Box, Button, Tabs, Tab, Typography } from '@mui/material';
+import { Box, Button, Tabs, Tab, Typography, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { v4 as uuid } from 'uuid';
@@ -48,10 +49,68 @@ function a11yProps(index) {
 }
 
 export default function FlightModal({ open, handleClose, flightData = {}, formMode, fetchFlightsData, aircrews, handleFlashClick, setFlashOrigin, handleLoadingChange }) {
+
+    // State for Button Message
+    const [buttonMessage, setButtonMessage] = useState('Go to Mission')
+    const scrollableContainerRef = useRef(null);
+
+    // State for scrolling function
+    const [scrollAtBottom, setScrollAtBottom] = useState(false);
+    const handleScroll = (event) => {
+        const element = event.target;
+        // Check if the user has scrolled to the bottom of the Box
+        if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+            setScrollAtBottom(true);
+        } else {
+            setScrollAtBottom(false);
+        }
+    };
+
     // State for Tabs on Modal
     const [tabValue, setTabValue] = React.useState(0);
-    const handleChange = (event, newValue) => {
+
+    const handleTabClick = (event, newValue) => {
         setTabValue(newValue);
+        setScrollAtBottom(false)
+        if (newValue > 3) { }
+        if (newValue === 0) {
+            setButtonMessage('Go to Mission');
+        } else if (newValue === 1) {
+            setButtonMessage('Go to Weather');
+        } else if (newValue === 2) {
+            setButtonMessage('Go to Final Risk');
+        } else if (newValue > 2) {
+            setButtonMessage(`${formMode} RCOP`);
+            setScrollAtBottom(true)
+        }
+        scrollableContainerRef.current.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    };
+
+    const handleSubmitButtonClick = (value) => {
+        if (value === 0) {
+            setTabValue(1);
+            setButtonMessage('Go to Weather');
+            setScrollAtBottom(false);
+        } else if (value === 1) {
+            setTabValue(2);
+            setButtonMessage('Go to Final Risk');
+            setScrollAtBottom(false);
+        } else if (value === 2) {
+            setTabValue(3);
+            setButtonMessage(`${formMode} RCOP`);
+            setScrollAtBottom(false);
+        } else if (value > 2) {
+            // Directly call the onSubmit function with the form data
+            handleLoadingChange(true)
+            onSubmit(watch());
+        }
+        scrollableContainerRef.current.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
     };
 
     const {
@@ -225,7 +284,6 @@ export default function FlightModal({ open, handleClose, flightData = {}, formMo
 
     const crewMembers = ['pc', 'pi', 'nrcm1', 'nrcm2', 'nrcm3'];
     const onSubmit = (data) => {
-        handleLoadingChange(true)
 
         // Flight Date
         data.date = formatDate(data.date);
@@ -249,7 +307,6 @@ export default function FlightModal({ open, handleClose, flightData = {}, formMo
             data[`${crewmember}HoursNG`] = hoursProperties.NG;
             data[`${crewmember}25HoursInAO`] = hoursProperties.atleast25InAO;
         }
-
 
         const handleFlight = async (flightObject) => {
             if (formMode === "File") {
@@ -276,10 +333,8 @@ export default function FlightModal({ open, handleClose, flightData = {}, formMo
                 }
             }
         };
-        handleFlight(data);
+        handleFlight(data)
     };
-
-
 
     return (
         <>
@@ -292,7 +347,7 @@ export default function FlightModal({ open, handleClose, flightData = {}, formMo
             >
                 {/* Tabs */}
                 <Box borderBottom={1} borderColor={'divider'}>
-                    <Tabs value={tabValue} onChange={handleChange} variant="scrollable"
+                    <Tabs value={tabValue} onChange={handleTabClick} variant="scrollable"
                         scrollButtons
                         allowScrollButtonsMobile
                     >
@@ -307,10 +362,23 @@ export default function FlightModal({ open, handleClose, flightData = {}, formMo
 
                 <Box
                     style={{
-                        flexGrow: 1, // Allow this div to grow and take up available space
+                        flexGrow: 1, // Allows div to grow and take up available space
                         overflowY: 'auto', // Enable vertical scrolling if needed
                     }}
+                    onScroll={handleScroll}
+                    ref={scrollableContainerRef}
                 >
+                    <IconButton
+                        aria-label="close"
+                        onClick={handleClose}
+                        sx={{
+                            position: 'absolute',
+                            right: 8,
+                            top: 8,
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
                     {/* Tab Panels */}
                     <CustomTabPanel value={tabValue} index={0}>
                         <Aircrew control={control} watch={watch} setValue={setValue} aircrews={aircrews} />
@@ -333,8 +401,15 @@ export default function FlightModal({ open, handleClose, flightData = {}, formMo
                 </Box>
 
                 {/* Submit Button */}
-                <Button variant="contained" type="submit" fullWidth sx={{ marginTop: 'auto', marginBottom: '8px' }}>
-                    {formMode} RCOP
+                <Button
+                    variant="contained"
+                    type="submit"
+                    fullWidth
+                    sx={{ marginTop: 'auto', marginBottom: '8px' }}
+                    disabled={!scrollAtBottom}
+                    onClick={() => { handleSubmitButtonClick(tabValue) }}
+                >
+                    {buttonMessage}
                 </Button>
             </form >
         </>

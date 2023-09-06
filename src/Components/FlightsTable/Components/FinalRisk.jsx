@@ -12,16 +12,29 @@ export default function FinalRisk({ row }) {
 
     return (
         <>
-            <TableRow sx={{ padding: '0px' }}>
-                <TableCell sx={{ borderBottom: 'none', padding: '0px' }}>
+            <TableRow>
+                <TableCell
+                    sx={{
+                        borderBottom: 'none',
+                        padding: '5px 0px 0px 0px',
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                >
                     <IconButton
                         aria-label="expand row"
                         size="small"
                         onClick={() => setFinalRiskOpen(!finalRiskOpen)}
-                        sx={{ display: 'inline' }}
+                        sx={{ height: '100%' }}
                     >
                         {finalRiskOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                        <Typography variant="h6" component="div" sx={{ display: 'inline' }}> Final: {row.finalmitigatedrisk}</Typography>
+                        <Typography
+                            variant="subtitle1"
+                            component="div"
+                            sx={{ marginLeft: '8px' }}
+                        >
+                            Final: {row.finalmitigatedrisk}
+                        </Typography>
                     </IconButton>
                 </TableCell>
             </TableRow>
