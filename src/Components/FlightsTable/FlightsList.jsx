@@ -14,7 +14,7 @@ import DeleteConfirmationModal from './Components/DeleteConfirmationModal'
 import './FlightsList.css';
 
 
-export default function Body({ drawerWidth, handleOpen, flights, fetchFlightsData, handleFlashClick, setFlashOrigin }) {
+export default function Body({ drawerWidth, handleOpen, flights, fetchFlightsData, handleFlashClick, setFlashOrigin, viewMode }) {
 
 
     // Flash State, State can be stored in DeleteConfirmationModal

@@ -98,6 +98,8 @@ function Layout(props, lightMode, handleLightModeToggle) {
         }
     }
 
+    // State for filter
+    const [viewMode, setViewMode] = useState('')
     return (
         <Box sx={{ display: 'flex' }}>
             <Header
@@ -129,6 +131,7 @@ function Layout(props, lightMode, handleLightModeToggle) {
                 fetchFlightsData={fetchFlightsData}
                 handleFlashClick={handleFlashClick}
                 setFlashOrigin={setFlashOrigin}
+                viewMode={viewMode}
             />
             <Snackbar
                 open={openFlash}
