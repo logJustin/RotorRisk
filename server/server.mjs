@@ -9,6 +9,7 @@ import updateFlight from './backendFunctions/updateFlight.js';
 import deleteFlight from './backendFunctions/deleteFlight.js';
 import addAircrew from './backendFunctions/addAircrew.js';
 import updateAircrew from './backendFunctions/updateAircrew.js';
+import addSuggestion from './backendFunctions/addSuggestion.js';
 
 // Use the import.meta.url to get the current file's URL
 const currentModuleUrl = new URL(import.meta.url);
@@ -68,7 +69,6 @@ app.get('/api/flights', async (req, res) => {
     }
 });
 
-// Add this route to your Express server
 app.post('/api/add-flight', async (req, res) => {
     try {
         const flightData = req.body;
@@ -138,6 +138,19 @@ app.put('/api/update-crewmember', async (req, res) => {
     } catch (error) {
         console.error('Error updating crewmember:', error);
         res.status(500).json({ error: 'An error occurred while updating the crewmember' });
+    }
+});
+
+app.post('/api/add-suggesstion', async (req, res) => {
+    try {
+        const suggestionData = req.body;
+        const client = await pool.connect(); // Acquire a client from the pool
+        await addSuggestion(client, suggestionData); // Pass the client to the addFlight function
+        client.release(); // Release the client back to the pool
+        res.status(200).json({ message: 'Flight added successfully' });
+    } catch (error) {
+        console.error('Error adding flight:', error);
+        res.status(500).json({ error: 'An error occurred while adding the flight' });
     }
 });
 

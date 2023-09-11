@@ -1,6 +1,5 @@
 
 // DO
-//     Multi-section: Add floating action button for user suggestions
 //     RCOP Form: Form Validation
 //     RCOP Form: Add Fighter Management
 //     RCOP Form: Change the select one sections to a different format
@@ -9,7 +8,8 @@
 //         CrewMember Recency
 //         Specific Vague Planning
 //     Multi-section: Authentication
-//     Multi-section: Write functionality for Brief and Approve buttons in LeftNavigation
+//     App: Add a secondary color // explore theme palette
+//     App: Deploy
 
 
 // COMPLETED
@@ -76,3 +76,5 @@
 //  ✓  RCOP Form: Change button to disabled unless scrolled at bottom
 //  ✓  RCOP Form: Change button to redirect to next tab
 //  ✓  RCOP Form: Auto-scroll up
+//  ✓  Multi-section: Write functionality for Brief and Approve buttons in LeftNavigation
+//  ✓  Multi-section: Add floating action button for user suggestions

@@ -58,13 +58,18 @@ export default function FlightModal({ open, handleClose, flightData = {}, formMo
     const [scrollAtBottom, setScrollAtBottom] = useState(false);
     const handleScroll = (event) => {
         const element = event.target;
-        // Check if the user has scrolled to the bottom of the Box
-        if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+        // Calculate the distance from the bottom of the scrollable content to the current scroll position
+        const distanceToBottom = element.scrollHeight - (element.scrollTop + element.clientHeight);
+
+        // Check if the distance to the bottom is very small (consider it at the bottom)
+        if (distanceToBottom < 10) {
             setScrollAtBottom(true);
         } else {
             setScrollAtBottom(false);
         }
     };
+
+
 
     // State for Tabs on Modal
     const [tabValue, setTabValue] = React.useState(0);

@@ -4,6 +4,7 @@ import { Box, Snackbar } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import Header from './Header'
 import LeftNavigation from './LeftNavigation'
+import SuggestionsFloatingButton from './SuggestionsFloatingButton'
 import FlightsList from '../FlightsTable/FlightsList'
 import '../FlightsTable/FlightsList.css'
 
@@ -123,6 +124,7 @@ function Layout(props, lightMode, handleLightModeToggle) {
                 fetchAircrewsData={fetchAircrewsData}
                 handleFlashClick={handleFlashClick}
                 setFlashOrigin={setFlashOrigin}
+                setViewMode={setViewMode}
             />
             <FlightsList
                 drawerWidth={drawerWidth}
@@ -132,6 +134,10 @@ function Layout(props, lightMode, handleLightModeToggle) {
                 handleFlashClick={handleFlashClick}
                 setFlashOrigin={setFlashOrigin}
                 viewMode={viewMode}
+            />
+            <SuggestionsFloatingButton
+                handleFlashClick={handleFlashClick}
+                setFlashOrigin={setFlashOrigin}
             />
             <Snackbar
                 open={openFlash}

@@ -105,9 +105,23 @@ export default function Body({ drawerWidth, handleOpen, flights, fetchFlightsDat
                     <TableBody>
                         {/* Render skeleton if flights hasn't fetched yet */}
                         {flights.length == 0 ? <FlightSkeleton /> : null}
-                        {flights.map((flight) => (
-                            <Row key={`${flight.flightid}`} row={flight} />
-                        ))}
+                        {flights
+                            .filter((flight) => {
+                                switch (viewMode) {
+                                    case '':
+                                        return true; // Include all flights
+                                    case 'briefer':
+                                        return !flight.briefer; // Exclude flights with a briefer
+                                    case 'approver':
+                                        return flight.briefer && !flight.approver; // Exclude flights with an approver
+                                    default:
+                                        return true; // Exclude all other cases
+                                }
+                            })
+                            .map((flight) => (
+                                <Row key={`${flight.flightid}`} row={flight} />
+                            ))}
+
                     </TableBody>
                 </Table>
             </TableContainer>

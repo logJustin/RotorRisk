@@ -15,7 +15,7 @@ import CrewmemberModal from '../CrewmemberModal/CrewmemberModal';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle, mobileOpen, lightMode, handleLightModeToggle, open, handleClose, handleOpen, flightData, formMode, fetchFlightsData, aircrews, fetchAircrewsData, handleFlashClick, setFlashOrigin }) {
+export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle, mobileOpen, lightMode, handleLightModeToggle, open, handleClose, handleOpen, flightData, formMode, fetchFlightsData, aircrews, fetchAircrewsData, handleFlashClick, setFlashOrigin, setViewMode }) {
 
 
     const { window } = props;
@@ -27,7 +27,7 @@ export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle,
                 <List
                     sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
-                    <ListItem key='View All' disablePadding>
+                    <ListItem key='View All' disablePadding onClick={() => { setViewMode('') }}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <ListIcon />
@@ -45,7 +45,7 @@ export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle,
                         </ListItemButton>
                     </ListItem>
 
-                    <ListItem key='Brief' disablePadding>
+                    <ListItem key='Brief' disablePadding onClick={() => { setViewMode('briefer') }}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <CheckCircleOutlineSharpIcon />
@@ -54,7 +54,7 @@ export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle,
                         </ListItemButton>
                     </ListItem>
 
-                    <ListItem key='Approve' disablePadding>
+                    <ListItem key='Approve' disablePadding onClick={() => { setViewMode('approver') }}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <CheckCircleSharpIcon />
