@@ -81,4 +81,5 @@
 //  ✓  RCOP Form: Auto-scroll up
 //  ✓  Multi-section: Write functionality for Brief and Approve buttons in LeftNavigation
 //  ✓  Multi-section: Add floating action button for user suggestions
+//  ✓  Header: Signout Button
 //  ✓  App: Add a secondary color // explore theme palette
