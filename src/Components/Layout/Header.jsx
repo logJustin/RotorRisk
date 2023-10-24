@@ -1,9 +1,7 @@
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
+import { Box, AppBar, Toolbar, Typography, IconButton, Button } from '@mui/material';
+import { SignOutButton } from "@clerk/clerk-react";
 import MenuIcon from '@mui/icons-material/Menu';
-
+import { UserButton } from "@clerk/clerk-react";
 
 export default function Header({ drawerWidth, handleDrawerToggle }) {
     return (
@@ -35,7 +33,14 @@ export default function Header({ drawerWidth, handleDrawerToggle }) {
                 <Typography variant="h6" noWrap component="div" sx={{ mr: 2, display: { xs: 'none', md: 'block' } }}>
                     : Managing Flight Risk Assessments
                 </Typography>
+
+                <Box style={{ marginLeft: 'auto' }}>
+                    <UserButton />
+                    {/* <SignOutButton>
+                        <Button color="inherit" variant="contained">Sign Out</Button>
+                    </SignOutButton> */}
+                </Box>
             </Toolbar>
-        </AppBar >
+        </AppBar>
     )
 }

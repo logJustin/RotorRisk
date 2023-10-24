@@ -17,8 +17,8 @@ const currentModuleUrl = new URL(import.meta.url);
 const currentDir = path.dirname(currentModuleUrl.pathname);
 
 try {
-    dotenv.config();
-    // dotenv.config({ path: '../.env' });
+    // dotenv.config();
+    dotenv.config({ path: '../.env' });
 } catch (error) {
     console.error('Error loading .env file:', error);
 }
@@ -164,5 +164,5 @@ app.get('*', (req, res) => {
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port`, PORT);
 });
