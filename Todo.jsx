@@ -1,5 +1,8 @@
 
 // DO
+//     Authentication: Disable footer
+//     Authentication: Create custom Signup component
+//     Authentication: Add rank & role
 //     RCOP Form: Form Validation
 //     RCOP Form: Add Fighter Management
 //     RCOP Form: Change the select one sections to a different format
@@ -8,7 +11,7 @@
 //         CrewMember Recency
 //         Specific Vague Planning
 //     Multi-section: Authentication
-//     App: Add a secondary color // explore theme palette
+//     Multi-section: Authorization
 //     App: Deploy
 
 
@@ -78,3 +81,4 @@
 //  ✓  RCOP Form: Auto-scroll up
 //  ✓  Multi-section: Write functionality for Brief and Approve buttons in LeftNavigation
 //  ✓  Multi-section: Add floating action button for user suggestions
+//  ✓  App: Add a secondary color // explore theme palette

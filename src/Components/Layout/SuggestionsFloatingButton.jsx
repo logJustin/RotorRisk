@@ -55,13 +55,11 @@ export default function SuggestionsFloatingButton({ handleFlashClick, setFlashOr
                 position: 'fixed',
                 bottom: '16px',
                 right: '16px',
-                zIndex: 1000, // above other content
+                zIndex: 1000, // above other content,
             }}
         >
-            <Fab size="small" variant="extended" onClick={handleOpen}>
-                <AddIcon
-                    sx={{ mr: 1 }}
-                />
+            <Fab size="small" variant="extended" onClick={handleOpen} sx={{ backgroundColor: '#fff' }}>
+                <AddIcon sx={{ mr: 1 }} />
                 <Typography sx={{
                     fontSize: '0.75rem',
                     padding: '8px',

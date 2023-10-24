@@ -14,10 +14,12 @@ import FormModal from '../Modal/FormModal';
 import CrewmemberModal from '../CrewmemberModal/CrewmemberModal';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useClerk } from "@clerk/clerk-react";
 
 export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle, mobileOpen, lightMode, handleLightModeToggle, open, handleClose, handleOpen, flightData, formMode, fetchFlightsData, aircrews, fetchAircrewsData, handleFlashClick, setFlashOrigin, setViewMode }) {
 
-
+    const { signOut } = useClerk();
     const { window } = props;
     const container = window !== undefined ? () => window().document.body : undefined;
 
@@ -83,6 +85,14 @@ export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle,
                                 {lightMode ? <Brightness4Icon /> : <Brightness7Icon />}
                             </ListItemIcon>
                             <ListItemText primary={lightMode ? 'Dark Mode' : 'Light Mode'} />
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem key='signout' disablePadding>
+                        <ListItemButton onClick={() => signOut()}>
+                            <ListItemIcon>
+                                <LogoutIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={'Sign out'} />
                         </ListItemButton>
                     </ListItem>
                 </List>
