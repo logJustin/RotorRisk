@@ -36,9 +36,6 @@ export default function Header({ drawerWidth, handleDrawerToggle }) {
 
                 <Box style={{ marginLeft: 'auto' }}>
                     <UserButton />
-                    {/* <SignOutButton>
-                        <Button color="inherit" variant="contained">Sign Out</Button>
-                    </SignOutButton> */}
                 </Box>
             </Toolbar>
         </AppBar>
