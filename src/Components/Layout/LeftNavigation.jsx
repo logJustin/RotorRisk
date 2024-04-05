@@ -11,6 +11,7 @@ import CheckCircleOutlineSharpIcon from '@mui/icons-material/CheckCircleOutlineS
 import CheckCircleSharpIcon from '@mui/icons-material/CheckCircleSharp';
 import ListIcon from '@mui/icons-material/List';
 import FormModal from '../Modal/FormModal';
+import PrivilegesModal from '../PrivilegesModal/PrivilegesModal';
 import CrewmemberModal from '../CrewmemberModal/CrewmemberModal';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -72,6 +73,12 @@ export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle,
             </Box >
             <Box sx={{ mt: 'auto' }}>
                 <List>
+                    <PrivilegesModal
+                        aircrews={aircrews}
+                        fetchAircrewsData={fetchAircrewsData}
+                        setFlashOrigin={setFlashOrigin}
+                        handleFlashClick={handleFlashClick}
+                    />
                     <CrewmemberModal
                         aircrews={aircrews}
                         fetchAircrewsData={fetchAircrewsData}
