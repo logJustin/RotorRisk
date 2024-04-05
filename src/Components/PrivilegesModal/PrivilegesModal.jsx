@@ -19,7 +19,7 @@ const airframes = ["AH64D", "CH47F", "HH60M", "UH60V"];
 
 export default function PrivilegesModal({ aircrews, fetchAircrewsData, setFlashOrigin, handleFlashClick }) {
     const { user } = useUser();
-    console.log(user)
+    // console.log(user)
     // State of Names avialable in Edit drop down
     const [names, setNames] = useState(aircrews.map((person) => {
         return person.name

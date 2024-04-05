@@ -114,7 +114,6 @@ app.delete('/api/delete-flight', async (req, res) => {
     }
 });
 
-// Add this route to your Express server
 app.post('/api/add-crewmember', async (req, res) => {
     try {
         const crewData = req.body;
@@ -254,7 +253,8 @@ app.post(
 
 
 // Serve the static assets of the React app
-app.use(express.static(path.join(currentDir, '..', 'src')));
+// app.use(express.static(path.join(currentDir, '..', 'src')));
+app.use(express.static(path.join(currentDir, '..', 'build')));
 
 // Catch-all route to serve the React app's index.html
 app.get('*', (req, res) => {
