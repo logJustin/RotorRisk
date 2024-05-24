@@ -10,5 +10,9 @@ http {
             index index.html;
             try_files $uri $uri/ /index.html;
         }
+
+        # Define the log files with absolute paths or create the logs directory
+        error_log <%= ENV["HOME"] %>/logs/error.log;
+        access_log <%= ENV["HOME"] %>/logs/access.log;
     }
 }
