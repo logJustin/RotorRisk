@@ -258,8 +258,9 @@ app.use(express.static(path.join(currentDir, '..', 'build')));
 
 // Catch-all route to serve the React app's index.html
 app.get('*', (req, res) => {
-    // res.sendFile(path.join(currentDir, '..', 'index.html'))
-    res.sendFile(path.join(currentDir, '/index.html'))
+    const indexPathing = path.join(currentDir, '..', 'index.html')
+    console.log('indexPathing', indexPathing)
+    res.sendFile(indexPathing)
 });
 
 // Start the server
