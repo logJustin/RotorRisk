@@ -19,9 +19,8 @@ const currentModuleUrl = new URL(import.meta.url);
 const currentDir = path.dirname(currentModuleUrl.pathname);
 
 try {
-    // Use path.resolve() to get the absolute path to the .env file
-    const envPath = path.resolve(__dirname, '..', '..', '.env');
-    dotenv.config({ path: envPath });
+    // dotenv.config();
+    dotenv.config({ path: '../.env' });
 } catch (error) {
     console.error('Error loading .env file:', error);
 }
