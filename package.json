@@ -6,7 +6,7 @@
   "scripts": {
     "start": "concurrently \"npm run dev\" \"npm run start:server\"",
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --base=/",
     "start:server": "cd server && node server.mjs"
   },
   "dependencies": {

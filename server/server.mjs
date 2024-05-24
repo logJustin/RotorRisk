@@ -253,12 +253,13 @@ app.post(
 
 
 // Serve the static assets of the React app
-app.use(express.static(path.join(currentDir, '..', 'src')));
+app.use(express.static(path.join(currentDir, '..', 'dist')));
 // app.use(express.static(path.join(currentDir, '..', 'build')));
 
 // Catch-all route to serve the React app's index.html
 app.get('*', (req, res) => {
-    const indexPathing = path.join(currentDir, '..', 'index.html')
+    console.log("currentDir", currentDir)
+    const indexPathing = path.join(currentDir, '..', 'dist/index.html')
     console.log('indexPathing', indexPathing)
     res.sendFile(indexPathing)
 });
