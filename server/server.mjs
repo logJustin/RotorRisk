@@ -253,8 +253,8 @@ app.post(
 
 
 // Serve the static assets of the React app
-// app.use(express.static(path.join(currentDir, '..', 'src')));
-app.use(express.static(path.join(currentDir, '..', 'build')));
+app.use(express.static(path.join(currentDir, '..', 'src')));
+// app.use(express.static(path.join(currentDir, '..', 'build')));
 
 // Catch-all route to serve the React app's index.html
 app.get('*', (req, res) => {
