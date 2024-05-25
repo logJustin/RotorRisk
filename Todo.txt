@@ -1,21 +1,27 @@
 
-// DO
-//     Authentication: Disable footer
-//     Authentication: Create custom Signup component
-//     Authentication: Add rank & role
-//     RCOP Form: Form Validation
-//     RCOP Form: Add Fighter Management
-//     RCOP Form: Change the select one sections to a different format
-//       (requires a change to each state, consider how riskLookup works, how they're rendered on FlightsList)
-//       Form Sections to reflect this:
-//         CrewMember Recency
-//         Specific Vague Planning
-//     Multi-section: Authentication
-//     Multi-section: Authorization
-//     App: Deploy
+DO - v1.0
+    App: Refactor hooks
+    App: Refactor components directory
+    App: Implement user based permissions
+    App: Apply useContext where it makes sense
+
+DO - v1.01
+    Authentication: Disable footer
+    Authentication: Create custom Signup component
+    Authentication: Add rank & role
+    RCOP Form: Form Validation
+    RCOP Form: Add Fighter Management
+    RCOP Form: Change the select one sections to a different format
+      (requires a change to each state, consider how riskLookup works, how they're rendered on FlightsList)
+      Form Sections to reflect this:
+        CrewMember Recency
+        Specific Vague Planning
+    Multi-section: Authentication
+    Multi-section: Authorization
 
 
 // COMPLETED
+//  ✓  App: Deploy
 //  ✓  RCOP Form: Change Lunar Data to Binary
 //  ✓  RCOP Form: Add ETD & ETE on 5484
 //  ✓  RCOP Form: Change CheckboxBinary to Yes/No

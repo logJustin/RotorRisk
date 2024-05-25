@@ -24,6 +24,9 @@ export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle,
     const { window } = props;
     const container = window !== undefined ? () => window().document.body : undefined;
 
+
+
+
     const drawer = (
         <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', }}>
             <Box>
