@@ -17,15 +17,14 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useClerk } from "@clerk/clerk-react";
+import { useDrawer } from '../../contexts/DrawerContext'
 
-export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle, mobileOpen, lightMode, handleLightModeToggle, open, handleClose, handleOpen, flightData, formMode, fetchFlightsData, aircrews, fetchAircrewsData, handleFlashClick, setFlashOrigin, setViewMode }) {
+export default function LeftNavigation({ drawerWidth, props, lightMode, handleLightModeToggle, open, handleClose, handleOpen, flightData, formMode, fetchFlightsData, aircrews, fetchAircrewsData, handleFlashClick, setFlashOrigin, setViewMode }) {
 
     const { signOut } = useClerk();
     const { window } = props;
     const container = window !== undefined ? () => window().document.body : undefined;
-
-
-
+    const { mobileOpen, handleDrawerToggle } = useDrawer();
 
     const drawer = (
         <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', }}>
@@ -139,7 +138,6 @@ export default function LeftNavigation({ drawerWidth, props, handleDrawerToggle,
                     keepMounted: true, // Better open performance on mobile.
                 }}
                 sx={{
-                    // display: { xs: 'block', sm: 'none' },
                     display: { sm: 'block', md: 'none' },
                     '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
                 }}

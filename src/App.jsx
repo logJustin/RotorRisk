@@ -5,12 +5,12 @@ import { CssBaseline, Box, Snackbar } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { ClerkProvider, SignedIn, SignedOut, UserButton, useUser, RedirectToSignIn, SignIn } from "@clerk/clerk-react";
 import { dark } from '@clerk/themes';
-import Header from './components/Layouts/Header';
-import LeftNavigation from './components/Layouts/LeftNavigation';
-import SuggestionsFloatingButton from './components/Layouts/SuggestionsFloatingButton';
+import SuggestionsFloatingButton from './Components/Layouts/SuggestionsFloatingButton';
+import LeftNavigation from './Components/Layouts/LeftNavigation';
 import FlightsList from './Components/FlightsTable/FlightsList';
+import { DrawerProvider } from './contexts/DrawerContext';
+import Header from './Components/Layouts/Header';
 import './App.css';
-
 const drawerWidth = 240;
 
 function App(props) {
@@ -69,12 +69,6 @@ function App(props) {
     localStorage.setItem('lightMode', newLightMode.toString());
   };
 
-  // State for the navBar on a mobile format is saved here
-  // so it can be passed as props both Header & LeftNavigation
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
 
   // used for Editing an RCOP, then passing it into FormModal
   const [flightData, setFlightData] = useState(null);
@@ -159,60 +153,59 @@ function App(props) {
     <ClerkProvider publishableKey={clerkPubKey} appearance={{ baseTheme: lightMode ? '' : dark, elements: { footer: "hidden" } }}>
       <SignedIn>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Box sx={{ display: 'flex' }}>
-            <Header
-              drawerWidth={drawerWidth}
-              handleDrawerToggle={handleDrawerToggle}
-            />
-            <LeftNavigation
-              drawerWidth={drawerWidth}
-              mobileOpen={mobileOpen}
-              handleDrawerToggle={handleDrawerToggle}
-              lightMode={lightMode}
-              handleLightModeToggle={handleLightModeToggle}
-              open={open}
-              handleClose={handleClose}
-              handleOpen={handleOpen}
-              formMode={formMode}
-              flightData={flightData}
-              fetchFlightsData={fetchFlightsData}
-              aircrews={aircrews}
-              fetchAircrewsData={fetchAircrewsData}
-              handleFlashClick={handleFlashClick}
-              setFlashOrigin={setFlashOrigin}
-              setViewMode={setViewMode}
-              props={props}
-            />
-            <FlightsList
-              drawerWidth={drawerWidth}
-              handleOpen={handleOpen}
-              flights={flights}
-              fetchFlightsData={fetchFlightsData}
-              handleFlashClick={handleFlashClick}
-              setFlashOrigin={setFlashOrigin}
-              viewMode={viewMode}
-            />
-            <SuggestionsFloatingButton
-              handleFlashClick={handleFlashClick}
-              setFlashOrigin={setFlashOrigin}
-            />
-            <Snackbar
-              open={openFlash}
-              autoHideDuration={3000}
-              onClose={handleFlashClose}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              sx={{ width: '50%' }}
-            >
-              <Alert
+          <DrawerProvider>
+            <CssBaseline />
+            <Box sx={{ display: 'flex' }}>
+              <Header
+                drawerWidth={drawerWidth}
+              />
+              <LeftNavigation
+                drawerWidth={drawerWidth}
+                lightMode={lightMode}
+                handleLightModeToggle={handleLightModeToggle}
+                open={open}
+                handleClose={handleClose}
+                handleOpen={handleOpen}
+                formMode={formMode}
+                flightData={flightData}
+                fetchFlightsData={fetchFlightsData}
+                aircrews={aircrews}
+                fetchAircrewsData={fetchAircrewsData}
+                handleFlashClick={handleFlashClick}
+                setFlashOrigin={setFlashOrigin}
+                setViewMode={setViewMode}
+                props={props}
+              />
+              <FlightsList
+                drawerWidth={drawerWidth}
+                handleOpen={handleOpen}
+                flights={flights}
+                fetchFlightsData={fetchFlightsData}
+                handleFlashClick={handleFlashClick}
+                setFlashOrigin={setFlashOrigin}
+                viewMode={viewMode}
+              />
+              <SuggestionsFloatingButton
+                handleFlashClick={handleFlashClick}
+                setFlashOrigin={setFlashOrigin}
+              />
+              <Snackbar
+                open={openFlash}
+                autoHideDuration={3000}
                 onClose={handleFlashClose}
-                severity={getSeverity()}
-                sx={{ width: '100%' }}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                sx={{ width: '50%' }}
               >
-                {flashOrigin}
-              </Alert>
-            </Snackbar>
-          </Box>
+                <Alert
+                  onClose={handleFlashClose}
+                  severity={getSeverity()}
+                  sx={{ width: '100%' }}
+                >
+                  {flashOrigin}
+                </Alert>
+              </Snackbar>
+            </Box>
+          </DrawerProvider>
         </ThemeProvider>
       </SignedIn>
       <SignedOut>
@@ -220,20 +213,6 @@ function App(props) {
       </SignedOut>
     </ClerkProvider>
   );
-
-  //   return (
-  //     <ClerkProvider publishableKey={clerkPubKey} appearance={{ baseTheme: lightMode ? '' : dark, elements: { footer: "hidden" } }}>
-  //       <SignedIn>
-  //         <ThemeProvider theme={theme}>
-  //           <CssBaseline />
-  //           <AppLayout lightMode={lightMode} handleLightModeToggle={handleLightModeToggle} />
-  //         </ThemeProvider>
-  //       </SignedIn>
-  //       <SignedOut>
-  //         <RedirectToSignIn />
-  //       </SignedOut>
-  //     </ClerkProvider>
-  //   );
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
