@@ -12,9 +12,10 @@ import aircraftInfo from '../../../data/aircraftTailNumbers'
 import AircrewRiskLookupValue from '../../../utils/AircrewRiskLookupValue';
 import AircrewRiskLookupValueNG from '../../../utils/AircrewRiskLookupValueNG';
 import CalculateHighestRisk from '../../../utils/CalculateHighestRisk';
+import { useGlobalState } from '../../../contexts/GlobalStateContext';
 
-export default function Aircrew({ control, watch, setValue, aircrews }) {
-
+export default function Aircrew({ control, watch, setValue }) {
+    const { aircrews } = useGlobalState();
 
     const crewSelect = (position, airframe) => (
         Object.values(aircrews)

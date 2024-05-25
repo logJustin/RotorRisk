@@ -9,22 +9,23 @@ import { ListItem, ListItemButton, ListItemIcon, ListItemText, ToggleButtonGroup
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import CloseIcon from '@mui/icons-material/Close';
 import { useForm, Controller } from 'react-hook-form';
+import { useGlobalState } from '../../contexts/GlobalStateContext';
 
 const positions = ["Pilot", "NRCM"];
 const nrcmRanks = ["PVT", "PV2", "PFC", "SPC", "CPL", "SGT", "SSG", "SFC", "MSG", "CSM"];
 const pilotRanks = ["WO1", "CW2", "CW3", "CW4", "CW5", "2LT", "1LT", "CPT", "MAJ", "LTC", "COL"];
 const airframes = ["AH64D", "CH47F", "HH60M", "UH60V"];
 
-export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashOrigin, handleFlashClick }) {
-
+export default function CrewmemberModal({ setFlashOrigin, handleFlashClick }) {
+    const { aircrews, setAircrews, fetchAircrewsData } = useGlobalState();
 
     const { control, handleSubmit, setValue } = useForm({
         defaultValues: {
             uuid: '',
-            position: 'Pilot',
-            rank: 'CW2',
+            position: positions[0],
+            rank: pilotRanks[1],
             last_name: '',
-            airframe: 'HH60M',
+            airframe: airframes[2],
             aircraft: '',
             ng: '',
             atleast25inao: '',
@@ -61,7 +62,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
     };
 
 
-    // State for Person to be edited
+    // State for Helicopter to be edited
     const [selectedHelicopter, setSelectedHelicopter] = useState('HH60M')
     // State for Person to be edited
     const [selectedPosition, setSelectedPosition] = useState('')
@@ -125,14 +126,16 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
 
     // update aircrews when Edit mode is clicked
     useEffect(() => {
-        if (mode === 'Edit') {
-            fetchAircrewsData()
-            setNames(aircrews.map((person) => {
-                return person.name
-            }))
-            resetForm()
-        }
-    }, [mode])
+        const fetchData = async () => {
+            if (mode === 'Edit') {
+                await fetchAircrewsData(setAircrews);
+                setNames(aircrews.map((person) => person.name));
+                resetForm();
+            }
+        };
+
+        fetchData();
+    }, [mode]);
 
     // Submit Logic
     const onSubmit = async (data) => {
@@ -150,7 +153,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
             };
             try {
                 await axios.post('http://localhost:3001/api/add-crewmember', revisedData);
-                await fetchAircrewsData();
+                await fetchAircrewsData(setAircrews);
                 await handleClose();
                 await resetForm();
                 handleFlashClick()
@@ -170,7 +173,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
             };
             try {
                 await axios.put('http://localhost:3001/api/update-crewmember', revisedData);
-                await fetchAircrewsData();
+                await fetchAircrewsData(setAircrews);
                 await handleClose();
                 await resetForm();
                 handleFlashClick()
@@ -592,7 +595,7 @@ export default function CrewmemberModal({ aircrews, fetchAircrewsData, setFlashO
                             </Grid>
                         )}
                         <Button color="inherit" variant="contained" type="submit" fullWidth sx={{ marginTop: '24px', marginBottom: '8px' }}>
-                            {mode === 'Add' ? 'Add' : 'Update'} Crewmember
+                            {mode} Crewmember
                         </Button>
 
                     </form >

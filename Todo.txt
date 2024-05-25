@@ -4,6 +4,7 @@ DO - v1.0
     App: Refactor components directory
     App: Implement user based permissions
     App: Apply useContext where it makes sense
+    App: Switch DB to AWS or Azure (whichever is cheaper)
 
 DO - v1.01
     Authentication: Disable footer

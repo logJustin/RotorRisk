@@ -12,10 +12,11 @@ import Weather from './Components/Weather'
 import FinalRisk from './Components/FinalRisk'
 import DeleteConfirmationModal from './Components/DeleteConfirmationModal'
 import './FlightsList.css';
+import { useGlobalState } from '../../contexts/GlobalStateContext';
 
+export default function Body({ handleFlashClick, setFlashOrigin, viewMode }) {
 
-export default function Body({ drawerWidth, handleOpen, flights, fetchFlightsData, handleFlashClick, setFlashOrigin, viewMode }) {
-
+    const { handleModalOpen, flights, drawerWidth } = useGlobalState()
 
     // Flash State, State can be stored in DeleteConfirmationModal
     // But state changes will cause the Flash Message to only appear 
@@ -27,7 +28,7 @@ export default function Body({ drawerWidth, handleOpen, flights, fetchFlightsDat
         const [open, setOpen] = useState(false);
 
         const handleEditRCOP = (flight) => {
-            handleOpen(flight, 'Update')
+            handleModalOpen(flight, 'Update')
         }
 
         return (
@@ -52,7 +53,6 @@ export default function Body({ drawerWidth, handleOpen, flights, fetchFlightsDat
                     <TableCell sx={{ p: '6px 0' }} align="center">
                         <DeleteConfirmationModal
                             flight={row}
-                            fetchFlightsData={fetchFlightsData}
                             openFlash={openFlash}
                             setFlashOpen={setFlashOpen}
                             handleFlashClick={handleFlashClick}
@@ -92,14 +92,14 @@ export default function Body({ drawerWidth, handleOpen, flights, fetchFlightsDat
                     <TableHead>
                         <TableRow>
                             <TableCell />
-                            <TableCell align="center" >Date</TableCell>
-                            <TableCell align="center" width="15%">Mission</TableCell>
-                            <TableCell align="center">Risk</TableCell>
-                            <TableCell align="center">Pilot</TableCell>
-                            <TableCell align="center">Briefer</TableCell>
-                            <TableCell align="center">Approver</TableCell>
-                            <TableCell align="center">Edit</TableCell>
-                            <TableCell align="center">Delete</TableCell>
+                            <TableCell sx={{ fontWeight: "bold" }} align="center" >Date</TableCell>
+                            <TableCell sx={{ fontWeight: "bold" }} align="center" width="15%">Mission</TableCell>
+                            <TableCell sx={{ fontWeight: "bold" }} align="center">Risk</TableCell>
+                            <TableCell sx={{ fontWeight: "bold" }} align="center">Pilot</TableCell>
+                            <TableCell sx={{ fontWeight: "bold" }} align="center">Briefer</TableCell>
+                            <TableCell sx={{ fontWeight: "bold" }} align="center">Approver</TableCell>
+                            <TableCell sx={{ fontWeight: "bold" }} align="center">Edit</TableCell>
+                            <TableCell sx={{ fontWeight: "bold" }} align="center">Delete</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

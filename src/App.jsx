@@ -9,20 +9,18 @@ import SuggestionsFloatingButton from './Components/Layouts/SuggestionsFloatingB
 import LeftNavigation from './Components/Layouts/LeftNavigation';
 import FlightsList from './Components/FlightsTable/FlightsList';
 import { DrawerProvider } from './contexts/DrawerContext';
+import { GlobalStateProvider } from './contexts/GlobalStateContext';
 import Header from './Components/Layouts/Header';
 import './App.css';
-const drawerWidth = 240;
 
 function App(props) {
   if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
     throw new Error("Missing Publishable Key");
   }
-
   const clerkPubKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
 
   const [lightMode, setLightMode] = useState(false);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const existingPreference = localStorage.getItem('lightMode');
     if (existingPreference) {
@@ -30,7 +28,6 @@ function App(props) {
     }
     setLoading(false);
   }, []);
-
   const lightPalette = {
     mode: 'light',
     primary: {
@@ -69,55 +66,6 @@ function App(props) {
     localStorage.setItem('lightMode', newLightMode.toString());
   };
 
-
-  // used for Editing an RCOP, then passing it into FormModal
-  const [flightData, setFlightData] = useState(null);
-  const [formMode, setFormMode] = useState('File')
-
-  // State for Modal
-  const [open, setOpen] = useState(false);
-  const handleOpen = async (flight, mode) => {
-    const aircrews = await fetchAircrewsData()
-    await setFlightData(flight);
-    setFormMode(mode);
-    setOpen(true)
-  };
-  const handleClose = () => setOpen(false);
-
-  // State for flights and aircrews
-  const [flights, setFlights] = useState([])
-  const [aircrews, setAircrews] = useState([]);
-  useEffect(() => {
-    // Fetch data when the component mounts
-    fetchFlightsData();
-    fetchAircrewsData();
-  }, []); // The empty dependency array ensures this runs once on mount
-
-  const fetchAircrewsData = async () => {
-    try {
-      const response = await fetch('http://localhost:3001/api/aircrews');
-      const jsonData = await response.json();
-      setAircrews(jsonData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
-  const fetchFlightsData = async () => {
-    try {
-      const response = await fetch('http://localhost:3001/api/flights');
-      const jsonData = await response.json();
-      jsonData.sort((a, b) => {
-        const dateA = new Date(a.date.replace(/(\d{2})([A-Za-z]{3})(\d{2})/, "$2 $1, $3"));
-        const dateB = new Date(b.date.replace(/(\d{2})([A-Za-z]{3})(\d{2})/, "$2 $1, $3"));
-        return dateA - dateB;
-      });
-      setFlights(jsonData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
   // State for Flash messages
   // flash origin says where it came from: the RCOP or Crewmember form
   const [flashOrigin, setFlashOrigin] = useState()
@@ -135,76 +83,67 @@ function App(props) {
     setFlashOpen(false);
   };
   const getSeverity = () => {
-    if (flashOrigin === 'Flight added successfully' || flashOrigin === 'Crewmember added successfully') {
-      return 'success';
-    } else if (flashOrigin === 'Flight updated successfully' || flashOrigin === 'Crewmember updated successfully') {
-      return 'info';
-    } else if (flashOrigin === 'Flight Deleted Successfully') {
-      return 'warning';
-    } else {
-      return 'info'; // Default value
-    }
-  }
+    const severityMap = {
+      'Flight added successfully': 'success',
+      'Crewmember added successfully': 'success',
+      'Flight updated successfully': 'info',
+      'Crewmember updated successfully': 'info',
+      'Flight Deleted Successfully': 'warning'
+    };
+
+    return severityMap[flashOrigin] || 'info';
+  };
+
 
   // State for filter
   const [viewMode, setViewMode] = useState('');
 
   return (
-    <ClerkProvider publishableKey={clerkPubKey} appearance={{ baseTheme: lightMode ? '' : dark, elements: { footer: "hidden" } }}>
+    <ClerkProvider
+      publishableKey={clerkPubKey}
+      appearance={{ baseTheme: lightMode ? '' : dark, elements: { footer: "hidden" } }}
+    >
       <SignedIn>
         <ThemeProvider theme={theme}>
           <DrawerProvider>
-            <CssBaseline />
-            <Box sx={{ display: 'flex' }}>
-              <Header
-                drawerWidth={drawerWidth}
-              />
-              <LeftNavigation
-                drawerWidth={drawerWidth}
-                lightMode={lightMode}
-                handleLightModeToggle={handleLightModeToggle}
-                open={open}
-                handleClose={handleClose}
-                handleOpen={handleOpen}
-                formMode={formMode}
-                flightData={flightData}
-                fetchFlightsData={fetchFlightsData}
-                aircrews={aircrews}
-                fetchAircrewsData={fetchAircrewsData}
-                handleFlashClick={handleFlashClick}
-                setFlashOrigin={setFlashOrigin}
-                setViewMode={setViewMode}
-                props={props}
-              />
-              <FlightsList
-                drawerWidth={drawerWidth}
-                handleOpen={handleOpen}
-                flights={flights}
-                fetchFlightsData={fetchFlightsData}
-                handleFlashClick={handleFlashClick}
-                setFlashOrigin={setFlashOrigin}
-                viewMode={viewMode}
-              />
-              <SuggestionsFloatingButton
-                handleFlashClick={handleFlashClick}
-                setFlashOrigin={setFlashOrigin}
-              />
-              <Snackbar
-                open={openFlash}
-                autoHideDuration={3000}
-                onClose={handleFlashClose}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                sx={{ width: '50%' }}
-              >
-                <Alert
+            <GlobalStateProvider>
+              <CssBaseline />
+              <Box sx={{ display: 'flex' }}>
+                <Header />
+                <LeftNavigation
+                  lightMode={lightMode}
+                  handleLightModeToggle={handleLightModeToggle}
+                  handleFlashClick={handleFlashClick}
+                  setFlashOrigin={setFlashOrigin}
+                  setViewMode={setViewMode}
+                  props={props}
+                />
+                <FlightsList
+                  handleFlashClick={handleFlashClick}
+                  setFlashOrigin={setFlashOrigin}
+                  viewMode={viewMode}
+                />
+                <SuggestionsFloatingButton
+                  handleFlashClick={handleFlashClick}
+                  setFlashOrigin={setFlashOrigin}
+                />
+                <Snackbar
+                  open={openFlash}
+                  autoHideDuration={3000}
                   onClose={handleFlashClose}
-                  severity={getSeverity()}
-                  sx={{ width: '100%' }}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  sx={{ width: '50%' }}
                 >
-                  {flashOrigin}
-                </Alert>
-              </Snackbar>
-            </Box>
+                  <Alert
+                    onClose={handleFlashClose}
+                    severity={getSeverity()}
+                    sx={{ width: '100%' }}
+                  >
+                    {flashOrigin}
+                  </Alert>
+                </Snackbar>
+              </Box>
+            </GlobalStateProvider>
           </DrawerProvider>
         </ThemeProvider>
       </SignedIn>

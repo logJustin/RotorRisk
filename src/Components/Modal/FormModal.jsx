@@ -3,7 +3,7 @@ import { Box, Modal, CircularProgress } from '@mui/material';
 import FlightModal from './ModalTabs'
 
 
-export default function FormModal({ open, handleClose, flightData, formMode, fetchFlightsData, aircrews, handleFlashClick, setFlashOrigin }) {
+export default function FormModal({ open, handleFlashClick, setFlashOrigin }) {
 
     // state for loading indicator
     const [loading, setLoading] = useState(false);
@@ -27,22 +27,16 @@ export default function FormModal({ open, handleClose, flightData, formMode, fet
         transition: 'filter 0.3s ease',
     };
 
-
     return (
         <Modal
             open={open}
-            onClose={handleClose}
+            // onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
                 <FlightModal
                     open={open}
-                    handleClose={handleClose}
-                    flightData={flightData}
-                    formMode={formMode}
-                    fetchFlightsData={fetchFlightsData}
-                    aircrews={aircrews}
                     handleFlashClick={handleFlashClick}
                     setFlashOrigin={setFlashOrigin}
                     handleLoadingChange={handleLoadingChange}

@@ -2,9 +2,11 @@ import { Box, AppBar, Toolbar, Typography, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { UserButton } from "@clerk/clerk-react";
 import { useDrawer } from '../../contexts/DrawerContext'
+import { useGlobalState } from '../../contexts/GlobalStateContext';
 
-export default function Header({ drawerWidth }) {
+export default function Header() {
 
+    const { drawerWidth } = useGlobalState();
     const { handleDrawerToggle } = useDrawer();
 
     return (

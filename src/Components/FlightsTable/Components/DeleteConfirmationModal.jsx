@@ -4,8 +4,11 @@ import { Box, Button, Modal, Dialog, IconButton, CircularProgress, Typography } 
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 import Grid from '@mui/material/Unstable_Grid2';
+import { useGlobalState } from '../../../contexts/GlobalStateContext';
 
-export default function DeleteConfirmationModal({ flight, fetchFlightsData, openFlash, setFlashOpen, handleFlashClick, setFlashOrigin }) {
+export default function DeleteConfirmationModal({ flight, openFlash, setFlashOpen, handleFlashClick, setFlashOrigin }) {
+
+    const { setFlights, fetchFlightsData } = useGlobalState();
 
     // Modal State & Functions
     const [open, setOpen] = useState(false);
@@ -19,7 +22,7 @@ export default function DeleteConfirmationModal({ flight, fetchFlightsData, open
         setLoading(true);
         try {
             await axios.delete('http://localhost:3001/api/delete-flight', { data: flight });
-            await fetchFlightsData();
+            await fetchFlightsData(setFlights);
             handleClose();
             setFlashOrigin('Flight Deleted Successfully');
             handleFlashClick();

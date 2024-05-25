@@ -12,11 +12,11 @@ import Weather from './Tabs/Weather'
 import FinalRisk from './Tabs/FinalRisk'
 import MBO from './Tabs/MBO'
 import FMAA from './Tabs/FMAA'
+import { useGlobalState } from '../../contexts/GlobalStateContext';
 
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
-
     return (
         <div
             role="tabpanel"
@@ -48,7 +48,9 @@ function a11yProps(index) {
     };
 }
 
-export default function FlightModal({ open, handleClose, flightData = {}, formMode, fetchFlightsData, aircrews, handleFlashClick, setFlashOrigin, handleLoadingChange }) {
+export default function FlightModal({ open, handleFlashClick, setFlashOrigin, handleLoadingChange }) {
+
+    const { handleModalClose, formMode, flightData, setFlights, fetchFlightsData, aircrews } = useGlobalState();
 
     // State for Button Message
     const [buttonMessage, setButtonMessage] = useState('Go to Mission')
@@ -318,9 +320,9 @@ export default function FlightModal({ open, handleClose, flightData = {}, formMo
                 setFlashOrigin('Flight added successfully')
                 try {
                     await axios.post('http://localhost:3001/api/add-flight', flightObject);
-                    await fetchFlightsData();
+                    await fetchFlightsData(setFlights);
                     await handleLoadingChange(false)
-                    await handleClose();
+                    await handleModalClose();
                     handleFlashClick();
                 } catch (error) {
                     console.error('Error adding flight:', error);
@@ -329,9 +331,9 @@ export default function FlightModal({ open, handleClose, flightData = {}, formMo
                 setFlashOrigin('Flight updated successfully')
                 try {
                     await axios.put('http://localhost:3001/api/update-flight', flightObject);
-                    await fetchFlightsData();
+                    await fetchFlightsData(setFlights);
                     await handleLoadingChange(false)
-                    await handleClose();
+                    await handleModalClose();
                     handleFlashClick();
                 } catch (error) {
                     console.error('Error adding flight:', error);
@@ -375,7 +377,7 @@ export default function FlightModal({ open, handleClose, flightData = {}, formMo
                 >
                     <IconButton
                         aria-label="close"
-                        onClick={handleClose}
+                        onClick={handleModalClose}
                         sx={{
                             position: 'absolute',
                             right: 8,

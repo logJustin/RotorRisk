@@ -18,13 +18,15 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useClerk } from "@clerk/clerk-react";
 import { useDrawer } from '../../contexts/DrawerContext'
+import { useGlobalState } from '../../contexts/GlobalStateContext';
 
-export default function LeftNavigation({ drawerWidth, props, lightMode, handleLightModeToggle, open, handleClose, handleOpen, flightData, formMode, fetchFlightsData, aircrews, fetchAircrewsData, handleFlashClick, setFlashOrigin, setViewMode }) {
+export default function LeftNavigation({ props, lightMode, handleLightModeToggle, flightData, handleFlashClick, setFlashOrigin, setViewMode }) {
 
     const { signOut } = useClerk();
     const { window } = props;
     const container = window !== undefined ? () => window().document.body : undefined;
     const { mobileOpen, handleDrawerToggle } = useDrawer();
+    const { modalOpen, handleModalOpen, handleModalClose, drawerWidth } = useGlobalState();
 
     const drawer = (
         <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', }}>
@@ -42,7 +44,7 @@ export default function LeftNavigation({ drawerWidth, props, lightMode, handleLi
                     </ListItem>
 
                     <ListItem key='Create' disablePadding>
-                        <ListItemButton onClick={() => { handleOpen('', 'File') }}>
+                        <ListItemButton onClick={() => { handleModalOpen('', 'File') }}>
                             <ListItemIcon>
                                 <AddCircleOutlineSharpIcon />
                             </ListItemIcon>
@@ -76,14 +78,10 @@ export default function LeftNavigation({ drawerWidth, props, lightMode, handleLi
             <Box sx={{ mt: 'auto' }}>
                 <List>
                     <PrivilegesModal
-                        aircrews={aircrews}
-                        fetchAircrewsData={fetchAircrewsData}
                         setFlashOrigin={setFlashOrigin}
                         handleFlashClick={handleFlashClick}
                     />
                     <CrewmemberModal
-                        aircrews={aircrews}
-                        fetchAircrewsData={fetchAircrewsData}
                         setFlashOrigin={setFlashOrigin}
                         handleFlashClick={handleFlashClick}
                     />
@@ -117,13 +115,10 @@ export default function LeftNavigation({ drawerWidth, props, lightMode, handleLi
             aria-label="mailbox folders"
         >
             <FormModal
-                open={open}
-                handleClose={handleClose}
+                open={modalOpen}
+                handleClose={handleModalClose}
                 lightMode={props.lightMode}
                 flightData={flightData}
-                formMode={formMode}
-                fetchFlightsData={fetchFlightsData}
-                aircrews={aircrews}
                 handleFlashClick={handleFlashClick}
                 setFlashOrigin={setFlashOrigin}
             />
