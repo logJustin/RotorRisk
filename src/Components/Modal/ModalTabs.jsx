@@ -13,7 +13,7 @@ import FinalRisk from './Tabs/FinalRisk'
 import MBO from './Tabs/MBO'
 import FMAA from './Tabs/FMAA'
 import { useGlobalState } from '../../contexts/GlobalStateContext';
-
+import { useFlash } from '../../contexts/FlashContext';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -48,9 +48,10 @@ function a11yProps(index) {
     };
 }
 
-export default function FlightModal({ open, handleFlashClick, setFlashOrigin, handleLoadingChange }) {
+export default function FlightModal({ open, handleLoadingChange }) {
 
     const { handleModalClose, formMode, flightData, setFlights, fetchFlightsData, aircrews } = useGlobalState();
+    const { handleFlashClick, setFlashMessage } = useFlash()
 
     // State for Button Message
     const [buttonMessage, setButtonMessage] = useState('Go to Mission')
@@ -317,7 +318,7 @@ export default function FlightModal({ open, handleFlashClick, setFlashOrigin, ha
 
         const handleFlight = async (flightObject) => {
             if (formMode === "File") {
-                setFlashOrigin('Flight added successfully')
+                setFlashMessage('Flight added successfully')
                 try {
                     await axios.post('http://localhost:3001/api/add-flight', flightObject);
                     await fetchFlightsData(setFlights);
@@ -328,7 +329,7 @@ export default function FlightModal({ open, handleFlashClick, setFlashOrigin, ha
                     console.error('Error adding flight:', error);
                 }
             } else if (formMode === "Update") {
-                setFlashOrigin('Flight updated successfully')
+                setFlashMessage('Flight updated successfully')
                 try {
                     await axios.put('http://localhost:3001/api/update-flight', flightObject);
                     await fetchFlightsData(setFlights);

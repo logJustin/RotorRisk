@@ -19,14 +19,18 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useClerk } from "@clerk/clerk-react";
 import { useDrawer } from '../../contexts/DrawerContext'
 import { useGlobalState } from '../../contexts/GlobalStateContext';
+import { useFlash } from '../../contexts/FlashContext';
+import { useFilter } from '../../contexts/FilterContext';
 
-export default function LeftNavigation({ props, lightMode, handleLightModeToggle, flightData, handleFlashClick, setFlashOrigin, setViewMode }) {
+
+// export default function LeftNavigation({ lightMode, handleLightModeToggle, setViewMode }) {
+export default function LeftNavigation({ lightMode, handleLightModeToggle }) {
 
     const { signOut } = useClerk();
-    const { window } = props;
-    const container = window !== undefined ? () => window().document.body : undefined;
     const { mobileOpen, handleDrawerToggle } = useDrawer();
-    const { modalOpen, handleModalOpen, handleModalClose, drawerWidth } = useGlobalState();
+    const { modalOpen, handleModalOpen, drawerWidth } = useGlobalState();
+    const { handleFlashClick, setFlashMessage } = useFlash();
+    const { setViewMode } = useFilter();
 
     const drawer = (
         <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', }}>
@@ -72,17 +76,16 @@ export default function LeftNavigation({ props, lightMode, handleLightModeToggle
 
 
 
-
                 </List >
             </Box >
             <Box sx={{ mt: 'auto' }}>
                 <List>
                     <PrivilegesModal
-                        setFlashOrigin={setFlashOrigin}
+                        setFlashMessage={setFlashMessage}
                         handleFlashClick={handleFlashClick}
                     />
                     <CrewmemberModal
-                        setFlashOrigin={setFlashOrigin}
+                        setFlashMessage={setFlashMessage}
                         handleFlashClick={handleFlashClick}
                     />
                     {/* Dark Mode toggler */}
@@ -116,16 +119,12 @@ export default function LeftNavigation({ props, lightMode, handleLightModeToggle
         >
             <FormModal
                 open={modalOpen}
-                handleClose={handleModalClose}
-                lightMode={props.lightMode}
-                flightData={flightData}
-                handleFlashClick={handleFlashClick}
-                setFlashOrigin={setFlashOrigin}
+                lightMode={lightMode}
             />
 
             {/* Tablet & Mobile Drawer */}
             <Drawer
-                container={container}
+                // container={container}
                 variant="temporary"
                 open={mobileOpen}
                 onClose={handleDrawerToggle}

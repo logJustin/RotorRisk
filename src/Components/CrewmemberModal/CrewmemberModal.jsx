@@ -10,14 +10,16 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import CloseIcon from '@mui/icons-material/Close';
 import { useForm, Controller } from 'react-hook-form';
 import { useGlobalState } from '../../contexts/GlobalStateContext';
+import { useFlash } from '../../contexts/FlashContext';
 
 const positions = ["Pilot", "NRCM"];
 const nrcmRanks = ["PVT", "PV2", "PFC", "SPC", "CPL", "SGT", "SSG", "SFC", "MSG", "CSM"];
 const pilotRanks = ["WO1", "CW2", "CW3", "CW4", "CW5", "2LT", "1LT", "CPT", "MAJ", "LTC", "COL"];
 const airframes = ["AH64D", "CH47F", "HH60M", "UH60V"];
 
-export default function CrewmemberModal({ setFlashOrigin, handleFlashClick }) {
+export default function CrewmemberModal() {
     const { aircrews, setAircrews, fetchAircrewsData } = useGlobalState();
+    const { setFlashMessage, handleFlashClick } = useFlash();
 
     const { control, handleSubmit, setValue } = useForm({
         defaultValues: {
@@ -141,7 +143,7 @@ export default function CrewmemberModal({ setFlashOrigin, handleFlashClick }) {
     const onSubmit = async (data) => {
         setLoading(true)
         if (mode === 'Add') {
-            setFlashOrigin('Crewmember added successfully')
+            setFlashMessage('Crewmember added successfully')
             const revisedData = {
                 uuid: uuid(),
                 name: `${data.rank} ${data.last_name}`,
@@ -161,7 +163,7 @@ export default function CrewmemberModal({ setFlashOrigin, handleFlashClick }) {
                 console.error('Error adding crewmember:', error);
             }
         } else if (mode === 'Edit') {
-            setFlashOrigin('Crewmember updated successfully')
+            setFlashMessage('Crewmember updated successfully')
             const revisedData = {
                 uuid: data.uuid,
                 name: name,

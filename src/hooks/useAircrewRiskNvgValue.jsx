@@ -1,4 +1,4 @@
-const AircrewRiskLookupValueNG = (NGHours, timeInAO) => {
+const useAircrewRiskNvgValue = (NGHours, timeInAO) => {
     if (timeInAO) {
         if (NGHours === undefined || NGHours > 99) {
             return 'L'; // Low risk
@@ -14,4 +14,4 @@ const AircrewRiskLookupValueNG = (NGHours, timeInAO) => {
     }
 };
 
-export default AircrewRiskLookupValueNG;
+export default useAircrewRiskNvgValue;

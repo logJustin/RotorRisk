@@ -6,14 +6,16 @@ import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import { useForm, Controller } from 'react-hook-form';
 import { v4 as uuid } from 'uuid';
+import { useFlash } from '../../contexts/FlashContext';
 
-export default function SuggestionsFloatingButton({ handleFlashClick, setFlashOrigin }) {
+export default function SuggestionsFloatingButton({ }) {
+
+    const { setFlashMessage, handleFlashClick } = useFlash()
 
     // State for Modal Opening
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
 
     // state for loading indicator
     const [loading, setLoading] = useState(false);
@@ -33,7 +35,7 @@ export default function SuggestionsFloatingButton({ handleFlashClick, setFlashOr
     // Submit Logic
     const onSubmit = async (data) => {
         setLoading(true)
-        setFlashOrigin('Suggestion added successfully')
+        setFlashMessage('Suggestion added successfully')
         data.id = uuid()
         data.user_name = '...pending'
         data.date = new Date();

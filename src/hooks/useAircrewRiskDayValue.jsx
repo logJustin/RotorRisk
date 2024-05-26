@@ -1,4 +1,4 @@
-const AircrewRiskLookupValue = (hours, pilot, timeInAO) => {
+const useAircrewRiskDayValue = (hours, pilot, timeInAO) => {
     if (pilot) {
         if (timeInAO) {
             if (hours === undefined || hours > 499) {
@@ -30,4 +30,4 @@ const AircrewRiskLookupValue = (hours, pilot, timeInAO) => {
     }
 };
 
-export default AircrewRiskLookupValue;
+export default useAircrewRiskDayValue;

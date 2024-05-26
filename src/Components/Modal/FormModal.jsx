@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Box, Modal, CircularProgress } from '@mui/material';
 import FlightModal from './ModalTabs'
+import { useGlobalState } from '../../contexts/GlobalStateContext';
 
+export default function FormModal({ open }) {
 
-export default function FormModal({ open, handleFlashClick, setFlashOrigin }) {
+    const { handleModalClose } = useGlobalState();
 
     // state for loading indicator
     const [loading, setLoading] = useState(false);
@@ -30,15 +32,13 @@ export default function FormModal({ open, handleFlashClick, setFlashOrigin }) {
     return (
         <Modal
             open={open}
-            // onClose={handleClose}
+            onClose={handleModalClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
                 <FlightModal
                     open={open}
-                    handleFlashClick={handleFlashClick}
-                    setFlashOrigin={setFlashOrigin}
                     handleLoadingChange={handleLoadingChange}
                 />
                 {loading && <CircularProgress color='inherit'

@@ -1,7 +1,7 @@
 
 import risks from '../data/riskMatrix';
 
-const LookupRiskValue = (task, flightModes) => {
+const useHighestRiskValue = (task, flightModes) => {
     let highestRisk = ''
     // Iterate over each riskLevel in the risks object
     for (const riskLevel in risks) {
@@ -36,4 +36,4 @@ const LookupRiskValue = (task, flightModes) => {
 };
 
 
-export default LookupRiskValue;
+export default useHighestRiskValue;

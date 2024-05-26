@@ -4,7 +4,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import FormLabel from '@mui/material/FormLabel';
 import { Controller } from "react-hook-form"
 import CheckboxesRiskLevel from '../Components/CheckboxesRiskLevel'
-import CalculateHighestRisk from '../../../utils/CalculateHighestRisk';
+import useFinalRiskValue from '../../../hooks/useFinalRiskValue';
 
 export default function FinalRisk({ control, watch, setValue }) {
 
@@ -25,7 +25,7 @@ export default function FinalRisk({ control, watch, setValue }) {
         if (!firstRender.current) {
             // Determine the highest risk level
             const risks = [aircrewInitialRisk, missionInitialRisk, weatherInitialRisk, aircrewMitigatedRisk, missionMitigatedRisk, weatherMitigatedRisk];
-            const highestRisk = CalculateHighestRisk(risks)
+            const highestRisk = useFinalRiskValue(risks)
             setValue('finalInitialRisk', highestRisk);
         } else {
             firstRender.current = false;

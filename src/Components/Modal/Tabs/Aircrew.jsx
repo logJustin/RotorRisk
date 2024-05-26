@@ -9,9 +9,9 @@ import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckboxesFlightConditions from '../Components/CheckboxesFlightConditions'
 import aircraftInfo from '../../../data/aircraftTailNumbers'
-import AircrewRiskLookupValue from '../../../utils/AircrewRiskLookupValue';
-import AircrewRiskLookupValueNG from '../../../utils/AircrewRiskLookupValueNG';
-import CalculateHighestRisk from '../../../utils/CalculateHighestRisk';
+import useAircrewRiskDayValue from '../../../hooks/useAircrewRiskDayValue';
+import useAircrewRiskNvgValue from '../../../hooks/useAircrewRiskNvgValue';
+import useFinalRiskValue from '../../../hooks/useFinalRiskValue';
 import { useGlobalState } from '../../../contexts/GlobalStateContext';
 
 export default function Aircrew({ control, watch, setValue }) {
@@ -27,7 +27,6 @@ export default function Aircrew({ control, watch, setValue }) {
                 </MenuItem>
             ))
     );
-
 
     const firstRender = useRef(true)
     const aircraftType = watch("aircraftType")
@@ -51,17 +50,17 @@ export default function Aircrew({ control, watch, setValue }) {
             const selectednrcm2 = aircrews.find(member => member.name === nrcm2)
             const selectednrcm3 = aircrews.find(member => member.name === nrcm3)
 
-            const newRiskPC = AircrewRiskLookupValue(selectedpc?.aircraft, true, selectedpc?.atleast25InAO)
-            const newRiskPI = AircrewRiskLookupValue(selectedpi?.aircraft, true, selectedpi?.atleast25InAO)
-            const newRiskNRCM1 = AircrewRiskLookupValue(selectednrcm1?.aircraft, false, selectednrcm1?.atleast25InAO)
-            const newRiskNRCM2 = AircrewRiskLookupValue(selectednrcm2?.aircraft, false, selectednrcm2?.atleast25InAO)
-            const newRiskNRCM3 = AircrewRiskLookupValue(selectednrcm3?.aircraft, false, selectednrcm3?.atleast25InAO)
+            const newRiskPC = useAircrewRiskDayValue(selectedpc?.aircraft, true, selectedpc?.atleast25InAO)
+            const newRiskPI = useAircrewRiskDayValue(selectedpi?.aircraft, true, selectedpi?.atleast25InAO)
+            const newRiskNRCM1 = useAircrewRiskDayValue(selectednrcm1?.aircraft, false, selectednrcm1?.atleast25InAO)
+            const newRiskNRCM2 = useAircrewRiskDayValue(selectednrcm2?.aircraft, false, selectednrcm2?.atleast25InAO)
+            const newRiskNRCM3 = useAircrewRiskDayValue(selectednrcm3?.aircraft, false, selectednrcm3?.atleast25InAO)
 
-            const newRiskPCNG = AircrewRiskLookupValueNG(selectedpc?.NG, selectedpc?.atleast25InAO)
-            const newRiskPING = AircrewRiskLookupValueNG(selectedpi?.NG, selectedpi?.atleast25InAO)
-            const newRiskNRCM1NG = AircrewRiskLookupValueNG(selectednrcm1?.NG, selectednrcm1?.atleast25InAO)
-            const newRiskNRCM2NG = AircrewRiskLookupValueNG(selectednrcm2?.NG, selectednrcm2?.atleast25InAO)
-            const newRiskNRCM3NG = AircrewRiskLookupValueNG(selectednrcm3?.NG, selectednrcm3?.atleast25InAO)
+            const newRiskPCNG = useAircrewRiskNvgValue(selectedpc?.NG, selectedpc?.atleast25InAO)
+            const newRiskPING = useAircrewRiskNvgValue(selectedpi?.NG, selectedpi?.atleast25InAO)
+            const newRiskNRCM1NG = useAircrewRiskNvgValue(selectednrcm1?.NG, selectednrcm1?.atleast25InAO)
+            const newRiskNRCM2NG = useAircrewRiskNvgValue(selectednrcm2?.NG, selectednrcm2?.atleast25InAO)
+            const newRiskNRCM3NG = useAircrewRiskNvgValue(selectednrcm3?.NG, selectednrcm3?.atleast25InAO)
 
             function compareRiskLevels(risk1, risk2) {
                 const hierarchy = ["L", "M"];
@@ -83,7 +82,7 @@ export default function Aircrew({ control, watch, setValue }) {
 
             // Determine the highest risk level
             const risks = [biggestpcRisk, biggestpiRisk, biggestnrcm1Risk, biggestnrcm2Risk, biggestnrcm3Risk];
-            const highestRisk = CalculateHighestRisk(risks)
+            const highestRisk = useFinalRiskValue(risks)
             setValue('aircrewInitialRisk', highestRisk);
         } else {
             firstRender.current = false;

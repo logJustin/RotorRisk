@@ -12,14 +12,16 @@ import { useForm, Controller } from 'react-hook-form';
 import { useOrganization } from "@clerk/clerk-react";
 import { useUser } from "@clerk/clerk-react";
 import { useGlobalState } from '../../contexts/GlobalStateContext';
+import { useFlash } from '../../contexts/FlashContext';
 
 const positions = ["Pilot", "NRCM"];
 const nrcmRanks = ["PVT", "PV2", "PFC", "SPC", "CPL", "SGT", "SSG", "SFC", "MSG", "CSM"];
 const pilotRanks = ["WO1", "CW2", "CW3", "CW4", "CW5", "2LT", "1LT", "CPT", "MAJ", "LTC", "COL"];
 const airframes = ["AH64D", "CH47F", "HH60M", "UH60V"];
 
-export default function PrivilegesModal({ setFlashOrigin, handleFlashClick }) {
+export default function PrivilegesModal({ }) {
     const { aircrews, setAircrews, fetchAircrewsData } = useGlobalState();
+    const { setFlashMessage, handleFlashClick } = useFlash()
     const { user } = useUser();
     // console.log(user)
     // State of Names avialable in Edit drop down

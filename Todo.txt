@@ -1,15 +1,14 @@
 
 DO - v1.0
-    App: Refactor hooks
     App: Refactor components directory
     App: Implement user based permissions
-    App: Apply useContext where it makes sense
     App: Switch DB to AWS or Azure (whichever is cheaper)
 
 DO - v1.01
     Authentication: Disable footer
     Authentication: Create custom Signup component
     Authentication: Add rank & role
+    CrewMember Modal: Delete ACM
     RCOP Form: Form Validation
     RCOP Form: Add Fighter Management
     RCOP Form: Change the select one sections to a different format
@@ -22,6 +21,8 @@ DO - v1.01
 
 
 // COMPLETED
+//  ✓  App: Apply useContext where it makes sense
+//  ✓  App: Refactor hooks
 //  ✓  App: Deploy
 //  ✓  RCOP Form: Change Lunar Data to Binary
 //  ✓  RCOP Form: Add ETD & ETE on 5484

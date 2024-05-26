@@ -5,8 +5,8 @@ import FormLabel from '@mui/material/FormLabel';
 import { Controller } from "react-hook-form"
 import CheckboxesModeOfFlight from '../Components/CheckboxesModeOfFlight'
 import CheckboxesBinary from '../Components/CheckboxesBinary'
-import CalculateHighestRisk from '../../../utils/CalculateHighestRisk';
-import LookupRiskValue from '../../../utils/LookupRiskValue';
+import useFinalRiskValue from '../../../hooks/useFinalRiskValue';
+import useHighestRiskValue from '../../../hooks/useHighestRiskValue';
 
 export default function Weather({ control, watch, setValue }) {
 
@@ -33,28 +33,28 @@ export default function Weather({ control, watch, setValue }) {
 
     useEffect(() => {
         if (!firstRender.current) {
-            const newgt1000 = LookupRiskValue('gt1000', gt1000)
-            const newlt1000 = LookupRiskValue('lt1000', lt1000)
-            const newlt700 = LookupRiskValue('lt700', lt700)
-            const newlt500 = LookupRiskValue('lt500', lt500)
-            const newgt3 = LookupRiskValue('gt3', gt3)
-            const newgt2 = LookupRiskValue('gt2', gt2)
-            const newgt1 = LookupRiskValue('gt1', gt1)
-            const newlt1 = LookupRiskValue('lt1', lt1)
-            const newaltRequired = LookupRiskValue('altRequired', altRequired)
-            const newgt25IllumAndgt30degrees = LookupRiskValue('gt25IllumAndgt30degrees', gt25IllumAndgt30degrees)
-            const newlt25IllumAndlt30degrees = LookupRiskValue('lt25IllumAndlt30degrees', lt25IllumAndlt30degrees)
-            const newgt25IllumAndgt30degreesLimitedLighting = LookupRiskValue('gt25IllumAndgt30degreesLimitedLighting', gt25IllumAndgt30degreesLimitedLighting)
-            const newWinds = LookupRiskValue('windGt30', windGt30)
-            const newWindsHoist = LookupRiskValue('windGt30Hoist', windGt30Hoist)
-            const newGustSpread = LookupRiskValue('gustSpreadGt20', gustSpreadGt20)
-            const newThunderstorms = LookupRiskValue('forecastThunderstorms', forecastThunderstorms)
-            const newTurbulence = LookupRiskValue('modTurbulenceIcing', modTurbulenceIcing)
-            const newOAT = LookupRiskValue('oatNegative10Positive30', oatNegative10Positive30)
+            const newgt1000 = useHighestRiskValue('gt1000', gt1000)
+            const newlt1000 = useHighestRiskValue('lt1000', lt1000)
+            const newlt700 = useHighestRiskValue('lt700', lt700)
+            const newlt500 = useHighestRiskValue('lt500', lt500)
+            const newgt3 = useHighestRiskValue('gt3', gt3)
+            const newgt2 = useHighestRiskValue('gt2', gt2)
+            const newgt1 = useHighestRiskValue('gt1', gt1)
+            const newlt1 = useHighestRiskValue('lt1', lt1)
+            const newaltRequired = useHighestRiskValue('altRequired', altRequired)
+            const newgt25IllumAndgt30degrees = useHighestRiskValue('gt25IllumAndgt30degrees', gt25IllumAndgt30degrees)
+            const newlt25IllumAndlt30degrees = useHighestRiskValue('lt25IllumAndlt30degrees', lt25IllumAndlt30degrees)
+            const newgt25IllumAndgt30degreesLimitedLighting = useHighestRiskValue('gt25IllumAndgt30degreesLimitedLighting', gt25IllumAndgt30degreesLimitedLighting)
+            const newWinds = useHighestRiskValue('windGt30', windGt30)
+            const newWindsHoist = useHighestRiskValue('windGt30Hoist', windGt30Hoist)
+            const newGustSpread = useHighestRiskValue('gustSpreadGt20', gustSpreadGt20)
+            const newThunderstorms = useHighestRiskValue('forecastThunderstorms', forecastThunderstorms)
+            const newTurbulence = useHighestRiskValue('modTurbulenceIcing', modTurbulenceIcing)
+            const newOAT = useHighestRiskValue('oatNegative10Positive30', oatNegative10Positive30)
 
             // Determine the highest risk level
             const risks = [newWinds, newWindsHoist, newGustSpread, newThunderstorms, newTurbulence, newOAT, newgt1000, newlt1000, newlt700, newlt500, newgt3, newgt2, newgt1, newlt1, newaltRequired, , newgt25IllumAndgt30degrees, newlt25IllumAndlt30degrees, newgt25IllumAndgt30degreesLimitedLighting];
-            const highestRisk = CalculateHighestRisk(risks)
+            const highestRisk = useFinalRiskValue(risks)
 
             // set the initial risk of weather
             setValue('weatherInitialRisk', highestRisk);

@@ -11,25 +11,19 @@ import Mission from './Components/Mission'
 import Weather from './Components/Weather'
 import FinalRisk from './Components/FinalRisk'
 import DeleteConfirmationModal from './Components/DeleteConfirmationModal'
-import './FlightsList.css';
 import { useGlobalState } from '../../contexts/GlobalStateContext';
+import { useFilter } from '../../contexts/FilterContext';
+import './FlightsList.css';
 
-export default function Body({ handleFlashClick, setFlashOrigin, viewMode }) {
+export default function Body() {
 
-    const { handleModalOpen, flights, drawerWidth } = useGlobalState()
-
-    // Flash State, State can be stored in DeleteConfirmationModal
-    // But state changes will cause the Flash Message to only appear 
-    // for half a second instead of remaining for a few seconds
-    const [openFlash, setFlashOpen] = useState(false);
+    const { handleModalOpen, flights, drawerWidth } = useGlobalState();
+    const { viewMode } = useFilter();
 
     function Row(props) {
         const { row } = props;
         const [open, setOpen] = useState(false);
-
-        const handleEditRCOP = (flight) => {
-            handleModalOpen(flight, 'Update')
-        }
+        const handleEditRCOP = (flight) => { handleModalOpen(flight, 'Update') }
 
         return (
             <React.Fragment>
@@ -51,13 +45,7 @@ export default function Body({ handleFlashClick, setFlashOrigin, viewMode }) {
                     <TableCell sx={{ p: '6px 0' }} align="center">{row.approver}</TableCell>
                     <TableCell sx={{ p: '6px 0' }} align="center"> <EditIcon sx={{ verticalAlign: 'middle' }} onClick={() => { handleEditRCOP(row) }} /> </TableCell>
                     <TableCell sx={{ p: '6px 0' }} align="center">
-                        <DeleteConfirmationModal
-                            flight={row}
-                            openFlash={openFlash}
-                            setFlashOpen={setFlashOpen}
-                            handleFlashClick={handleFlashClick}
-                            setFlashOrigin={setFlashOrigin}
-                        />
+                        <DeleteConfirmationModal flight={row} />
                     </TableCell>
                 </TableRow>
                 <TableRow>

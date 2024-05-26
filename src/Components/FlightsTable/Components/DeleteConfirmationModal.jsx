@@ -5,10 +5,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useGlobalState } from '../../../contexts/GlobalStateContext';
+import { useFlash } from '../../../contexts/FlashContext';
 
-export default function DeleteConfirmationModal({ flight, openFlash, setFlashOpen, handleFlashClick, setFlashOrigin }) {
+export default function DeleteConfirmationModal({ flight }) {
 
     const { setFlights, fetchFlightsData } = useGlobalState();
+    const { handleFlashClick, setFlashMessage } = useFlash();
 
     // Modal State & Functions
     const [open, setOpen] = useState(false);
@@ -24,7 +26,7 @@ export default function DeleteConfirmationModal({ flight, openFlash, setFlashOpe
             await axios.delete('http://localhost:3001/api/delete-flight', { data: flight });
             await fetchFlightsData(setFlights);
             handleClose();
-            setFlashOrigin('Flight Deleted Successfully');
+            setFlashMessage('Flight Deleted Successfully');
             handleFlashClick();
         } catch (error) {
             console.error('Error deleting data from the front end:', error);
@@ -85,7 +87,9 @@ export default function DeleteConfirmationModal({ flight, openFlash, setFlashOpe
                             transition: 'filter 0.3s ease',
                         }}
                         variant='h5'
-                        textAlign={'center'}>
+                        textAlign={'center'}
+                        fontWeight={'bold'}
+                    >
                         Delete this flight?
                     </Typography>
                     <Grid container
@@ -98,16 +102,16 @@ export default function DeleteConfirmationModal({ flight, openFlash, setFlashOpe
                             borderTop: '1px grey solid',
                             boxshadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'
                         }}>
-                        <Grid marginBottom={'12px'} xs={3} md={3}>Date: {flight.date}</Grid>
-                        <Grid marginBottom={'12px'} xs={3} md={3}>PC: {flight.pc}</Grid>
-                        <Grid marginBottom={'12px'} xs={3} md={3}>Residual Risk: {flight.finalmitigatedrisk}</Grid>
-                        <Grid marginBottom={'12px'} xs={3} md={3}>ETD: {flight.etd}</Grid>
-                        <Grid marginBottom={'12px'} xs={12} md={3}>Mission: {flight.mission}</Grid>
-                        <Grid marginBottom={'12px'} xs={12} md={9}>Mission Statement: {flight.missionstatement}</Grid>
-                        <Grid marginBottom={'12px'} xs={3} md={3}>Aircrew Risk: {flight.aircrewmitigatedrisk}</Grid>
-                        <Grid marginBottom={'12px'} xs={3} md={3}>Mission Risk: {flight.missionmitigatedrisk}</Grid>
-                        <Grid marginBottom={'12px'} xs={3} md={3}>Weather Risk: {flight.weathermitigatedrisk}</Grid>
-                        <Grid marginBottom={'12px'} xs={3} md={3}>Final Risk: {flight.finalmitigatedrisk}</Grid>
+                        <Grid marginBottom={'12px'} xs={3} md={3}><Typography component={'span'} fontWeight={'bold'}>Date: </Typography> {flight.date}</Grid>
+                        <Grid marginBottom={'12px'} xs={3} md={3}><Typography component={'span'} fontWeight={'bold'}>PC: </Typography> {flight.pc}</Grid>
+                        <Grid marginBottom={'12px'} xs={3} md={3}><Typography component={'span'} fontWeight={'bold'}>Residual Risk: </Typography> {flight.finalmitigatedrisk}</Grid>
+                        <Grid marginBottom={'12px'} xs={3} md={3}><Typography component={'span'} fontWeight={'bold'}>ETD: </Typography> {flight.etd}</Grid>
+                        <Grid marginBottom={'12px'} xs={12} md={3}><Typography component={'span'} fontWeight={'bold'}>Mission: </Typography> {flight.mission}</Grid>
+                        <Grid marginBottom={'12px'} xs={12} md={9}><Typography component={'span'} fontWeight={'bold'}>Mission Statement: </Typography> {flight.missionstatement}</Grid>
+                        <Grid marginBottom={'12px'} xs={3} md={3}><Typography component={'span'} fontWeight={'bold'}>Aircrew Risk: </Typography> {flight.aircrewmitigatedrisk}</Grid>
+                        <Grid marginBottom={'12px'} xs={3} md={3}><Typography component={'span'} fontWeight={'bold'}>Mission Risk: </Typography> {flight.missionmitigatedrisk}</Grid>
+                        <Grid marginBottom={'12px'} xs={3} md={3}><Typography component={'span'} fontWeight={'bold'}>Weather Risk: </Typography> {flight.weathermitigatedrisk}</Grid>
+                        <Grid marginBottom={'12px'} xs={3} md={3}><Typography component={'span'} fontWeight={'bold'}>Final Risk: </Typography> {flight.finalmitigatedrisk}</Grid>
 
                     </Grid>
                     <Box sx={{

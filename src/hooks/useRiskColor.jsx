@@ -1,8 +1,7 @@
-
 import risks from '../data/riskMatrix';
 const [lowRisk, moderateRisk, highRisk, extremelyHighRisk] = ['#8CD47E', '#F8D66D', '#FF6961', '#653239']
 
-const determineHighestRisk = (task, flightModes) => {
+const useRiskColor = (task, flightModes) => {
     if (!flightModes) {
         return '#424242'
     }
@@ -41,4 +40,4 @@ const determineHighestRisk = (task, flightModes) => {
 };
 
 
-export default determineHighestRisk;
+export default useRiskColor;
