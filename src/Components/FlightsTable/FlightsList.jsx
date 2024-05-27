@@ -13,16 +13,27 @@ import FinalRisk from './Components/FinalRisk'
 import DeleteConfirmationModal from '../Modals/DeleteConfirmationModal'
 import { useGlobalState } from '../../contexts/GlobalStateContext';
 import { useFilter } from '../../contexts/FilterContext';
+import { useUser } from '@clerk/clerk-react';
 
 export default function Body() {
 
     const { handleModalOpen, flights, drawerWidth } = useGlobalState();
     const { viewMode } = useFilter();
+    const userData = useUser();
+    const userID = userData.user.id
+    const userRole = userData.user.publicMetadata.role
+    const isAdmin = userData.user.publicMetadata.admin
+    const isBriefer = userRole === 'MBO'
+    const isApprover = userRole === 'FMAA'
+    const filedAFlight = flights.some(flight => flight.filerid === userID);
+    const canManipulateAFlight = isAdmin || filedAFlight || isBriefer || isApprover
 
-    function Row(props) {
-        const { row } = props;
+
+    function Row({ row }) {
         const [open, setOpen] = useState(false);
         const handleEditRCOP = (flight) => { handleModalOpen(flight, 'Update') }
+        const canEditThisFlight = isAdmin || row.filerid === userID || (row.briefer === '' && isBriefer) || (row.approver === '' && isApprover)
+        const canDeleteThisFlight = isAdmin || row.filerid === userID
 
         return (
             <React.Fragment>
@@ -42,10 +53,8 @@ export default function Body() {
                     <TableCell sx={{ p: '6px 0' }} align="center">{row.pc}</TableCell>
                     <TableCell sx={{ p: '6px 0' }} align="center">{row.briefer}</TableCell>
                     <TableCell sx={{ p: '6px 0' }} align="center">{row.approver}</TableCell>
-                    <TableCell sx={{ p: '6px 0' }} align="center"> <EditIcon sx={{ verticalAlign: 'middle' }} onClick={() => { handleEditRCOP(row) }} /> </TableCell>
-                    <TableCell sx={{ p: '6px 0' }} align="center">
-                        <DeleteConfirmationModal flight={row} />
-                    </TableCell>
+                    <TableCell sx={{ p: '6px 0' }} align="center"> {canEditThisFlight && <EditIcon sx={{ verticalAlign: 'middle' }} onClick={() => { handleEditRCOP(row) }} />} </TableCell>
+                    <TableCell sx={{ p: '6px 0' }} align="center"> {canDeleteThisFlight && <DeleteConfirmationModal flight={row} />} </TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
@@ -69,12 +78,11 @@ export default function Body() {
         <Box
             component="main"
             sx={{
-                flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` },
-                // maxWidth: '1200px'
+                flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` }
             }}
         >
             <Toolbar />
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} sx={{ boxShadow: 'rgba(0, 0, 0, 0.1) 0px 5px 15px' }}>
                 <Table aria-label="collapsible table" size="small">
                     <TableHead>
                         <TableRow>
@@ -85,8 +93,8 @@ export default function Body() {
                             <TableCell sx={{ fontWeight: "bold" }} align="center">Pilot</TableCell>
                             <TableCell sx={{ fontWeight: "bold" }} align="center">Briefer</TableCell>
                             <TableCell sx={{ fontWeight: "bold" }} align="center">Approver</TableCell>
-                            <TableCell sx={{ fontWeight: "bold" }} align="center">Edit</TableCell>
-                            <TableCell sx={{ fontWeight: "bold" }} align="center">Delete</TableCell>
+                            {canManipulateAFlight && <TableCell sx={{ fontWeight: "bold" }} align="center">Edit</TableCell>}
+                            {canManipulateAFlight && <TableCell sx={{ fontWeight: "bold" }} align="center">Delete</TableCell>}
                         </TableRow>
                     </TableHead>
                     <TableBody>

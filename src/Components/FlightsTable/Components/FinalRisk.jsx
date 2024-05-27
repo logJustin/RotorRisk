@@ -51,30 +51,40 @@ export default function FinalRisk({ row }) {
                                 <TableRow key='MissionRiskMitigation'>
                                     <TableCell colSpan={5} component="th" scope="row"><Typography fontWeight={500}>Risk Mitigation </Typography>{row.finalriskmitigation}</TableCell>
                                 </TableRow>
-                                <TableRow key='brieferHeader'>
-                                    <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
-                                        <Typography variant="h6" component="div" align='center' fontWeight={'bold'}>Briefer</Typography>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow key='Briefer'>
-                                    <TableCell component="th" scope="row"><Typography fontWeight={500}>Briefer </Typography>{row.briefer}</TableCell>
-                                    <TableCell><Typography fontWeight={500}>Comment Date </Typography> {row.briefercommentdate}</TableCell>
-                                </TableRow>
-                                <TableRow key='BrieferComment'>
-                                    <TableCell colSpan={3} component="th" scope="row"><Typography fontWeight={500}>Briefer Comments </Typography> {row.briefercomment}</TableCell>
-                                </TableRow>
-                                <TableRow key='approverHeader'>
-                                    <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
-                                        <Typography variant="h6" component="div" align='center' fontWeight={'bold'}>Approver</Typography>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow key='Approver'>
-                                    <TableCell component="th" scope="row"><Typography fontWeight={500}>Approver </Typography> {row.approver}</TableCell>
-                                    <TableCell><Typography fontWeight={500}>Comment Date </Typography> {row.approvercommentdate}</TableCell>
-                                </TableRow>
-                                <TableRow key='ApproverComment'>
-                                    <TableCell colSpan={4} component="th" scope="row"><Typography fontWeight={500}>Approver Comments </Typography> {row.approvercomment}</TableCell>
-                                </TableRow>
+
+                                {row.briefercomment &&
+                                    <>
+                                        <TableRow key='brieferHeader'>
+                                            <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
+                                                <Typography variant="h6" component="div" align='center' fontWeight={'bold'}>Briefer</Typography>
+                                            </TableCell>
+                                        </TableRow>
+                                        <TableRow key='Briefer'>
+                                            <TableCell component="th" scope="row"><Typography fontWeight={500}>Briefer </Typography>{row.briefer}</TableCell>
+                                            <TableCell><Typography fontWeight={500}>Comment Date </Typography> {row.briefercommentdate}</TableCell>
+                                        </TableRow>
+                                        <TableRow key='BrieferComment'>
+                                            <TableCell colSpan={3} component="th" scope="row"><Typography fontWeight={500}>Briefer Comments </Typography> {row.briefercomment}</TableCell>
+                                        </TableRow>
+                                    </>
+                                }
+
+                                {row.approvercomment &&
+                                    <>
+                                        <TableRow key='approverHeader'>
+                                            <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
+                                                <Typography variant="h6" component="div" align='center' fontWeight={'bold'}>Approver</Typography>
+                                            </TableCell>
+                                        </TableRow>
+                                        <TableRow key='Approver'>
+                                            <TableCell component="th" scope="row"><Typography fontWeight={500}>Approver </Typography> {row.approver}</TableCell>
+                                            <TableCell><Typography fontWeight={500}>Comment Date </Typography> {row.approvercommentdate}</TableCell>
+                                        </TableRow>
+                                        <TableRow key='ApproverComment'>
+                                            <TableCell colSpan={4} component="th" scope="row"><Typography fontWeight={500}>Approver Comments </Typography> {row.approvercomment}</TableCell>
+                                        </TableRow>
+                                    </>
+                                }
                             </TableHead>
                         </Table>
                     </Collapse>

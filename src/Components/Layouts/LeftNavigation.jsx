@@ -15,8 +15,12 @@ import { useDrawer } from '../../contexts/DrawerContext'
 import { useGlobalState } from '../../contexts/GlobalStateContext';
 import { useFlash } from '../../contexts/FlashContext';
 import { useFilter } from '../../contexts/FilterContext';
+import { useUser } from '@clerk/clerk-react';
 
 export default function LeftNavigation({ lightMode, handleLightModeToggle }) {
+    const userData = useUser();
+    const userRole = userData.user.publicMetadata.role
+    const isAdmin = userData.user.publicMetadata.admin
 
     const { signOut } = useClerk();
     const { mobileOpen, handleDrawerToggle } = useDrawer();
@@ -48,38 +52,45 @@ export default function LeftNavigation({ lightMode, handleLightModeToggle }) {
                         </ListItemButton>
                     </ListItem>
 
-                    <ListItem key='Brief' disablePadding onClick={() => { setViewMode('briefer') }}>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <CheckCircleOutlineSharpIcon />
-                            </ListItemIcon>
-                            <ListItemText primary='Brief' />
-                        </ListItemButton>
-                    </ListItem>
+                    {(userRole === 'MBO' || userRole === 'FMAA') &&
+                        <ListItem key='Brief' disablePadding onClick={() => { setViewMode('briefer') }}>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <CheckCircleOutlineSharpIcon />
+                                </ListItemIcon>
+                                <ListItemText primary='Brief' />
+                            </ListItemButton>
+                        </ListItem>
+                    }
 
-                    <ListItem key='Approve' disablePadding onClick={() => { setViewMode('approver') }}>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <CheckCircleSharpIcon />
-                            </ListItemIcon>
-                            <ListItemText primary='Approve' />
-                        </ListItemButton>
-                    </ListItem>
-
+                    {userRole === 'FMAA' &&
+                        <ListItem key='Approve' disablePadding onClick={() => { setViewMode('approver') }}>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <CheckCircleSharpIcon />
+                                </ListItemIcon>
+                                <ListItemText primary='Approve' />
+                            </ListItemButton>
+                        </ListItem>
+                    }
 
 
                 </List >
             </Box >
             <Box sx={{ mt: 'auto' }}>
                 <List>
-                    <PrivilegesModal
-                        setFlashMessage={setFlashMessage}
-                        handleFlashClick={handleFlashClick}
-                    />
-                    <CrewmemberModal
-                        setFlashMessage={setFlashMessage}
-                        handleFlashClick={handleFlashClick}
-                    />
+                    {isAdmin === true &&
+                        <>
+                            <PrivilegesModal
+                                setFlashMessage={setFlashMessage}
+                                handleFlashClick={handleFlashClick}
+                            />
+                            <CrewmemberModal
+                                setFlashMessage={setFlashMessage}
+                                handleFlashClick={handleFlashClick}
+                            />
+                        </>
+                    }
                     {/* Dark Mode toggler */}
                     <ListItem key='Toggler' disablePadding>
                         <ListItemButton onClick={handleLightModeToggle}>

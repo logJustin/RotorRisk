@@ -14,9 +14,11 @@ import MBO from './Tabs/MBO'
 import FMAA from './Tabs/FMAA'
 import { useGlobalState } from '../../../contexts/GlobalStateContext';
 import { useFlash } from '../../../contexts/FlashContext';
+import { useUser } from '@clerk/clerk-react';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
+
     return (
         <div
             role="tabpanel"
@@ -48,10 +50,16 @@ function a11yProps(index) {
     };
 }
 
-export default function FlightModalTabs({ open, handleLoadingChange }) {
+export default function FlightModalTabs({ handleLoadingChange }) {
 
     const { handleModalClose, formMode, flightData, setFlights, fetchFlightsData, aircrews } = useGlobalState();
     const { handleFlashClick, setFlashMessage } = useFlash()
+    const userData = useUser();
+    const userID = userData.user.id
+    const userRole = userData.user.publicMetadata.role
+    const userRank = userData.user.publicMetadata.rank
+    const userLastName = userData.user.lastName
+    const isAdmin = userData.user.publicMetadata.admin
 
     // State for Button Message
     const [buttonMessage, setButtonMessage] = useState('Go to Mission')
@@ -71,8 +79,6 @@ export default function FlightModalTabs({ open, handleLoadingChange }) {
             setScrollAtBottom(false);
         }
     };
-
-
 
     // State for Tabs on Modal
     const [tabValue, setTabValue] = React.useState(0);
@@ -121,9 +127,28 @@ export default function FlightModalTabs({ open, handleLoadingChange }) {
         });
     };
 
-    const {
+    function getTodaysDate() {
+        const date = new Date();
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = date.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+        const year = String(date.getFullYear()).slice(-2);
+
+        return `${day}${month}${year}`;
+    }
+
+    let {
         flightid, date, aircrafttype, aircrafttail, mission, missionstatement, route, etd, ete, flightconditions, pc, pcrisk, pcseat, pi, pirisk, piseat, nrcm1, nrcm1risk, nrcm2, nrcm2risk, nrcm3, nrcm3risk, pchourstotal, pchoursng, pc25hoursinao, pihourstotal, pihoursng, pi25hoursinao, nrcm1hourstotal, nrcm1hoursng, nrcm125hoursinao, nrcm2hourstotal, nrcm2hoursng, nrcm225hoursinao, nrcm3hourstotal, nrcm3hoursng, nrcm325hoursinao, aircrewriskmitigation, aircrewinitialrisk, aircrewmitigatedrisk, airassault, AH64attackreconsecurity, medevac, casevac, farp, crosscountryborder, multiship, mixedmultiship, mtfgeneraltraining, dartonetimeflight, blackout, waterbucket, paradrops, rappelspiesfries, externalloads, airmovementvip, continuation, cefs, fatcow, terrainflight, mountainoperations, overwateroperations, pinnacleoperations, urbanoperations, confinedoperations, ogewithin10, igewithin10, ogewithin5, igewithin5, cruisewithin10, progessionevaluationeps, ifrsimulatedimc, cbrne, nonlivehoist, livehoist, combatmanueveringflight, gunnerylivefire, calfex, ams, blackoutcurtain, owuntrained, famflight, hoverwxrlt500, uh60doorsOff, owsea4to5, owseagt6, pcgt90, pcgt60, pcgt30, pigt90, pigt60, pigt30, nrcm1gt90, nrcm1gt60, nrcm1gt30, nrcm2gt90, nrcm2gt60, nrcm2gt30, nrcm3gt90, nrcm3gt60, nrcm3gt30, hoistgt90, hoistgt60, hoistgt30, specificgt12, specific2to12, specificlt2, vaguegt12, vague2to12, vaguelt2, missionriskmitigation, missioninitialrisk, missionmitigatedrisk, gt1000, lt1000, lt700, lt500, gt3, gt2, gt1, lt1, altrequired, gt25illumandgt30degrees, lt25illumandlt30degrees, gt25illumandgt30degreeslimitedlighting, windgt30, windgt30hoist, gustspreadgt20, forecastthunderstorms, modturbulenceicing, oatnegative10positive30, weatherriskmitigation, weatherinitialrisk, weathermitigatedrisk, finalriskmitigation, finalmitigatedrisk, briefer, briefercomment, briefercommentdate, approver, approvercomment, approvercommentdate, finalinitialrisk, greatestrisk
     } = flightData
+
+    if (userRole === 'MBO' && briefer === '') {
+        briefer = `${userRank} ${userLastName}`
+        briefercommentdate = getTodaysDate()
+    }
+
+    if (userRole === 'FMAA' && approver === '') {
+        approver = `${userRank} ${userLastName}`
+        approvercommentdate = getTodaysDate()
+    }
 
     const { control, handleSubmit, watch, setValue } = useForm({
         defaultValues: {
@@ -273,6 +298,7 @@ export default function FlightModalTabs({ open, handleLoadingChange }) {
             greatestRisk: greatestrisk !== undefined ? greatestrisk : '',
         },
     });
+
     const formatDate = (dateObject) => {
         const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
         const day = dateObject.$D;
@@ -292,7 +318,6 @@ export default function FlightModalTabs({ open, handleLoadingChange }) {
 
     const crewMembers = ['pc', 'pi', 'nrcm1', 'nrcm2', 'nrcm3'];
     const onSubmit = (data) => {
-
         // Flight Date
         data.date = formatDate(data.date);
 
@@ -300,7 +325,6 @@ export default function FlightModalTabs({ open, handleLoadingChange }) {
         const etdHours = data.etd.$H;
         const etdMinutes = String(data.etd.$m).padStart(2, '0');
         data.etd = `${etdHours}:${etdMinutes}`;
-
 
         // update crewmembers
         for (const crewmember of crewMembers) {
@@ -320,6 +344,7 @@ export default function FlightModalTabs({ open, handleLoadingChange }) {
             if (formMode === "File") {
                 setFlashMessage('Flight added successfully')
                 try {
+                    flightObject.filerID = userID
                     await axios.post('http://localhost:3001/api/add-flight', flightObject);
                     await fetchFlightsData(setFlights);
                     await handleLoadingChange(false)
@@ -363,8 +388,8 @@ export default function FlightModalTabs({ open, handleLoadingChange }) {
                         <Tab label="Mission" {...a11yProps(1)} />
                         <Tab label="Weather" {...a11yProps(2)} />
                         <Tab label="Final Risk" {...a11yProps(3)} />
-                        <Tab label="MBO" {...a11yProps(4)} />
-                        <Tab label="FMAA" {...a11yProps(5)} />
+                        {(userRole === 'MBO' || userRole === 'FMAA') && <Tab label="MBO" {...a11yProps(4)} />}
+                        {userRole === 'FMAA' && <Tab label="FMAA" {...a11yProps(5)} />}
                     </Tabs>
                 </Box>
 
@@ -404,7 +429,7 @@ export default function FlightModalTabs({ open, handleLoadingChange }) {
                         <MBO control={control} watch={watch} />
                     </CustomTabPanel>
                     <CustomTabPanel value={tabValue} index={5}>
-                        <FMAA control={control} watch={watch} />
+                        <FMAA control={control} watch={watch} briefed={briefer !== ''} />
                     </CustomTabPanel>
                 </Box>
 
@@ -414,7 +439,7 @@ export default function FlightModalTabs({ open, handleLoadingChange }) {
                     type="submit"
                     fullWidth
                     sx={{ marginTop: 'auto', marginBottom: '8px' }}
-                    disabled={!scrollAtBottom}
+                    disabled={!scrollAtBottom || (tabValue === 4 && userRole === 'FMAA') || (tabValue === 5 && briefer === '')}
                     onClick={() => { handleSubmitButtonClick(tabValue) }}
                 >
                     {buttonMessage}

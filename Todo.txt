@@ -1,12 +1,16 @@
+Bugs:
+    - Figure out how to only update MBO, MBO comment, MBO comment date if only on tab for MBO
+    - Figure out how to only update FMAA, FMAA comment, FMAA comment date if only on tab for FMAA
 
 DO - v1.0
-    App: Implement user based permissions
+    App: Allow admins to update metadata (frontend)
+    App: Allow admins to update metadata (backend)
     App: Switch DB to AWS or Azure (whichever is cheaper)
+    App: get designer to look at my app
 
 DO - v1.01
     Authentication: Disable footer
-    Authentication: Create custom Signup component
-    Authentication: Add rank & role
+    Authentication: limit user email to a .mil domain
     CrewMember Modal: Delete ACM
     RCOP Form: Form Validation
     RCOP Form: Add Fighter Management
@@ -15,11 +19,15 @@ DO - v1.01
       Form Sections to reflect this:
         CrewMember Recency
         Specific Vague Planning
-    Multi-section: Authentication
-    Multi-section: Authorization
 
 
 // COMPLETED
+//  ✓  App: if a flight is not briefed//approved, don't show that sub-section in Final Risk in FlightsList Component
+//  ✓  App: only user or admin can delete RCOPs
+//  ✓  App: only user, MBO, FMAA, or admin can edit RCOPs
+//  ✓  App: Implement user based permissions
+//  ✓  Multi-section: Authentication
+//  ✓  Multi-section: Authorization
 //  ✓  App: Refactor components directory
 //  ✓  App: Apply useContext where it makes sense
 //  ✓  App: Refactor hooks
