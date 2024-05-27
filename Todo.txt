@@ -1,6 +1,5 @@
 
 DO - v1.0
-    App: Refactor components directory
     App: Implement user based permissions
     App: Switch DB to AWS or Azure (whichever is cheaper)
 
@@ -21,6 +20,7 @@ DO - v1.01
 
 
 // COMPLETED
+//  ✓  App: Refactor components directory
 //  ✓  App: Apply useContext where it makes sense
 //  ✓  App: Refactor hooks
 //  ✓  App: Deploy

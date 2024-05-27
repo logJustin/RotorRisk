@@ -3,7 +3,6 @@ import { Table, TableCell, TableHead, TableRow, Typography, IconButton, Collapse
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import useRiskColor from '../../../hooks/useRiskColor'
-import '../FlightsList.css';
 
 export default function Mission({ row }) {
     const [missionOpen, setMissionOpen] = React.useState(false);

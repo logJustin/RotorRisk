@@ -5,8 +5,8 @@ import FormLabel from '@mui/material/FormLabel';
 import { Controller } from "react-hook-form"
 import CheckboxesModeOfFlight from '../Components/CheckboxesModeOfFlight'
 import CheckboxesBinary from '../Components/CheckboxesBinary'
-import useFinalRiskValue from '../../../hooks/useFinalRiskValue';
-import useHighestRiskValue from '../../../hooks/useHighestRiskValue';
+import useFinalRiskValue from '../../../../hooks/useFinalRiskValue';
+import useHighestRiskValue from '../../../../hooks/useHighestRiskValue';
 
 export default function Weather({ control, watch, setValue }) {
 

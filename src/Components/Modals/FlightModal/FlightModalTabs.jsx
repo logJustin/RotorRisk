@@ -12,8 +12,8 @@ import Weather from './Tabs/Weather'
 import FinalRisk from './Tabs/FinalRisk'
 import MBO from './Tabs/MBO'
 import FMAA from './Tabs/FMAA'
-import { useGlobalState } from '../../contexts/GlobalStateContext';
-import { useFlash } from '../../contexts/FlashContext';
+import { useGlobalState } from '../../../contexts/GlobalStateContext';
+import { useFlash } from '../../../contexts/FlashContext';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -48,7 +48,7 @@ function a11yProps(index) {
     };
 }
 
-export default function FlightModal({ open, handleLoadingChange }) {
+export default function FlightModalTabs({ open, handleLoadingChange }) {
 
     const { handleModalClose, formMode, flightData, setFlights, fetchFlightsData, aircrews } = useGlobalState();
     const { handleFlashClick, setFlashMessage } = useFlash()

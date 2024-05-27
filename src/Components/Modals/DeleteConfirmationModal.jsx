@@ -4,8 +4,8 @@ import { Box, Button, Modal, Dialog, IconButton, CircularProgress, Typography } 
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 import Grid from '@mui/material/Unstable_Grid2';
-import { useGlobalState } from '../../../contexts/GlobalStateContext';
-import { useFlash } from '../../../contexts/FlashContext';
+import { useGlobalState } from '../../contexts/GlobalStateContext';
+import { useFlash } from '../../contexts/FlashContext';
 
 export default function DeleteConfirmationModal({ flight }) {
 

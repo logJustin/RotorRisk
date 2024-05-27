@@ -3,7 +3,6 @@ import { Table, TableCell, TableHead, TableRow, Typography, IconButton, Collapse
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import useAircrewRiskColor from '../../../hooks/useAircrewRiskColor';
-import '../FlightsList.css';
 
 
 export default function Aircrew({ row }) {

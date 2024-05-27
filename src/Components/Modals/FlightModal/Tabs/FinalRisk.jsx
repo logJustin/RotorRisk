@@ -4,7 +4,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import FormLabel from '@mui/material/FormLabel';
 import { Controller } from "react-hook-form"
 import CheckboxesRiskLevel from '../Components/CheckboxesRiskLevel'
-import useFinalRiskValue from '../../../hooks/useFinalRiskValue';
+import useFinalRiskValue from '../../../../hooks/useFinalRiskValue';
 
 export default function FinalRisk({ control, watch, setValue }) {
 

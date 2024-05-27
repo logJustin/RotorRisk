@@ -7,12 +7,12 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import DeleteIcon from '@mui/icons-material/Delete';
-import CheckboxesFlightConditions from '../Components/CheckboxesFlightConditions'
-import aircraftInfo from '../../../data/aircraftTailNumbers'
-import useAircrewRiskDayValue from '../../../hooks/useAircrewRiskDayValue';
-import useAircrewRiskNvgValue from '../../../hooks/useAircrewRiskNvgValue';
-import useFinalRiskValue from '../../../hooks/useFinalRiskValue';
-import { useGlobalState } from '../../../contexts/GlobalStateContext';
+import CheckboxesFlightConditions from '../components/CheckboxesFlightConditions'
+import aircraftInfo from '../../../../data/aircraftTailNumbers'
+import useAircrewRiskDayValue from '../../../../hooks/useAircrewRiskDayValue';
+import useAircrewRiskNvgValue from '../../../../hooks/useAircrewRiskNvgValue';
+import useFinalRiskValue from '../../../../hooks/useFinalRiskValue';
+import { useGlobalState } from '../../../../contexts/GlobalStateContext';
 
 export default function Aircrew({ control, watch, setValue }) {
     const { aircrews } = useGlobalState();

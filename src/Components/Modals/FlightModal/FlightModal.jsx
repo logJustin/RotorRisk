@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Box, Modal, CircularProgress } from '@mui/material';
-import FlightModal from './ModalTabs'
-import { useGlobalState } from '../../contexts/GlobalStateContext';
+import FlightModalTabs from './FlightModalTabs'
+import { useGlobalState } from '../../../contexts/GlobalStateContext';
 
-export default function FormModal({ open }) {
+export default function FlightModal({ open }) {
 
     const { handleModalClose } = useGlobalState();
 
@@ -37,7 +37,7 @@ export default function FormModal({ open }) {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <FlightModal
+                <FlightModalTabs
                     open={open}
                     handleLoadingChange={handleLoadingChange}
                 />

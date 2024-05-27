@@ -10,10 +10,9 @@ import Aircrew from './Components/Aircrew'
 import Mission from './Components/Mission'
 import Weather from './Components/Weather'
 import FinalRisk from './Components/FinalRisk'
-import DeleteConfirmationModal from './Components/DeleteConfirmationModal'
+import DeleteConfirmationModal from '../Modals/DeleteConfirmationModal'
 import { useGlobalState } from '../../contexts/GlobalStateContext';
 import { useFilter } from '../../contexts/FilterContext';
-import './FlightsList.css';
 
 export default function Body() {
 

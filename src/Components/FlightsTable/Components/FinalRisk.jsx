@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Table, TableCell, TableHead, TableRow, Typography, IconButton, Collapse } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import '../FlightsList.css';
 
 export default function FinalRisk({ row }) {
     const [finalRiskOpen, setFinalRiskOpen] = React.useState(false);

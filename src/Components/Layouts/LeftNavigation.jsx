@@ -1,18 +1,12 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import AddCircleOutlineSharpIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import CheckCircleOutlineSharpIcon from '@mui/icons-material/CheckCircleOutlineSharp';
 import CheckCircleSharpIcon from '@mui/icons-material/CheckCircleSharp';
 import ListIcon from '@mui/icons-material/List';
-import FormModal from '../Modal/FormModal';
-import PrivilegesModal from '../PrivilegesModal/PrivilegesModal';
-import CrewmemberModal from '../CrewmemberModal/CrewmemberModal';
+import FlightModal from '../Modals/FlightModal/FlightModal';
+import PrivilegesModal from '../Modals/PrivilegesModal';
+import CrewmemberModal from '../Modals/CrewmemberModal';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -22,8 +16,6 @@ import { useGlobalState } from '../../contexts/GlobalStateContext';
 import { useFlash } from '../../contexts/FlashContext';
 import { useFilter } from '../../contexts/FilterContext';
 
-
-// export default function LeftNavigation({ lightMode, handleLightModeToggle, setViewMode }) {
 export default function LeftNavigation({ lightMode, handleLightModeToggle }) {
 
     const { signOut } = useClerk();
@@ -117,7 +109,7 @@ export default function LeftNavigation({ lightMode, handleLightModeToggle }) {
             sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
             aria-label="mailbox folders"
         >
-            <FormModal
+            <FlightModal
                 open={modalOpen}
                 lightMode={lightMode}
             />
