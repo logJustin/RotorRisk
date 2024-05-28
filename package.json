@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "start": "cd server && node server.mjs",
-    "heroku-postbuild": "npm run build"
+    "start:server": "cd server && node server.mjs",
+    "start": "npm run build && npm run start:server"
   },
   "dependencies": {
     "@clerk/clerk-react": "^4.26.6",
