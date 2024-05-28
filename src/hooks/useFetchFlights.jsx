@@ -1,6 +1,5 @@
 export const fetchFlightsData = async (setFlights) => {
     const backend_url = import.meta.env.VITE_BACKEND_URL;
-    console.log('backend_url', backend_url)
     try {
         const response = await fetch(`${backend_url}/api/flights`);
         const jsonData = await response.json();
@@ -9,7 +8,6 @@ export const fetchFlightsData = async (setFlights) => {
             const dateB = new Date(b.date.replace(/(\d{2})([A-Za-z]{3})(\d{2})/, "$2 $1, $3"));
             return dateA - dateB;
         });
-        console.log('flights', jsonData)
         setFlights(jsonData);
     } catch (error) {
         console.error('Error fetching flights data:', error);
