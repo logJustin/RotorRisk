@@ -18,7 +18,6 @@ import { useUser } from '@clerk/clerk-react';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
-
     return (
         <div
             role="tabpanel"
@@ -52,6 +51,7 @@ function a11yProps(index) {
 
 export default function FlightModalTabs({ handleLoadingChange }) {
 
+    const backend_url = import.meta.env.VITE_BACKEND_URL;
     const { handleModalClose, formMode, flightData, setFlights, fetchFlightsData, aircrews } = useGlobalState();
     const { handleFlashClick, setFlashMessage } = useFlash()
     const userData = useUser();
@@ -345,7 +345,7 @@ export default function FlightModalTabs({ handleLoadingChange }) {
                 setFlashMessage('Flight added successfully')
                 try {
                     flightObject.filerID = userID
-                    await axios.post('http://localhost:3001/api/add-flight', flightObject);
+                    await axios.post(`${backend_url}/api/add-flight`, flightObject);
                     await fetchFlightsData(setFlights);
                     await handleLoadingChange(false)
                     await handleModalClose();
@@ -356,7 +356,7 @@ export default function FlightModalTabs({ handleLoadingChange }) {
             } else if (formMode === "Update") {
                 setFlashMessage('Flight updated successfully')
                 try {
-                    await axios.put('http://localhost:3001/api/update-flight', flightObject);
+                    await axios.put(`${backend_url}/api/update-flight`, flightObject);
                     await fetchFlightsData(setFlights);
                     await handleLoadingChange(false)
                     await handleModalClose();

@@ -18,6 +18,7 @@ const pilotRanks = ["WO1", "CW2", "CW3", "CW4", "CW5", "2LT", "1LT", "CPT", "MAJ
 const airframes = ["AH64D", "CH47F", "HH60M", "UH60V"];
 
 export default function CrewmemberModal() {
+    const backend_url = import.meta.env.VITE_BACKEND_URL;
     const { aircrews, setAircrews, fetchAircrewsData } = useGlobalState();
     const { setFlashMessage, handleFlashClick } = useFlash();
 
@@ -154,7 +155,7 @@ export default function CrewmemberModal() {
                 atleast25inao: data.atleast25inao.toLowerCase(),
             };
             try {
-                await axios.post('http://localhost:3001/api/add-crewmember', revisedData);
+                await axios.post(`${backend_url}/api/add-crewmember`, revisedData);
                 await fetchAircrewsData(setAircrews);
                 await handleClose();
                 await resetForm();
@@ -174,7 +175,7 @@ export default function CrewmemberModal() {
                 atleast25inao: data.atleast25inao.toLowerCase(),
             };
             try {
-                await axios.put('http://localhost:3001/api/update-crewmember', revisedData);
+                await axios.put(`${backend_url}/api/update-crewmember`, revisedData);
                 await fetchAircrewsData(setAircrews);
                 await handleClose();
                 await resetForm();

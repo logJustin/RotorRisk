@@ -1,6 +1,7 @@
 export const fetchAircrewsData = async (setAircrews) => {
+    const backend_url = import.meta.env.VITE_BACKEND_URL;
     try {
-        const response = await fetch('http://localhost:3001/api/aircrews');
+        const response = await fetch(`${backend_url}/api/aircrews`);
         const jsonData = await response.json();
         setAircrews(jsonData);
     } catch (error) {

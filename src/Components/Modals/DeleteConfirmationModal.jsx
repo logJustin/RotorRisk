@@ -9,6 +9,7 @@ import { useFlash } from '../../contexts/FlashContext';
 
 export default function DeleteConfirmationModal({ flight }) {
 
+    const backend_url = import.meta.env.VITE_BACKEND_URL;
     const { setFlights, fetchFlightsData } = useGlobalState();
     const { handleFlashClick, setFlashMessage } = useFlash();
 
@@ -23,7 +24,7 @@ export default function DeleteConfirmationModal({ flight }) {
     const handleDeleteRCOP = async (flight) => {
         setLoading(true);
         try {
-            await axios.delete('http://localhost:3001/api/delete-flight', { data: flight });
+            await axios.delete(`${backend_url}/api/delete-flight`, { data: flight });
             await fetchFlightsData(setFlights);
             handleClose();
             setFlashMessage('Flight Deleted Successfully');

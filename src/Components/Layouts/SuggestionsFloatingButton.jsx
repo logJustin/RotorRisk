@@ -10,6 +10,7 @@ import { useFlash } from '../../contexts/FlashContext';
 
 export default function SuggestionsFloatingButton({ }) {
 
+    const backend_url = import.meta.env.VITE_BACKEND_URL;
     const { setFlashMessage, handleFlashClick } = useFlash()
 
     // State for Modal Opening
@@ -41,7 +42,7 @@ export default function SuggestionsFloatingButton({ }) {
         data.date = new Date();
 
         try {
-            await axios.post('http://localhost:3001/api/add-suggesstion', data);
+            await axios.post(`${backend_url}/api/add-suggesstion`, data);
             await handleClose();
             await resetForm();
             handleFlashClick()

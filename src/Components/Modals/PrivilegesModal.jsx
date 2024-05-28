@@ -12,6 +12,7 @@ import { useUser } from "@clerk/clerk-react";
 import { useFlash } from '../../contexts/FlashContext';
 
 export default function PrivilegesModal({ }) {
+    const backend_url = import.meta.env.VITE_BACKEND_URL;
     const [selectedPerson, setSelectedPerson] = useState(null)
     const { setFlashMessage, handleFlashClick } = useFlash()
     const [users, setUsers] = useState('');
@@ -39,7 +40,7 @@ export default function PrivilegesModal({ }) {
         const fetchUsers = async () => {
             setLoading(true);
             try {
-                const response = await axios.get('http://localhost:3001/api/userList');
+                const response = await axios.get(`${backend_url}/api/userList`);
                 const usersResponse = response.data.data;
                 const formattedUsers = usersResponse.map(user => ({
                     name: `${user.publicMetadata.rank} ${user.lastName}`,
@@ -84,7 +85,7 @@ export default function PrivilegesModal({ }) {
         data.admin = false
 
         try {
-            await axios.post('http://localhost:3001/api/updateRole', data);
+            await axios.post(`${backend_url}/api/updateRole`, data);
             await handleClose();
             await resetForm();
             handleFlashClick()
