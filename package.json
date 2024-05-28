@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "concurrently \"npm run dev\" \"cd server && node server.mjs\"",
+    "start": "concurrently \"npm run dev\" \"npm run start:server\"",
     "dev": "vite",
-    "build": "vite build --base=/"
+    "build": "vite build --base=/",
+    "start:server": "cd server && node server.mjs"
   },
   "dependencies": {
     "@clerk/clerk-react": "^4.26.6",
