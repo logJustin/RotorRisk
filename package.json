@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "npm run dev",
     "dev": "vite",
-    "build": "vite build --base=/",
-    "server": "cd server && node server.mjs"
+    "build": "vite build",
+    "start": "cd server && node server.mjs",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@clerk/clerk-react": "^4.26.6",
