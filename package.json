@@ -6,11 +6,11 @@
   "scripts": {
     "start": "concurrently \"npm run dev\" \"cd server && node server.mjs\"",
     "dev": "vite",
-    "build": "vite build --base=/",
-    "start:server": "cd server && node server.mjs"
+    "build": "vite build --base=/"
   },
   "dependencies": {
     "@clerk/clerk-react": "^4.26.6",
+    "@clerk/clerk-sdk-node": "^5.0.9",
     "@clerk/themes": "^1.7.9",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -20,14 +20,14 @@
     "axios": "^1.4.0",
     "cors": "^2.8.5",
     "dayjs": "^1.11.9",
+    "dotenv": "^16.4.5",
     "express": "^4.18.2",
     "pg-promise": "^11.5.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.4",
     "svix": "^1.21.0",
-    "uuid": "^9.0.0",
-    "dotenv": "^16.4.5"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.14",
@@ -38,8 +38,8 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.1",
+    "nodemon": "^3.1.1",
     "pg": "^8.11.3",
-    "nodemon": "^3.1.0",
     "vite": "^4.4.0"
   }
 }

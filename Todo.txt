@@ -1,21 +1,37 @@
+Bugs:
+    - Figure out how to only update MBO, MBO comment, MBO comment date if only on tab for MBO
+    - Figure out how to only update FMAA, FMAA comment, FMAA comment date if only on tab for FMAA
 
-// DO
-//     Authentication: Disable footer
-//     Authentication: Create custom Signup component
-//     Authentication: Add rank & role
-//     RCOP Form: Form Validation
-//     RCOP Form: Add Fighter Management
-//     RCOP Form: Change the select one sections to a different format
-//       (requires a change to each state, consider how riskLookup works, how they're rendered on FlightsList)
-//       Form Sections to reflect this:
-//         CrewMember Recency
-//         Specific Vague Planning
-//     Multi-section: Authentication
-//     Multi-section: Authorization
-//     App: Deploy
+DO - v1.0
+    App: Allow admins to update metadata (frontend)
+    App: Allow admins to update metadata (backend)
+    App: Switch DB to AWS or Azure (whichever is cheaper)
+    App: get designer to look at my app
+
+DO - v1.01
+    Authentication: Disable footer
+    Authentication: limit user email to a .mil domain
+    CrewMember Modal: Delete ACM
+    RCOP Form: Form Validation
+    RCOP Form: Add Fighter Management
+    RCOP Form: Change the select one sections to a different format
+      (requires a change to each state, consider how riskLookup works, how they're rendered on FlightsList)
+      Form Sections to reflect this:
+        CrewMember Recency
+        Specific Vague Planning
 
 
 // COMPLETED
+//  ✓  App: if a flight is not briefed//approved, don't show that sub-section in Final Risk in FlightsList Component
+//  ✓  App: only user or admin can delete RCOPs
+//  ✓  App: only user, MBO, FMAA, or admin can edit RCOPs
+//  ✓  App: Implement user based permissions
+//  ✓  Multi-section: Authentication
+//  ✓  Multi-section: Authorization
+//  ✓  App: Refactor components directory
+//  ✓  App: Apply useContext where it makes sense
+//  ✓  App: Refactor hooks
+//  ✓  App: Deploy
 //  ✓  RCOP Form: Change Lunar Data to Binary
 //  ✓  RCOP Form: Add ETD & ETE on 5484
 //  ✓  RCOP Form: Change CheckboxBinary to Yes/No
