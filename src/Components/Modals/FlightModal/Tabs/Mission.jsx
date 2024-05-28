@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import { Controller } from "react-hook-form"
 import { TextField, FormLabel } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import CheckboxesModeOfFlight from '../Components/CheckboxesModeOfFlight'
-import CheckboxesBinary from '../Components/CheckboxesBinary'
-import RecencyToggleButton from '../Components/RecencyToggleButton'
+import CheckboxesModeOfFlight from '../components/CheckboxesModeOfFlight'
+import CheckboxesBinary from '../components/CheckboxesBinary'
+import RecencyToggleButton from '../components/RecencyToggleButton'
 import useFinalRiskValue from '../../../../hooks/useFinalRiskValue'
 import useHighestRiskValue from '../../../../hooks/useHighestRiskValue';
 

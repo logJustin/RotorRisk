@@ -3,8 +3,8 @@ import { TextField } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import FormLabel from '@mui/material/FormLabel';
 import { Controller } from "react-hook-form"
-import CheckboxesModeOfFlight from '../Components/CheckboxesModeOfFlight'
-import CheckboxesBinary from '../Components/CheckboxesBinary'
+import CheckboxesModeOfFlight from '../components/CheckboxesModeOfFlight'
+import CheckboxesBinary from '../components/CheckboxesBinary'
 import useFinalRiskValue from '../../../../hooks/useFinalRiskValue';
 import useHighestRiskValue from '../../../../hooks/useHighestRiskValue';
 
