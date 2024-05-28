@@ -7,7 +7,7 @@ import { dark } from '@clerk/themes';
 import SuggestionsFloatingButton from './Components/Layouts/SuggestionsFloatingButton';
 import LeftNavigation from './Components/Layouts/LeftNavigation';
 import FlightsList from './Components/FlightsTable/FlightsList';
-import { lightPalette, darkPalette } from '../public/ThemePalletes'
+import { lightPalette, darkPalette } from './ThemePalletes'
 import { FlashContextProvider, useFlash } from './contexts/FlashContext';
 import { GlobalStateProvider } from './contexts/GlobalStateContext';
 import { DrawerProvider } from './contexts/DrawerContext';
