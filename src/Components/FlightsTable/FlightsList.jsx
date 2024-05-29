@@ -6,10 +6,10 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import EditIcon from '@mui/icons-material/Edit';
 import FlightSkeleton from './Components/FlightSkeleton'
-import Aircrew from './Components/Aircrew'
-import Mission from './Components/Mission'
-import Weather from './Components/Weather'
-import FinalRisk from './Components/FinalRisk'
+import Aircrew from './components/Aircrew'
+import Mission from './components/Mission'
+import Weather from './components/Weather'
+import FinalRisk from './components/FinalRisk'
 import DeleteConfirmationModal from '../Modals/DeleteConfirmationModal'
 import { useGlobalState } from '../../contexts/GlobalStateContext';
 import { useFilter } from '../../contexts/FilterContext';
@@ -59,7 +59,7 @@ export default function Body() {
                 <TableRow>
                     <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
                         <Collapse in={open} timeout="auto" unmountOnExit>
-                            <Table size="small" >
+                            <Table size="small">
                                 <TableBody>
                                     <Aircrew row={row} />
                                     <Mission row={row} />

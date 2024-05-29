@@ -55,16 +55,21 @@ export default function Mission({ row }) {
                                     <TableCell><Typography fontWeight={500}>ETE </Typography> {row.ete}</TableCell>
                                 </TableRow>
                                 {/* Missions */}
+                                <TableRow key='riskValues'>
+                                    <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
+                                        <Typography variant="h6" component="div" align='center' fontWeight={'bold'}>Risk Values</Typography>
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow key='exampleRow'>
+                                    <TableCell sx={{ background: lowRisk, color: 'black', borderBottom: 'none' }} align='center'>Low</TableCell>
+                                    <TableCell sx={{ background: moderateRisk, color: 'black', borderBottom: 'none' }} align='center'>Moderate</TableCell>
+                                    <TableCell sx={{ background: highRisk, color: 'black', borderBottom: 'none' }} align='center'>High</TableCell>
+                                    <TableCell sx={{ background: extremelyHighRisk, color: 'black', borderBottom: 'none' }} align='center'>Extremely High</TableCell>
+                                </TableRow>
                                 <TableRow key='missionConsiderationsHeader'>
                                     <TableCell colSpan={5} sx={{ borderBottom: 'none' }}>
                                         <Typography variant="h6" component="div" align='center' fontWeight={'bold'}>Mission Considerations</Typography>
                                     </TableCell>
-                                </TableRow>
-                                <TableRow key='exampleRow'>
-                                    <TableCell sx={{ background: lowRisk, color: 'black', borderBottom: 'none' }} align='center'>Low Risk</TableCell>
-                                    <TableCell sx={{ background: moderateRisk, color: 'black', borderBottom: 'none' }} align='center'>Moderate Risk</TableCell>
-                                    <TableCell sx={{ background: highRisk, color: 'black', borderBottom: 'none' }} align='center'>High Risk</TableCell>
-                                    <TableCell sx={{ background: extremelyHighRisk, color: 'black', borderBottom: 'none' }} align='center'>Extremely High Risk</TableCell>
                                 </TableRow>
                                 <TableRow key='firstMissionRow'>
                                     <TableCell sx={{ background: useRiskColor('airAssault', row.airassault), color: 'black', borderBottom: 'none' }} align='center'>Air Assault <br></br>{row.airassault && `(${row.airassault})`}</TableCell>
