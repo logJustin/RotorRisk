@@ -79,7 +79,7 @@ export default function LeftNavigation({ lightMode, handleLightModeToggle }) {
             </Box >
             <Box sx={{ mt: 'auto' }}>
                 <List>
-                    {/* {isAdmin === true &&
+                    {isAdmin === true &&
                         <>
                             <PrivilegesModal
                                 setFlashMessage={setFlashMessage}
@@ -90,7 +90,7 @@ export default function LeftNavigation({ lightMode, handleLightModeToggle }) {
                                 handleFlashClick={handleFlashClick}
                             />
                         </>
-                    } */}
+                    }
                     {/* Dark Mode toggler */}
                     <ListItem key='Toggler' disablePadding>
                         <ListItemButton onClick={handleLightModeToggle}>

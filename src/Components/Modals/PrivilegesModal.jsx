@@ -4,52 +4,39 @@ import {
     Box, IconButton, Button, Select, MenuItem, Modal, FormControl, InputLabel, TextField, Typography, CircularProgress, Autocomplete
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import { ListItem, ListItemButton, ListItemIcon, ListItemText, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import CloseIcon from '@mui/icons-material/Close';
 import { useForm, Controller } from 'react-hook-form';
-import { useUser } from "@clerk/clerk-react";
 import { useFlash } from '../../contexts/FlashContext';
 
 export default function PrivilegesModal({ }) {
     const backend_url = import.meta.env.VITE_BACKEND_URL;
-    const [selectedPerson, setSelectedPerson] = useState(null)
+    const [loading, setLoading] = useState(false);
+    const [clerkUsers, setClerkUsers] = useState('');
+    const [selectedPerson, setSelectedPerson] = useState()
     const { setFlashMessage, handleFlashClick } = useFlash()
-    const [users, setUsers] = useState('');
-    const userData = useUser();
 
-    const { control, handleSubmit, setValue } = useForm({
-        defaultValues: {
-            role: 'pilot',
-            userId: '',
-            rank: '',
-            admin: false,
-            name: ''
-        },
-    });
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-    const resetForm = () => {
-        setValue('name', '');
-        setValue('role', '');
-        setValue('userId', '');
-        setValue('rank', '');
-        setValue('admin', '');
-    }
+    const ranks = ["PVT", "PV2", "PFC", "SPC", "CPL", "SGT", "SSG", "SFC", "MSG", "1SG", "CSM", "WO1", "CW2", "CW3", "CW4", "CW5", "2LT", "1LT", "CPT", "MAJ", "LTC", "COL"];
 
+    // set state for the clerk users
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchClerkUsers = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`${backend_url}/api/userList`);
-                const usersResponse = response.data.data;
-                const formattedUsers = usersResponse.map(user => ({
+                const response = await axios.get(`${backend_url}/api/userList`)
+                const formattedUsers = response.data.data.map(user => ({
                     name: `${user.publicMetadata.rank} ${user.lastName}`,
+                    rank: user.publicMetadata.rank,
                     userId: user.id,
                     role: user.publicMetadata.role,
-                    rank: user.publicMetadata.rank,
-                    admin: user.publicMetadata.admin
+                    admin: user.publicMetadata.admin === true ? 'Yes' : 'No'
                 }));
-                setUsers(formattedUsers);
+                setClerkUsers(formattedUsers);
             } catch (error) {
                 console.error('Error fetching user list:', error);
                 // Handle error state or notify the user
@@ -58,31 +45,51 @@ export default function PrivilegesModal({ }) {
             }
         };
 
-        fetchUsers();
-    }, []);
+        fetchClerkUsers();
+    }, [open]);
 
-    const handlePersonSelection = (person) => {
-        console.log(person)
+    useEffect(() => {
+        if (selectedPerson) {
+            setValue('role', selectedPerson.role);
+            setValue('userId', selectedPerson.userId);
+            setValue('rank', selectedPerson.rank);
+            setValue('admin', selectedPerson.admin);
+        }
+    }, [selectedPerson]);
+
+    const { control, handleSubmit, setValue } = useForm({
+        defaultValues: {
+            role: '',
+            userId: '',
+            rank: '',
+            admin: '',
+        },
+    });
+
+    const handlePersonSelection = (personName) => {
+        const selectedUser = clerkUsers.find(user => user.name === personName);
+        if (selectedUser) {
+            setSelectedPerson(selectedUser);
+        }
     }
 
-
-    // State for Modal Opening
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
-    // state for loading indicator
-    const [loading, setLoading] = useState(false);
+    const resetForm = () => {
+        setValue('role', '');
+        setValue('user', '');
+        setValue('rank', '');
+        setValue('admin', '');
+    }
 
     // Submit Logic
     const onSubmit = async (data) => {
         setLoading(true)
         setFlashMessage('User permission update successfully')
 
-        data.role = 'MBO'
-        data.userId = userData.user.id
-        data.rank = 'LTC';
-        data.admin = false
+        if (data.admin === "Yes") {
+            data.admin = true
+        } else if (data.admin === "No") {
+            data.admin = false
+        }
 
         try {
             await axios.post(`${backend_url}/api/updateRole`, data);
@@ -94,8 +101,6 @@ export default function PrivilegesModal({ }) {
         }
         setLoading(false)
     }
-
-
 
     return (
         <>
@@ -142,6 +147,7 @@ export default function PrivilegesModal({ }) {
                     >
                         <CloseIcon />
                     </IconButton>
+
                     {loading && <CircularProgress color='inherit'
                         sx={{
                             position: 'absolute',
@@ -150,6 +156,8 @@ export default function PrivilegesModal({ }) {
                             transform: 'translate(-50%, -50%)',
                         }}
                     />}
+
+                    <Typography variant='h5' textAlign={'center'}>Admin Dashboard</Typography>
                     <form style={{
                         height: '100%',
                         display: 'flex',
@@ -163,51 +171,24 @@ export default function PrivilegesModal({ }) {
                         }}>
 
                             {/* User */}
-                            {/* <Grid xs={12} sm={6} md={4}>
+                            <Grid xs={12}>
                                 <FormControl fullWidth component="fieldset">
-                                    <InputLabel>User</InputLabel>
+                                    <InputLabel>Select User</InputLabel>
                                     <Controller
                                         name="user"
                                         control={control}
+                                        defaultValue=""
                                         render={({ field }) => (
                                             <Select
                                                 {...field}
                                                 fullWidth
-                                                required
-                                                label="User"
-                                                value={selectedPerson || ''} // Ensure the value is controlled
+                                                label="Select User"
                                                 onChange={(selectedValue) => {
                                                     field.onChange(selectedValue);
-                                                    handlePersonSelection(selectedValue.target.value);
+                                                    handlePersonSelection(selectedValue.target.value)
                                                 }}
                                             >
-                                                {users.map((user) => (
-                                                    <MenuItem key={user.name} value={user.name}>
-                                                        {user.name}
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        )}
-                                    />
-                                </FormControl>
-                            </Grid> */}
-                            <Grid xs={12} sm={6} md={3}>
-                                <FormControl fullWidth component="fieldset">
-                                    <InputLabel>User</InputLabel>
-                                    <Controller
-                                        name="user"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <Select
-                                                {...field}
-                                                fullWidth
-                                                label="User"
-                                                onChange={(selectedValue) => {
-                                                    field.onChange(selectedValue);
-                                                    setValue('user', users[0].name);
-                                                }}
-                                            >
-                                                {users.map((user) => (
+                                                {clerkUsers.map((user) => (
                                                     <MenuItem key={user.name} value={user.name}>
                                                         {user.name}
                                                     </MenuItem>
@@ -218,129 +199,89 @@ export default function PrivilegesModal({ }) {
                                 </FormControl>
                             </Grid>
 
-                            {/* Position */}
-                            {/* <Grid xs={12} sm={6} md={4}>
+                            {/* update rank */}
+                            <Grid xs={12}>
                                 <FormControl fullWidth component="fieldset">
-                                    <InputLabel>Position</InputLabel>
+                                    <InputLabel>Update Rank</InputLabel>
                                     <Controller
-                                        name="position"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <Select
-                                                {...field}
-                                                fullWidth
-                                                label="Position"
-                                                disabled={selectedHelicopter === 'AH64D'}
-                                                onChange={(selectedValue) => {
-                                                    field.onChange(selectedValue);
-                                                    setValue('rank', '');
-                                                    selectedValue.target.value === 'NRCM' ? setRanks(nrcmRanks) : setRanks(pilotRanks);
-                                                    setSelectedPosition(selectedValue.target.value)
-                                                    setSelectedPerson('')
-                                                    setValue('name', '')
-                                                }}
-                                            >
-                                                {positions.map((position) => (
-                                                    <MenuItem key={position} value={position}>
-                                                        {position}
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        )}
-                                    />
-                                </FormControl>
-                            </Grid> */}
-
-                            {/* Name */}
-                            {/* <Grid xs={12} sm={6} md={4}>
-                                <FormControl fullWidth component="fieldset">
-                                    <Controller
-                                        name="name"
+                                        name="rank"
                                         control={control}
                                         defaultValue=""
                                         render={({ field }) => (
-                                            <Autocomplete
-                                                {...field}
-                                                freeSolo
-                                                fullWidth
-                                                required
-                                                options={names}
-                                                onChange={(event, newValue) => {
-                                                    field.onChange(newValue);
-                                                    handleNameSelection(newValue);
-                                                }}
-                                                renderInput={(params) => (
-                                                    <TextField
-                                                        {...params}
-                                                        label="Name"
-                                                        onChange={handleNameInputChange}
-                                                    />
-                                                )}
-                                            />
-                                        )}
-                                    />
-                                </FormControl>
-                            </Grid> */}
-
-                            {/* Aircraft Hours */}
-                            {/* <Grid xs={12} sm={6} md={4}>
-                                <Controller
-                                    name="aircraft"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <TextField fullWidth
-                                            disabled={selectedPerson === null}
-                                            required {...field} label="Total Aircraft Hours" placeholder='420.0' type='number' />
-                                    )}
-                                />
-                            </Grid> */}
-
-                            {/* NG Hours */}
-                            {/* <Grid xs={12} sm={6} md={4}>
-                                <Controller
-                                    name="ng"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <TextField fullWidth
-                                            disabled={selectedPerson === null}
-                                            required {...field} label="NG Flight Hours" placeholder='100.1' type='number' />
-                                    )}
-                                />
-                            </Grid> */}
-
-                            {/* 25 in ao */}
-                            {/* <Grid xs={12} sm={6} md={4}>
-                                <FormControl fullWidth component="fieldset">
-                                    <InputLabel>Greater than 25 Hours in AO</InputLabel>
-                                    <Controller
-                                        name="atleast25inao"
-                                        required
-                                        control={control}
-                                        render={({ field }) => (
                                             <Select
                                                 {...field}
                                                 fullWidth
-                                                required
-                                                disabled={selectedPerson === null}
-                                                label="Greater than 25 Hours in AO"
+                                                label="Update Rank"
+                                                disabled={!selectedPerson}
                                             >
-                                                {['True', 'False'].map((boolean) => (
-                                                    <MenuItem key={boolean} value={boolean}>
-                                                        {boolean}
+                                                {ranks.map((rank) => (
+                                                    <MenuItem key={rank} value={rank}>
+                                                        {rank}
                                                     </MenuItem>
                                                 ))}
                                             </Select>
                                         )}
                                     />
                                 </FormControl>
-                            </Grid> */}
+                            </Grid>
+
+                            {/* make admin */}
+                            <Grid xs={12}>
+                                <FormControl fullWidth component="fieldset">
+                                    <InputLabel>Make Admin</InputLabel>
+                                    <Controller
+                                        name="admin"
+                                        control={control}
+                                        defaultValue=""
+                                        render={({ field }) => (
+                                            <Select
+                                                {...field}
+                                                fullWidth
+                                                label="Make Admin"
+                                                disabled={!selectedPerson}
+                                            >
+                                                {['Yes', 'No'].map((item) => (
+                                                    <MenuItem key={item} value={item}>
+                                                        {item}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        )}
+                                    />
+                                </FormControl>
+                            </Grid>
+
+                            {/* update role */}
+                            <Grid xs={12}>
+                                <FormControl fullWidth component="fieldset">
+                                    <InputLabel>Update Role</InputLabel>
+                                    <Controller
+                                        name="role"
+                                        control={control}
+                                        defaultValue=""
+                                        render={({ field }) => (
+                                            <Select
+                                                {...field}
+                                                fullWidth
+                                                label="Update Role"
+                                                disabled={!selectedPerson}
+                                            >
+                                                {['Pilot', 'MBO', 'FMAA'].map((item) => (
+                                                    <MenuItem key={item} value={item}>
+                                                        {item}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        )}
+                                    />
+                                </FormControl>
+                            </Grid>
+
+                            <Button color="inherit" variant="contained" type="submit" fullWidth sx={{ marginTop: '24px', marginBottom: '8px' }}>
+                                Update User
+                            </Button>
+
                         </Grid>
-
-
-                        <Button color="inherit" variant="contained" type="submit" fullWidth sx={{ marginTop: '24px', marginBottom: '8px' }}>
-                            Update User
-                        </Button>
-
                     </form >
                 </Box>
             </Modal >
