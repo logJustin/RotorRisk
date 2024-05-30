@@ -15,6 +15,7 @@ import { useGlobalState } from '../../contexts/GlobalStateContext';
 import { useFilter } from '../../contexts/FilterContext';
 import { useUser } from '@clerk/clerk-react';
 
+
 export default function Body() {
 
     const { handleModalOpen, flights, drawerWidth } = useGlobalState();
