@@ -10,6 +10,10 @@ export const lightPalette = {
         default: '#FAF1E4',
         paper: '#fff'
     },
+    text: {
+        primary: '#000000',
+        customColor: '#000000',
+    }
 };
 export const darkPalette = {
     mode: 'dark',

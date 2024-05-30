@@ -27,7 +27,8 @@ export default function FinalRisk({ row }) {
                         <Typography
                             variant="subtitle1"
                             component="div"
-                            sx={{ marginLeft: '8px', color: 'black' }} // Add some margin for spacing
+                            sx={{ marginLeft: '8px' }} // Add some margin for spacing
+                            color="text.customColor"
                         >
                             <Typography component={'span'} fontWeight={'bold'}>Final: </Typography>
                             {row.finalmitigatedrisk}

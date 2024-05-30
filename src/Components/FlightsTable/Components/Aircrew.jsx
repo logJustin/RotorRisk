@@ -29,7 +29,8 @@ export default function Aircrew({ row }) {
                         <Typography
                             variant="subtitle1"
                             component="div"
-                            sx={{ marginLeft: '8px', color: 'black' }} // Add some margin for spacing
+                            sx={{ marginLeft: '8px' }}
+                            color="text.customColor"
                         >
                             <Typography component={'span'} fontWeight={'bold'}>Aircrew: </Typography>
                             {row.aircrewmitigatedrisk}

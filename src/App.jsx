@@ -13,8 +13,6 @@ import { GlobalStateProvider } from './contexts/GlobalStateContext';
 import { DrawerProvider } from './contexts/DrawerContext';
 import { FilterProvider } from './contexts/FilterContext';
 import Header from './Components/Layouts/Header';
-import './App.css';
-
 
 const AppComponents = ({ lightMode, handleLightModeToggle }) => {
   const { getSeverity, Alert, flashMessage, openFlash, handleFlashClose } = useFlash();
