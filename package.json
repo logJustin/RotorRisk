@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "server": "cd server && node server.mjs",
+    "start:server": "cd server && node server.mjs",
     "start": "npm run build && npm run server"
   },
   "dependencies": {
