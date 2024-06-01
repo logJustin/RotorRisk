@@ -59,7 +59,7 @@ export default function FlightModalTabs({ handleLoadingChange }) {
     const userRole = userData.user.publicMetadata.role
     const userRank = userData.user.publicMetadata.rank
     const userLastName = userData.user.lastName
-    const isAdmin = userData.user.publicMetadata.admin
+    const userNameWithRank = `${userData.user.publicMetadata.rank} ${userData.user.fullName}`
 
     // State for Button Message
     const [buttonMessage, setButtonMessage] = useState('Go to Mission')
@@ -137,7 +137,7 @@ export default function FlightModalTabs({ handleLoadingChange }) {
     }
 
     let {
-        flightid, date, aircrafttype, aircrafttail, mission, missionstatement, route, etd, ete, flightconditions, pc, pcrisk, pcseat, pi, pirisk, piseat, nrcm1, nrcm1risk, nrcm2, nrcm2risk, nrcm3, nrcm3risk, pchourstotal, pchoursng, pc25hoursinao, pihourstotal, pihoursng, pi25hoursinao, nrcm1hourstotal, nrcm1hoursng, nrcm125hoursinao, nrcm2hourstotal, nrcm2hoursng, nrcm225hoursinao, nrcm3hourstotal, nrcm3hoursng, nrcm325hoursinao, aircrewriskmitigation, aircrewinitialrisk, aircrewmitigatedrisk, airassault, AH64attackreconsecurity, medevac, casevac, farp, crosscountryborder, multiship, mixedmultiship, mtfgeneraltraining, dartonetimeflight, blackout, waterbucket, paradrops, rappelspiesfries, externalloads, airmovementvip, continuation, cefs, fatcow, terrainflight, mountainoperations, overwateroperations, pinnacleoperations, urbanoperations, confinedoperations, ogewithin10, igewithin10, ogewithin5, igewithin5, cruisewithin10, progessionevaluationeps, ifrsimulatedimc, cbrne, nonlivehoist, livehoist, combatmanueveringflight, gunnerylivefire, calfex, ams, blackoutcurtain, owuntrained, famflight, hoverwxrlt500, uh60doorsOff, owsea4to5, owseagt6, pcgt90, pcgt60, pcgt30, pigt90, pigt60, pigt30, nrcm1gt90, nrcm1gt60, nrcm1gt30, nrcm2gt90, nrcm2gt60, nrcm2gt30, nrcm3gt90, nrcm3gt60, nrcm3gt30, hoistgt90, hoistgt60, hoistgt30, specificgt12, specific2to12, specificlt2, vaguegt12, vague2to12, vaguelt2, missionriskmitigation, missioninitialrisk, missionmitigatedrisk, gt1000, lt1000, lt700, lt500, gt3, gt2, gt1, lt1, altrequired, gt25illumandgt30degrees, lt25illumandlt30degrees, gt25illumandgt30degreeslimitedlighting, windgt30, windgt30hoist, gustspreadgt20, forecastthunderstorms, modturbulenceicing, oatnegative10positive30, weatherriskmitigation, weatherinitialrisk, weathermitigatedrisk, finalriskmitigation, finalmitigatedrisk, briefer, briefercomment, briefercommentdate, approver, approvercomment, approvercommentdate, finalinitialrisk, greatestrisk
+        flightid, date, aircrafttype, aircrafttail, mission, missionstatement, route, etd, ete, flightconditions, pc, pcrisk, pcseat, pi, pirisk, piseat, nrcm1, nrcm1risk, nrcm2, nrcm2risk, nrcm3, nrcm3risk, pchourstotal, pchoursng, pc25hoursinao, pihourstotal, pihoursng, pi25hoursinao, nrcm1hourstotal, nrcm1hoursng, nrcm125hoursinao, nrcm2hourstotal, nrcm2hoursng, nrcm225hoursinao, nrcm3hourstotal, nrcm3hoursng, nrcm325hoursinao, aircrewriskmitigation, aircrewinitialrisk, aircrewmitigatedrisk, airassault, AH64attackreconsecurity, medevac, casevac, farp, crosscountryborder, multiship, mixedmultiship, mtfgeneraltraining, dartonetimeflight, blackout, waterbucket, paradrops, rappelspiesfries, externalloads, airmovementvip, continuation, cefs, fatcow, terrainflight, mountainoperations, overwateroperations, pinnacleoperations, urbanoperations, confinedoperations, ogewithin10, igewithin10, ogewithin5, igewithin5, cruisewithin10, progessionevaluationeps, ifrsimulatedimc, cbrne, nonlivehoist, livehoist, combatmanueveringflight, gunnerylivefire, calfex, ams, blackoutcurtain, owuntrained, famflight, hoverwxrlt500, uh60doorsOff, owsea4to5, owseagt6, pcgt90, pcgt60, pcgt30, pigt90, pigt60, pigt30, nrcm1gt90, nrcm1gt60, nrcm1gt30, nrcm2gt90, nrcm2gt60, nrcm2gt30, nrcm3gt90, nrcm3gt60, nrcm3gt30, hoistgt90, hoistgt60, hoistgt30, specificgt12, specific2to12, specificlt2, vaguegt12, vague2to12, vaguelt2, missionriskmitigation, missioninitialrisk, missionmitigatedrisk, gt1000, lt1000, lt700, lt500, gt3, gt2, gt1, lt1, altrequired, gt25illumandgt30degrees, lt25illumandlt30degrees, gt25illumandgt30degreeslimitedlighting, windgt30, windgt30hoist, gustspreadgt20, forecastthunderstorms, modturbulenceicing, oatnegative10positive30, weatherriskmitigation, weatherinitialrisk, weathermitigatedrisk, finalriskmitigation, finalmitigatedrisk, briefer, briefercomment, briefercommentdate, approver, approvercomment, approvercommentdate, finalinitialrisk, greatestrisk, filername
     } = flightData
 
     if (userRole === 'MBO' && briefer === '') {
@@ -296,6 +296,7 @@ export default function FlightModalTabs({ handleLoadingChange }) {
             approverComment: approvercomment !== undefined ? approvercomment : '',
             approverCommentDate: approvercommentdate !== undefined ? approvercommentdate : '',
             greatestRisk: greatestrisk !== undefined ? greatestrisk : '',
+            filerName: filername !== undefined ? filername : userNameWithRank,
         },
     });
 

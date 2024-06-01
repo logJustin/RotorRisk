@@ -7,11 +7,14 @@ import AddIcon from '@mui/icons-material/Add';
 import { useForm, Controller } from 'react-hook-form';
 import { v4 as uuid } from 'uuid';
 import { useFlash } from '../../contexts/FlashContext';
+import { useUser } from '@clerk/clerk-react';
 
 export default function SuggestionsFloatingButton({ }) {
 
     const backend_url = import.meta.env.VITE_BACKEND_URL;
     const { setFlashMessage, handleFlashClick } = useFlash()
+    const user = useUser();
+    const userNameWithRank = `${user.user.publicMetadata.rank} ${user.user.fullName}`
 
     // State for Modal Opening
     const [open, setOpen] = useState(false);
@@ -38,11 +41,11 @@ export default function SuggestionsFloatingButton({ }) {
         setLoading(true)
         setFlashMessage('Suggestion added successfully')
         data.id = uuid()
-        data.user_name = '...pending'
+        data.user_name = userNameWithRank
         data.date = new Date();
 
         try {
-            await axios.post(`${backend_url}/api/add-suggesstion`, data);
+            await axios.post(`${backend_url}/api/add-suggestion`, data);
             await handleClose();
             await resetForm();
             handleFlashClick()

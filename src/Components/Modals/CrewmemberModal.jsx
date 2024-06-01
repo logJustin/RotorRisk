@@ -142,50 +142,36 @@ export default function CrewmemberModal() {
 
     // Submit Logic
     const onSubmit = async (data) => {
-        setLoading(true)
-        if (mode === 'Add') {
-            setFlashMessage('Crewmember added successfully')
-            const revisedData = {
-                uuid: uuid(),
-                name: `${data.rank} ${data.last_name}`,
-                position: data.position.toLowerCase(),
-                airframe: data.airframe,
-                aircraft: data.aircraft,
-                ng: data.ng,
-                atleast25inao: data.atleast25inao.toLowerCase(),
-            };
-            try {
-                await axios.post(`${backend_url}/api/add-crewmember`, revisedData);
-                await fetchAircrewsData(setAircrews);
-                await handleClose();
-                await resetForm();
-                handleFlashClick()
-            } catch (error) {
-                console.error('Error adding crewmember:', error);
-            }
-        } else if (mode === 'Edit') {
-            setFlashMessage('Crewmember updated successfully')
-            const revisedData = {
-                uuid: data.uuid,
-                name: name,
-                position: data.position.toLowerCase(),
-                airframe: data.airframe,
-                aircraft: data.aircraft,
-                ng: data.ng,
-                atleast25inao: data.atleast25inao.toLowerCase(),
-            };
-            try {
-                await axios.put(`${backend_url}/api/update-crewmember`, revisedData);
-                await fetchAircrewsData(setAircrews);
-                await handleClose();
-                await resetForm();
-                handleFlashClick()
-            } catch (error) {
-                console.error('Error editing crewmember:', error);
-            }
+        setLoading(true);
+
+        const isAddMode = mode === 'Add';
+        const successMessage = isAddMode ? 'Crewmember added successfully' : 'Crewmember updated successfully';
+
+        const revisedData = {
+            uuid: isAddMode ? uuid() : data.uuid,
+            name: isAddMode ? `${data.rank} ${data.last_name}` : data.name,
+            position: data.position.toLowerCase(),
+            airframe: data.airframe,
+            aircraft: data.aircraft,
+            ng: data.ng,
+            atleast25inao: data.atleast25inao.toLowerCase(),
+        };
+
+        setFlashMessage(successMessage);
+
+        try {
+            await axios.post(`${backend_url}/api/add-crewmember`, revisedData);
+            await fetchAircrewsData(setAircrews);
+            await handleClose();
+            await resetForm();
+            handleFlashClick();
+        } catch (error) {
+            console.error(`Error ${isAddMode ? 'adding' : 'editing'} crewmember:`, error);
         }
-        setLoading(false)
-    }
+
+        setLoading(false);
+    };
+
 
 
     return (

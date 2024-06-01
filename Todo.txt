@@ -3,7 +3,10 @@ Bugs:
     - Figure out how to only update FMAA, FMAA comment, FMAA comment date if only on tab for FMAA
 
 DO - v1.0
-    App: Switch DB to SupaBase
+    App: Delete ElephantSQL account
+    App: Test being on the new DB
+    App: Add user.id to the suggestions input & the filerId
+    FlightModal: disable button if state for Aircrew/Weather/Mission/FinalRisk is blank
     App: get designer to look at my app
 
 DO - v1.01
@@ -20,6 +23,7 @@ DO - v1.01
 
 
 // COMPLETED
+//  ✓  App: Switch DB to SupaBase
 //  ✓  App: Allow admins to update metadata (frontend)
 //  ✓  App: Allow admins to update metadata (backend)
 //  ✓  App: if a flight is not briefed//approved, don't show that sub-section in Final Risk in FlightsList Component
