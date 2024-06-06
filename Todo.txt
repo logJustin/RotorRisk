@@ -2,6 +2,8 @@ Bugs:
     - Figure out how to only update MBO, MBO comment, MBO comment date if only on tab for MBO
     - Figure out how to only update FMAA, FMAA comment, FMAA comment date if only on tab for FMAA
 
+Icons: https://github.com/hugeicons/hugeicons-react
+
 DO - v1.0
     App: Delete ElephantSQL account
     App: Test being on the new DB
