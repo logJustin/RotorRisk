@@ -5,9 +5,6 @@ Bugs:
 Icons: https://github.com/hugeicons/hugeicons-react
 
 DO - v1.0
-    App: Delete ElephantSQL account
-    App: Test being on the new DB
-    App: Add user.id to the suggestions input & the filerId
     FlightModal: disable button if state for Aircrew/Weather/Mission/FinalRisk is blank
     App: get designer to look at my app
 
@@ -25,6 +22,10 @@ DO - v1.01
 
 
 // COMPLETED
+//  ✓  App: Updating add/edit flight from frontend
+//  ✓  App: Add user.id to the suggestions input & the filerId
+//  ✓  App: Delete ElephantSQL account
+//  ✓  App: Test being on the new DB
 //  ✓  App: Switch DB to SupaBase
 //  ✓  App: Allow admins to update metadata (frontend)
 //  ✓  App: Allow admins to update metadata (backend)

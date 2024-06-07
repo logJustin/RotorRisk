@@ -342,29 +342,18 @@ export default function FlightModalTabs({ handleLoadingChange }) {
         }
 
         const handleFlight = async (flightObject) => {
-            if (formMode === "File") {
-                setFlashMessage('Flight added successfully')
-                try {
-                    flightObject.filerID = userID
-                    await axios.post(`${backend_url}/api/add-flight`, flightObject);
-                    await fetchFlightsData(setFlights);
-                    await handleLoadingChange(false)
-                    await handleModalClose();
-                    handleFlashClick();
-                } catch (error) {
-                    console.error('Error adding flight:', error);
-                }
-            } else if (formMode === "Update") {
-                setFlashMessage('Flight updated successfully')
-                try {
-                    await axios.put(`${backend_url}/api/update-flight`, flightObject);
-                    await fetchFlightsData(setFlights);
-                    await handleLoadingChange(false)
-                    await handleModalClose();
-                    handleFlashClick();
-                } catch (error) {
-                    console.error('Error adding flight:', error);
-                }
+            try {
+                flightObject.filerID = userID
+                await axios.post(`${backend_url}/api/add-flight`, flightObject);
+                await fetchFlightsData(setFlights);
+                await handleLoadingChange(false)
+                await handleModalClose();
+                let message = formMode === "File" ? 'Flight added successfully' : 'Flight updated successfully';
+                setFlashMessage(message);
+                handleFlashClick();
+            } catch (error) {
+                setFlashMessage('Error filing fligh.')
+                console.error("Error handling flight:", error);
             }
         };
         handleFlight(data)

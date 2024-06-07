@@ -6,6 +6,7 @@ import {
 import Grid from '@mui/material/Unstable_Grid2';
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import { useForm, Controller } from 'react-hook-form';
 import { useFlash } from '../../contexts/FlashContext';
@@ -107,7 +108,7 @@ export default function PrivilegesModal({ }) {
             <ListItem key="AdminUpdate" disablePadding>
                 <ListItemButton onClick={handleOpen}>
                     <ListItemIcon>
-                        <PersonAddIcon />
+                        <SupervisedUserCircleIcon />
                     </ListItemIcon>
                     <ListItemText primary="Manage Admins" />
                 </ListItemButton>

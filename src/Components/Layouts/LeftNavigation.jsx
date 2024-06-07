@@ -43,12 +43,12 @@ export default function LeftNavigation({ lightMode, handleLightModeToggle }) {
                         </ListItemButton>
                     </ListItem>
 
-                    <ListItem key='Create' disablePadding>
+                    <ListItem key='File' disablePadding>
                         <ListItemButton onClick={() => { handleModalOpen('', 'File') }}>
                             <ListItemIcon>
                                 <AddCircleOutlineSharpIcon />
                             </ListItemIcon>
-                            <ListItemText primary='Create' />
+                            <ListItemText primary='File' />
                         </ListItemButton>
                     </ListItem>
 
@@ -81,11 +81,11 @@ export default function LeftNavigation({ lightMode, handleLightModeToggle }) {
                 <List>
                     {isAdmin === true &&
                         <>
-                            <PrivilegesModal
+                            <CrewmemberModal
                                 setFlashMessage={setFlashMessage}
                                 handleFlashClick={handleFlashClick}
                             />
-                            <CrewmemberModal
+                            <PrivilegesModal
                                 setFlashMessage={setFlashMessage}
                                 handleFlashClick={handleFlashClick}
                             />
