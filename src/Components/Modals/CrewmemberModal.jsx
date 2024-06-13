@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { ListItem, ListItemButton, ListItemIcon, ListItemText, ToggleButtonGroup, ToggleButton } from '@mui/material';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import { useForm, Controller } from 'react-hook-form';
 import { useGlobalState } from '../../contexts/GlobalStateContext';
@@ -64,7 +64,6 @@ export default function CrewmemberModal() {
         resetForm();
     };
 
-
     // State for Helicopter to be edited
     const [selectedHelicopter, setSelectedHelicopter] = useState('HH60M')
     // State for Person to be edited
@@ -92,7 +91,6 @@ export default function CrewmemberModal() {
         }
     }, [mode, selectedHelicopter, selectedPosition]);
 
-
     // Handle selection of a person's name in Edit mode
     const handleHelicopterSelection = (helicopter) => {
         setSelectedHelicopter(helicopter);
@@ -101,7 +99,7 @@ export default function CrewmemberModal() {
     const [selectedPerson, setSelectedPerson] = useState(null)
     // Update the form default values based on selected person when in Edit mode
     useEffect(() => {
-        if (mode === 'Edit' && selectedPerson) {
+        if ((mode === 'Edit' || mode === 'Delete') && selectedPerson) {
             setValue('name', selectedPerson.name);
             setValue('position', selectedPerson.position === 'pilot' ? 'Pilot' : 'NRCM');
             setValue('airframe', selectedPerson.airframe);
@@ -127,12 +125,12 @@ export default function CrewmemberModal() {
         setName(newValue); // Update the selected name when the user types into the TextField
     };
 
-    // update aircrews when Edit mode is clicked
+    // update aircrews when Edit or Delete mode is clicked
     useEffect(() => {
         const fetchData = async () => {
-            if (mode === 'Edit') {
+            if (mode === 'Edit' || mode === 'Delete') {
                 await fetchAircrewsData(setAircrews);
-                setNames(aircrews.map((person) => person.name));
+                setNames(aircrews.map((person) => person.name).sort((a, b) => a.localeCompare(b)));
                 resetForm();
             }
         };
@@ -142,10 +140,11 @@ export default function CrewmemberModal() {
 
     // Submit Logic
     const onSubmit = async (data) => {
+        console.log('data', data);
         setLoading(true);
 
         const isAddMode = mode === 'Add';
-        const successMessage = isAddMode ? 'Crewmember added successfully' : 'Crewmember updated successfully';
+        let successMessage = isAddMode ? 'Crewmember added successfully' : 'Crewmember updated successfully';
 
         const revisedData = {
             uuid: isAddMode ? uuid() : data.uuid,
@@ -157,21 +156,25 @@ export default function CrewmemberModal() {
             atleast25inao: data.atleast25inao.toLowerCase(),
         };
 
-        setFlashMessage(successMessage);
-
         try {
-            await axios.post(`${backend_url}/api/add-crewmember`, revisedData);
+            if (mode === "Delete") {
+                await axios.delete(`${backend_url}/api/delete-crewmember`, { data: { uuid: revisedData.uuid } });
+                successMessage = 'Crewmember deleted successfully';
+            } else {
+                await axios.post(`${backend_url}/api/add-crewmember`, revisedData);
+            }
+
+            setFlashMessage(successMessage);
             await fetchAircrewsData(setAircrews);
             await handleClose();
             await resetForm();
             handleFlashClick();
         } catch (error) {
-            console.error(`Error ${isAddMode ? 'adding' : 'editing'} crewmember:`, error);
+            console.error(`Error ${isAddMode ? 'adding' : (mode === 'Delete' ? 'deleting' : 'editing')} crewmember:`, error);
+        } finally {
+            setLoading(false);
         }
-
-        setLoading(false);
     };
-
 
 
     return (
@@ -179,9 +182,9 @@ export default function CrewmemberModal() {
             <ListItem key="AddCrew" disablePadding>
                 <ListItemButton onClick={handleOpen}>
                     <ListItemIcon>
-                        <PersonAddIcon />
+                        <SupervisedUserCircleIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Manage Crewmembers" />
+                    <ListItemText primary="Manage ACMs" />
                 </ListItemButton>
             </ListItem>
             <Modal
@@ -251,6 +254,7 @@ export default function CrewmemberModal() {
                                 >
                                     <ToggleButton value="Add">Add Mode</ToggleButton>
                                     <ToggleButton value="Edit">Edit Mode</ToggleButton>
+                                    <ToggleButton value="Delete">Delete Mode</ToggleButton>
                                 </ToggleButtonGroup>
                             </Grid>
                         </Grid>
@@ -411,24 +415,7 @@ export default function CrewmemberModal() {
                             </Grid>
                         )}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         {/* Container for Edit */}
-
                         {mode === 'Edit' && (
                             <Grid container justifyContent="space-evenly" spacing={2} sx={{
                                 padding: '5px',
@@ -583,6 +570,47 @@ export default function CrewmemberModal() {
                                 </Grid>
                             </Grid>
                         )}
+
+                        {/* Container for Delete */}
+                        {mode === 'Delete' && (
+                            <Grid container justifyContent="space-evenly" spacing={2} sx={{
+                                padding: '5px',
+                                margin: ' 24px 0px 0px 0px'
+                            }}>
+
+                                {/* Name */}
+                                <Grid xs={12}>
+                                    <FormControl fullWidth component="fieldset">
+                                        <Controller
+                                            name="deleteNames"
+                                            control={control}
+                                            defaultValue=""
+                                            render={({ field }) => (
+                                                <Autocomplete
+                                                    {...field}
+                                                    freeSolo
+                                                    fullWidth
+                                                    required
+                                                    options={names}
+                                                    onChange={(event, newValue) => {
+                                                        field.onChange(newValue);
+                                                        handleNameSelection(newValue);
+                                                    }}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
+                                                            label="Delete Name"
+                                                            onChange={handleNameInputChange}
+                                                        />
+                                                    )}
+                                                />
+                                            )}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
+                        )}
+
                         <Button color="inherit" variant="contained" type="submit" fullWidth sx={{ marginTop: '24px', marginBottom: '8px' }}>
                             {mode} Crewmember
                         </Button>

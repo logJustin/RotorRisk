@@ -81,11 +81,11 @@ export default function LeftNavigation({ lightMode, handleLightModeToggle }) {
                 <List>
                     {isAdmin === true &&
                         <>
-                            <CrewmemberModal
+                            <PrivilegesModal
                                 setFlashMessage={setFlashMessage}
                                 handleFlashClick={handleFlashClick}
                             />
-                            <PrivilegesModal
+                            <CrewmemberModal
                                 setFlashMessage={setFlashMessage}
                                 handleFlashClick={handleFlashClick}
                             />

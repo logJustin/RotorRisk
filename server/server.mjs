@@ -253,6 +253,27 @@ app.post('/api/add-crewmember', async (req, res) => {
     }
 });
 
+app.delete('/api/delete-crewmember', async (req, res) => {
+    try {
+        const { uuid } = req.body;  // Destructure uuid from request body
+
+        const { error } = await supabase
+            .from('aircrews')
+            .delete()
+            .eq('uuid', uuid);
+
+        if (error) {
+            throw error;
+        }
+
+        res.status(200).json({ message: 'Crewmember deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting crewmember:', error);
+        res.status(500).json({ error: 'An error occurred while deleting the crewmember' });
+    }
+});
+
+
 app.post('/api/add-suggestion', async (req, res) => {
     try {
         const suggestion = req.body;
@@ -295,7 +316,6 @@ app.get('/api/userList', async (req, res) => {
     const response = await clerkClient.users.getUserList();
     res.json(response);
 })
-
 
 const currentModuleUrl = new URL(import.meta.url);
 const currentDir = path.dirname(currentModuleUrl.pathname);

@@ -10,6 +10,7 @@ export const GlobalStateProvider = ({ children }) => {
     const [formMode, setFormMode] = useState('File');
     const [flights, setFlights] = useState([]);
     const [aircrews, setAircrews] = useState([]);
+    const [briefCommentContent, setBriefCommentContent] = useState()
     const drawerWidth = 240;
 
     useEffect(() => {
@@ -27,7 +28,7 @@ export const GlobalStateProvider = ({ children }) => {
 
     return (
         <GlobalStateContext.Provider
-            value={{ modalOpen, formMode, drawerWidth, flightData, setFlightData, aircrews, setAircrews, flights, setFlights, handleModalOpen, handleModalClose, fetchAircrewsData, fetchFlightsData }}
+            value={{ modalOpen, formMode, drawerWidth, flightData, setFlightData, aircrews, setAircrews, flights, setFlights, briefCommentContent, setBriefCommentContent, handleModalOpen, handleModalClose, fetchAircrewsData, fetchFlightsData }}
         >
             {children}
         </GlobalStateContext.Provider>

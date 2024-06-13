@@ -5,8 +5,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import { useForm, Controller } from 'react-hook-form';
 import { useFlash } from '../../contexts/FlashContext';
@@ -108,9 +107,9 @@ export default function PrivilegesModal({ }) {
             <ListItem key="AdminUpdate" disablePadding>
                 <ListItemButton onClick={handleOpen}>
                     <ListItemIcon>
-                        <SupervisedUserCircleIcon />
+                        <AccountCircleIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Manage Admins" />
+                    <ListItemText primary="Manage Admin" />
                 </ListItemButton>
             </ListItem>
             <Modal
@@ -158,7 +157,7 @@ export default function PrivilegesModal({ }) {
                         }}
                     />}
 
-                    <Typography variant='h5' textAlign={'center'}>Admin Dashboard</Typography>
+                    <Typography variant='h5' textAlign={'center'}>Manage Admins</Typography>
                     <form style={{
                         height: '100%',
                         display: 'flex',

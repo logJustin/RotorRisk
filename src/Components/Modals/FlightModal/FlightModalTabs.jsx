@@ -343,6 +343,7 @@ export default function FlightModalTabs({ handleLoadingChange }) {
 
         const handleFlight = async (flightObject) => {
             try {
+                console.log(flightObject)
                 flightObject.filerID = userID
                 await axios.post(`${backend_url}/api/add-flight`, flightObject);
                 await fetchFlightsData(setFlights);
@@ -352,7 +353,7 @@ export default function FlightModalTabs({ handleLoadingChange }) {
                 setFlashMessage(message);
                 handleFlashClick();
             } catch (error) {
-                setFlashMessage('Error filing fligh.')
+                setFlashMessage('Error filing flight.')
                 console.error("Error handling flight:", error);
             }
         };
@@ -429,7 +430,7 @@ export default function FlightModalTabs({ handleLoadingChange }) {
                     type="submit"
                     fullWidth
                     sx={{ marginTop: 'auto', marginBottom: '8px' }}
-                    disabled={!scrollAtBottom || (tabValue === 4 && userRole === 'FMAA') || (tabValue === 5 && briefer === '')}
+                    disabled={!scrollAtBottom || (tabValue === 4 && userRole === 'FMAA') || (tabValue === 5 && briefer === '') || finalmitigatedrisk === ''}
                     onClick={() => { handleSubmitButtonClick(tabValue) }}
                 >
                     {buttonMessage}
