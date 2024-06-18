@@ -140,7 +140,6 @@ export default function CrewmemberModal() {
 
     // Submit Logic
     const onSubmit = async (data) => {
-        console.log('data', data);
         setLoading(true);
 
         const isAddMode = mode === 'Add';

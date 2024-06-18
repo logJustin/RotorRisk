@@ -300,6 +300,8 @@ export default function FlightModalTabs({ handleLoadingChange }) {
         },
     });
 
+    const watchBriefComments = watch(["brieferComment", "approverComment"])
+
     const formatDate = (dateObject) => {
         const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
         const day = dateObject.$D;
@@ -430,7 +432,7 @@ export default function FlightModalTabs({ handleLoadingChange }) {
                     type="submit"
                     fullWidth
                     sx={{ marginTop: 'auto', marginBottom: '8px' }}
-                    disabled={!scrollAtBottom || (tabValue === 4 && userRole === 'FMAA') || (tabValue === 5 && briefer === '') || finalmitigatedrisk === ''}
+                    disabled={!scrollAtBottom || (tabValue === 4 && userRole === 'FMAA') || (tabValue === 5 && briefer === '') || finalmitigatedrisk === '' || (userRole === 'MBO' && tabValue === 4 && watchBriefComments[0] === '') || (userRole === 'FMAA' && tabValue === 5 && watchBriefComments[1] === '')}
                     onClick={() => { handleSubmitButtonClick(tabValue) }}
                 >
                     {buttonMessage}
